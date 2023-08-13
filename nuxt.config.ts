@@ -18,4 +18,4 @@ export default defineNuxtConfig({
     // remove
     baseUrl: 'https://ecosean1@gmail.com',
   },
-})
+});
