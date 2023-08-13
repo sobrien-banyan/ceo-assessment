@@ -5,7 +5,7 @@ module.exports = {
         port: '3000',
         exec_mode: 'cluster',
         instances: 'max',
-        script: 'npm run dev',
+        script: './node_modules/nuxt/bin/nuxt.js',
       }
     ]
   }
