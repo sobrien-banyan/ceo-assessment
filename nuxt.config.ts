@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: false,
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss', 'nuxt-icon', 'vue-email/nuxt', '@sidebase/nuxt-auth', '@sidebase/nuxt-pdf'],
   css: ['~/assets/css/main.css'],
