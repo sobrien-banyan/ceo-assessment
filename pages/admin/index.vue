@@ -1,7 +1,7 @@
 <script setup>
 definePageMeta({
   layout: "main",
-  middleware: 'auth',
+  // middleware: 'auth',
 
 });
 import { ref, watchEffect } from 'vue';

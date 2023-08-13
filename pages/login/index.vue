@@ -5,25 +5,22 @@ definePageMeta({
         navigateAuthenticatedTo: '/admin',
     }
 });
-import { ref, watchEffect } from 'vue';
+import { ref } from 'vue';
 
 const router = useRouter();
-const { status, signIn } = useAuth();
 
 const username = ref('');
 const password = ref('');
 
-watchEffect(() => {
-    if (status.value === 'authenticated') {
-        router.push('/admin');
-    };
-});
+
  
 const signInHandler = () => {
-   signIn('credentials', { username: username.value, password: password.value });
+//    signIn('credentials', { username: username.value, password: password.value });
+console.log('sign in');
 };   
 const TempSignInHandler = () => {
-   signIn('credentials', { username: 'Genevieve', password: '78w3bri&8h2je!' });
+//    signIn('credentials', { username: 'Genevieve', password: '78w3bri&8h2je!' });
+console.log('temp sign in');
 };   
 
 

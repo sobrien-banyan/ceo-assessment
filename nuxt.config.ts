@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', 'nuxt-icon', 'vue-email/nuxt', '@sidebase/nuxt-auth', '@sidebase/nuxt-pdf'],
+  modules: ['@nuxtjs/tailwindcss', 'nuxt-icon', 'vue-email/nuxt', '@sidebase/nuxt-pdf'],
   css: ['~/assets/css/main.css'],
   tailwindcss: {
     exposeConfig: true,
