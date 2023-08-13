@@ -45,7 +45,7 @@ const containerButton = {
 }
 
 const button = {
-  backgroundColor: '#2da301',
+  backgroundColor: '#41ef00',
   padding: '12px 30px',
   borderRadius: 3,
   color: '#FFF',
