@@ -1,12 +1,13 @@
 // server/api/send-email.post.ts
 import { SES } from '@aws-sdk/client-ses';
+const config = useRuntimeConfig();
 
-const ses = new SES({ region: process.env.AWS_SES_REGION })
+const ses = new SES({ region: config.awsSesRegion })
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const params = {
-    Source: process.env.SENDER_EMAIL_ADDRESS,
+    Source: config.senderEmail,
     Destination: {
       ToAddresses: ['ecosean1@gmail.com'],
     },

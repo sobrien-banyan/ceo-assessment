@@ -1,5 +1,4 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-process.env.AUTH_SECRET = process.env.AUTH_SECRET
 export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: true },
@@ -12,12 +11,17 @@ export default defineNuxtConfig({
   runtimeConfig: {
     mongoUrl: process.env.MONGO_URL,
     mongoDBName: process.env.MONGO_DB_NAME,
+    awsSesRegion: process.env.AWS_SES_REGION,
+    senderEmail: process.env.SENDER_EMAIL_ADDRESS,
+    authSecret: process.env.AUTH_SECRET,
+    authPassword: process.env.AUTH_PASSWORD,
+    authUser: process.env.AUTH_USER_NAME,
   },
   nitro: {
     plugins: ["~/server/index.ts"],
   },
   vueEmail: {
-    // remove
-    baseUrl: 'https://ecosean1@gmail.com',
+    secretKey: process.env.AUTH_SECRET,
   },
+
 });

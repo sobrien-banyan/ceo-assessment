@@ -8,12 +8,10 @@ import { responses } from '../assessment/data/responses';
 import { reportContentPDF } from '~/pages/assessment/data/reportContentPDF';
 
 const route = useRoute();
-// const token = route.params.token;
 
 const users = ref([]);
 const emails = ref([]);
 const isList = ref(true);
-// const isAuth = ref(false);
 
 const isOpen = ref({});
 
@@ -33,12 +31,7 @@ const getEmails = async () => {
 };
 
 watchEffect(() => {
-        // if (token != process.env.AUTH_SECRET) {
-        //     navigateTo(`/login`);
-        // } else {
-        //     isAuth.value = true;
             getUsers();
-        // };
 });
 
 const toggle = (index) => {
