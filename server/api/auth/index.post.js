@@ -4,6 +4,8 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event);
     const user = {name: config.authUser, password: config.authPassword };
     const secret = config.authSecret;
+    console.log('User: ', user);
+    console.log(body);
     try {
         if (body.username === user.name && body.password === user.password) {
             console.log('User authenticated successfully');
