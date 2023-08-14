@@ -120,7 +120,7 @@ const logoutHandler = () => {
                 <div class="flex flex-col">
                   <p class="text-neutral-400">Score: <span class="text-black">{{ user.score }}</span></p>
                   <p class="text-neutral-400">Date created: <span class="text-black">{{ new
-                    Date(user.createdAt).getMonth()
+                    Date(user.createdAt).getMonth() + 1
                   }}/</span><span class="text-black">{{ new Date(user.createdAt).getDate() }}/</span><span
                       class="text-black">{{ new Date(user.createdAt).getFullYear() }}</span></p>
                 </div>
@@ -323,7 +323,7 @@ const logoutHandler = () => {
                 </div>
                 <div class="flex flex-col">
                   <p class="text-neutral-400">Date created: <span class="text-black">{{ new
-                    Date(email.createdAt).getMonth()
+                    Date(email.createdAt).getMonth() + 1
                   }}/</span><span class="text-black">{{ new Date(email.createdAt).getDate() }}/</span><span
                       class="text-black">{{ new Date(email.createdAt).getFullYear() }}</span></p>
                 </div>
