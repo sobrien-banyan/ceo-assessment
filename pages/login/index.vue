@@ -1,28 +1,47 @@
-<script setup lang="ts">
+<script setup>
 definePageMeta({
-    layout: "main",
-    auth: {
-        navigateAuthenticatedTo: '/admin',
-    }
+  layout: "main",
 });
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
+const route = useRouter();
 
-const router = useRouter();
 
 const username = ref('');
 const password = ref('');
 
 
- 
-const signInHandler = () => {
-//    signIn('credentials', { username: username.value, password: password.value });
-console.log('sign in');
-};   
-const TempSignInHandler = () => {
-//    signIn('credentials', { username: 'Genevieve', password: '78w3bri&8h2je!' });
-console.log('temp sign in');
-};   
 
+watchEffect(() => {
+  console.log('watching')
+});
+
+
+const signInHandler = async () => {
+  await useFetch(`/api/auth`, {
+    method: 'POST',
+    body: {
+      username: username.value,
+      password: password.value,
+    },
+  }).then((res) => {
+    if (res.data.value.status === 'authenticated') {
+        navigateTo({path: '/admin', query: {token: res.data.value.token}});
+    };
+  });
+};
+const TempSignInHandler = async () => {
+    await useFetch(`/api/auth`, {
+    method: 'POST',
+    body: {
+      username: 'Genevieve',
+      password: '78w3bri&8h2je!',
+    },
+  }).then((res) => {
+    if (res.data.value.status === 'authenticated') {
+        navigateTo({path: '/admin', query: {token: res.data.value.token}});
+    };
+  });
+};
 
 </script>
 <template>
@@ -75,5 +94,3 @@ console.log('temp sign in');
     }
 }
 </style>
-  
-  

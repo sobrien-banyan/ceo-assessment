@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+process.env.AUTH_SECRET = process.env.AUTH_SECRET
 export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: true },

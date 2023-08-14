@@ -1,18 +1,19 @@
 <script setup>
 definePageMeta({
   layout: "main",
-  // middleware: 'auth',
-
+  middleware: 'auth'
 });
 import { ref, watchEffect } from 'vue';
 import { responses } from '../assessment/data/responses';
 import { reportContentPDF } from '~/pages/assessment/data/reportContentPDF';
 
-const { signOut } = useAuth();
+const route = useRoute();
+// const token = route.params.token;
 
 const users = ref([]);
 const emails = ref([]);
 const isList = ref(true);
+// const isAuth = ref(false);
 
 const isOpen = ref({});
 
@@ -32,7 +33,12 @@ const getEmails = async () => {
 };
 
 watchEffect(() => {
-  getUsers();
+        // if (token != process.env.AUTH_SECRET) {
+        //     navigateTo(`/login`);
+        // } else {
+        //     isAuth.value = true;
+            getUsers();
+        // };
 });
 
 const toggle = (index) => {
@@ -74,6 +80,9 @@ const pdfHandler = () => {
     }, 500);
 
 };
+const logoutHandler = () => {
+  navigateTo(`/`);
+};  
 </script>
 
 <template>
@@ -84,7 +93,7 @@ const pdfHandler = () => {
         class="h-10 w-200 mb-6 rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">
         {{ !isList ? 'View Assessments' : 'View Emails' }}
       </button>
-      <button @click="() => signOut({ callbackUrl: '/' })"
+      <button @click="logoutHandler"
         class="h-10 w-200 mb-6 rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">
         SignOut
       </button>
