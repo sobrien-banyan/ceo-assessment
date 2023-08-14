@@ -21,7 +21,7 @@ export default defineNuxtConfig({
     plugins: ["~/server/index.ts"],
   },
   vueEmail: {
-    secretKey: process.env.AUTH_SECRET,
+    key: process.env.AUTH_SECRET,
   },
 
 });

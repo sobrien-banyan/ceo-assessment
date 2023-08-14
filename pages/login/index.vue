@@ -2,19 +2,12 @@
 definePageMeta({
   layout: "main",
 });
-import { ref, watchEffect } from 'vue';
+import { ref } from 'vue';
 const route = useRouter();
 
 
 const username = ref('');
 const password = ref('');
-
-
-
-watchEffect(() => {
-  console.log('watching')
-});
-
 
 const signInHandler = async () => {
   await useFetch(`/api/auth`, {
