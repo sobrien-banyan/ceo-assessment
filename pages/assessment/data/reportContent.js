@@ -63,7 +63,7 @@ export const reportContent = {
     <p>https://insight.kellogg.northwestern.edu/article/should-you-hire-someone-with-a-criminal-record</p>
     <p>https://www.umass.edu/news/article/new-research-umass-amherst-sociologist-2</p>
     <p>https://psycnet.apa.org/doiLanding?doi=10.1037%2F0021-9010.92.5.1427</p>
-    <p>https://www.abajournal.com/news/article/are_former_offenders_more_likely_to_be_fired_for_misconduct_only_in_one_kin
+    <p style="word-break:break-all;word-wrap:break-word;">https://www.abajournal.com/news/article/are_former_offenders_more_likely_to_be_fired_for_misconduct_only_in_one_kin
     </p><br>
     <h3 class="underline decoration-solid font-bold">Fair Chance Hiring in Action</h3><br>
     <h3 class="font-bold">Case Study #1 - Employer Commitments</h3>

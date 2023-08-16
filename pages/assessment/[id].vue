@@ -141,7 +141,7 @@ const clickHandler = (event) => {
                                 :data-question-id="shuffledQuestions[showListItem].id" :id="answer.id" :value="answer.value"
                                 v-model=runningScore[shuffledQuestions[showListItem].id]
                                 class="w-6 h-6 radioInput cursor focus:ring-0 focus:ring-offset-0 focus:ring-offset-white focus:ring-opacity-100" />
-                            <label :for="answer.id" class=" answer w-full py-3 ml-2 pr-2 text-lg font-medium text-gray-900 cursor">
+                            <label :for="answer.id" class=" answer noselect w-full py-3 ml-2 pr-2 text-lg font-medium text-gray-900 cursor">
                                 {{ answer.answer }}</label>
                         </div>
                     </li>
@@ -390,7 +390,15 @@ const clickHandler = (event) => {
     font-size: .65rem;
     font-weight: 600;
 }
-
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
 .cursor {
     cursor: pointer !important;
 }
