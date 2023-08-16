@@ -88,7 +88,7 @@ const states =
     </section>
 
 
-    <section class="flex px-8 mx-auto lg:items-center lg:justify-between flex-col py-4 bg-tan">
+    <section class="flex mx-auto lg:items-center lg:justify-between flex-col py-4 bg-tan">
         <form @submit.prevent="submitForm">
             <div class="space-y-12 m-5 wrapper">
                 <div class="pb-12">

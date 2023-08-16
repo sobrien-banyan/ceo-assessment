@@ -27,6 +27,7 @@ const results = ref({});
 const isOpen = ref({});
 
 const runningScore = ref({});
+const runningAnswers = ref({});
 const length = questions.length;
 const runningScoreLength = ref(Object.keys(runningScore.value).length);
 
@@ -81,7 +82,6 @@ const saveScore = () => {
         pretty: true,
     });
     html().then((result) => {
-        console.log("result", result);
         useFetch(`/api/sendEmail`, {
         method: 'POST',
         body: {
@@ -97,13 +97,15 @@ const saveScore = () => {
 };
 const clickHandler = (event) => {
     runningScore.value[event.target.dataset.questionId] = event.target.value;
-
+    
     const questionObject = questions.filter((obj) => obj.id == event.target.dataset.questionId)[0];
+    const answerObject = questionObject.answers.filter((obj) => obj.id == event.target.id)[0];
+    runningAnswers.value[event.target.dataset.questionId] = answerObject.id;
 
     results.value[event.target.dataset.questionId] = {
         section: questionObject.section,
         question: questionObject.question,
-        answer: questionObject.answers.filter((obj) => obj.id == event.target.id)[0].answer,
+        answer: answerObject.answer,
         value: event.target.value,
     };
 
@@ -123,7 +125,7 @@ const clickHandler = (event) => {
 </script>
 
 <template>
-    <section class="flex px-8 mx-auto lg:items-center lg:justify-between flex-col py-4 bg-tan h-full"
+    <section class="flex mx-auto lg:items-center lg:justify-between flex-col py-4 bg-tan h-full"
         v-if="runningScoreLength != length">
         <div class="space-y-12 m-5 wrapper h-full">
             <h1 class="question mb-2 h-20 text-3xl font-semibold text-gray-900 ">{{ shuffledQuestions[showListItem].question }}</h1>
@@ -131,11 +133,15 @@ const clickHandler = (event) => {
                 <ul v-for="answer in shuffledQuestions[showListItem].answers" class="w-full">
                     <li class="mb-2 font-medium bg-white border border-gray-200 rounded-lg cursor">
                         <div class="flex items-center pl-3 card cursor">
-                            <input @click="clickHandler" type="radio" :name="answer.id"
+                            <input v-if="runningAnswers[shuffledQuestions[showListItem].id] == answer.id" @click="clickHandler" type="radio" :name="answer.id"
                                 :data-question-id="shuffledQuestions[showListItem].id" :id="answer.id" :value="answer.value"
                                 v-model=runningScore[shuffledQuestions[showListItem].id]
-                                class="w-6 h-6 radioInput cursor focus:none focus:fill-none focus:ring-0 focus:outline-white focus:ring-offset-0 focus:ring-offset-white focus:ring-opacity-100" />
-                            <label :for="answer.id" class=" answer w-full py-3 ml-2 text-lg font-medium text-gray-900 cursor">
+                                class="w-6 h-6 radioInputSelected cursor focus:ring-0 focus:ring-offset-0 focus:ring-offset-white focus:ring-opacity-100" />
+                            <input v-else @click="clickHandler" type="radio" :name="answer.id"
+                                :data-question-id="shuffledQuestions[showListItem].id" :id="answer.id" :value="answer.value"
+                                v-model=runningScore[shuffledQuestions[showListItem].id]
+                                class="w-6 h-6 radioInput cursor focus:ring-0 focus:ring-offset-0 focus:ring-offset-white focus:ring-opacity-100" />
+                            <label :for="answer.id" class=" answer w-full py-3 ml-2 pr-2 text-lg font-medium text-gray-900 cursor">
                                 {{ answer.answer }}</label>
                         </div>
                     </li>
@@ -151,7 +157,7 @@ const clickHandler = (event) => {
         </div>
     </section>
     <section v-else>
-        <div class="flex px-6 mx-auto lg:items-center lg:justify-between flex-col py-4 h-full bg-tan">
+        <div class="flex mx-auto lg:items-center lg:justify-between flex-col py-4 h-full bg-tan">
             <div class="m-5 wrapper h-full">
                 <div class="flex mb-6">
                     <button @click="pdfHandler"
@@ -339,17 +345,18 @@ const clickHandler = (event) => {
                     <div class="pdf-container">
                         <div class="pdf-wrapper">
                             <div id="pdf-section">
+                                <img class=" logo h-5 w-auto" src="../../assets/img/ceoRound.png" alt="CEO Works Logo" />
                                 <h4 class="pdf-header text-center w-full mb-4">Fair Chance Employment Assessment Report</h4>
                                 <div v-html="reportContentPDF.content_one"></div>
-                                <div class="ml-3 pdf-score" v-if="total <= 6">Poor, with a
+                                <div class="pdf-score" v-if="total <= 6">Poor, with a
                                     score of {{ percentage }}</div>
-                                <div class="ml-3 pdf-score" v-else-if="total > 6 && total <= 12"><span>Fair, with a score of
+                                <div class="pdf-score" v-else-if="total > 6 && total <= 12"><span>Fair, with a score of
                                         {{
                                             percentage }}%</span></div>
-                                <div class="ml-3 pdf-score" v-else-if="total > 12 && total <= 18"><span>Good, with a score
+                                <div class="pdf-score" v-else-if="total > 12 && total <= 18"><span>Good, with a score
                                         of {{
                                             percentage }}%</span></div>
-                                <div class="ml-3 pdf-score" v-else="total > 18 && total <= 24">
+                                <div class="pdf-score" v-else="total > 18 && total <= 24">
                                     <span>Excellent, with a score of {{ percentage }}%</span>
                                 </div>
                                 <div v-html="reportContentPDF.content_two"></div>
@@ -410,8 +417,19 @@ const clickHandler = (event) => {
 }
 
 .radioInput {
-    background-color: transparent;
+    border: 1px solid #2da301 !important;
 }
+.radioInput:checked {
+    background: none !important;
+}
+.radioInputSelected {
+    background-color: #2da301;
+    border: 1px solid #2da301 !important;
+}
+.radioInputSelected:hover {
+    background-color: #2da301;
+}
+
 @media (max-width: 868px) {
 
 .question {

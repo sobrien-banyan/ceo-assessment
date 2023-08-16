@@ -102,7 +102,7 @@ const logoutHandler = () => {
                   class="h-8 w-8  bg-red-400 rounded-md text-red-50 font-extrabold font-size text-2xl transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-red-600 duration-300">X</button>
               </div>
               <hr>
-              <div class="flex justify-between flex-wrap mt-3 ">
+              <div class="flex justify-between flex-wrap mt-3 info-wrapper">
                 <div class="flex flex-col">
                   <p class="text-neutral-400">Email: <span class="text-black">{{ user.email }}</span></p>
                   <p class="text-neutral-400">Title: <span class="text-black">{{ user.title }}</span></p>
@@ -338,38 +338,6 @@ const logoutHandler = () => {
 </template>
 
 <style scoped>
-.header-container {
-  width: 100%;
-  height: 37vh;
-  position: relative;
-  overflow: hidden;
-}
-
-.cursor {
-  cursor: pointer !important;
-}
-
-.header-text {
-  position: relative;
-  top: 18%;
-  font-weight: 600;
-}
-
-.noMarigns {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-}
-
-.text-wrapper {
-  margin-top: 20%;
-}
-
-.text {
-  font-family: proxima-nova, sans-serif;
-  font-size: 1.4rem;
-  line-height: 2.5rem;
-  color: #555555;
-}
 
 .v-enter-active,
 .v-leave-active {
@@ -396,5 +364,10 @@ const logoutHandler = () => {
 .pdf-score {
   font-size: .65rem;
   font-weight: 600;
+}
+@media screen and (max-width: 640px) {
+ .info-wrapper {
+  flex-direction: column;
+ }
 }
 </style>

@@ -138,7 +138,7 @@ const submit = async () => {
                 class="w-72 h-8 px-2 py-4 sm:py-3 text-sm focus:outline-none border border-[#AAAAAA] placeholder-[#888]"
                 placeholder="Enter your email" />
               <button type="submit"
-                class="h-8 button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">
+                class="subscribe-button h-8 button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">
                 Subscribe
               </button>
             </form>
@@ -191,6 +191,9 @@ const submit = async () => {
   }
   .info-container {
     flex-direction: column;
+  }
+  .subscribe-button {
+    margin-top:.80rem;
   } 
 }
   
