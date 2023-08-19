@@ -11,7 +11,7 @@ import { reportContent } from '~/pages/assessment/data/reportContent';
 import { useRender } from 'vue-email';
 import template from '~/components/Email.vue';
 
-const { UserName } = route.query;
+const { UserName, Email } = route.query;
 
 
 const shuffledQuestions = ref(questions.map((obj) => {
@@ -85,8 +85,7 @@ const saveScore = () => {
             method: 'POST',
             body: {
                 template: result,
-// replace with users email !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            toAddress: 'ecosean1@gmail.com',
+                toAddress: Email,
         },
     });
         

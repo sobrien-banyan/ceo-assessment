@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
       return {
       id: newUserData._id,
       name: newUserData.name,
+      email: newUserData.email,
       };
   
   } catch (err) {
