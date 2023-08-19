@@ -5,7 +5,6 @@ definePageMeta({
 });
 import { ref, watchEffect } from 'vue';
 import { responses } from '../assessment/data/responses';
-import { reportContentPDF } from '~/pages/assessment/data/reportContentPDF';
 
 const route = useRoute();
 
