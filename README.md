@@ -135,7 +135,7 @@ Using
 
         # node api reverse proxy
         location / {
-        proxy_pass http://localhost:4000/;
+        proxy_pass http://localhost:3000/;
         }
     }
     ```
@@ -177,7 +177,7 @@ Using
 
         # node api reverse proxy
         location / {
-        proxy_pass http://localhost:4000/;
+        proxy_pass http://localhost:3000/;
         }
     }
     ```
