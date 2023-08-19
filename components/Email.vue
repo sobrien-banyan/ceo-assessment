@@ -4,7 +4,7 @@ import { reportContent } from '~/pages/assessment/data/reportContent';
 const props = defineProps({
   UserName: {
     type: String,
-    default: 'Value Client',
+    default: 'Valued Client',
   },
   AssessmentScore: {
     type: Number,

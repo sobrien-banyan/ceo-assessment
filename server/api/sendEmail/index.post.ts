@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const params = {
     Source: config.senderEmail,
     Destination: {
-      ToAddresses: ['ecosean1@gmail.com'],
+      ToAddresses: [body.toAddress],
     },
     Message: {
       Body: {

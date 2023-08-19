@@ -8,7 +8,6 @@ const route = useRoute();
 import { questions } from './data/questions';
 import { responses } from './data/responses';
 import { reportContent } from '~/pages/assessment/data/reportContent';
-import { reportContentPDF } from '~/pages/assessment/data/reportContentPDF';
 import { useRender } from 'vue-email';
 import template from '~/components/Email.vue';
 
@@ -25,6 +24,7 @@ const total = ref(0);
 const percentage = ref(0);
 const results = ref({});
 const isOpen = ref({});
+const pdfSection = ref('');
 
 const runningScore = ref({});
 const runningAnswers = ref({});
@@ -57,7 +57,6 @@ const pdfHandler = () => {
     if (pdfSection.style.display === "none") {
         pdfSection.style.display = "block";
     };
-    pdfSection.style.cssText += "width: 440px;padding: 4%;font-family: proxima-nova, sans-serif;font-size: .4rem;";
     exportToPDF('CeoWorksAssessment.pdf', pdfSection);
     setTimeout(() => {
         pdfSection.style.display = "none";
@@ -83,9 +82,11 @@ const saveScore = () => {
     });
     html().then((result) => {
         useFetch(`/api/sendEmail`, {
-        method: 'POST',
-        body: {
-            template: result,
+            method: 'POST',
+            body: {
+                template: result,
+// replace with users email !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            toAddress: 'ecosean1@gmail.com',
         },
     });
         
@@ -117,6 +118,7 @@ const clickHandler = (event) => {
     if (runningScoreLength.value + 1 === length) {
         saveScore();
         percentage.value = (total.value / 24 * 100).toFixed(0);
+        pdfSection.value = total.value  <= 6 ? `Poor, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : total.value  > 6 && total.value  <= 12 ? `Fair, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : total.value  > 12 && total.value  <= 18 ? `Good, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : `Excellent , with a score of ${(total.value  / 24 * 100).toFixed(0)}%`; 
     };
 
 };
@@ -344,22 +346,37 @@ const clickHandler = (event) => {
                     </div>
                     <div class="pdf-container">
                         <div class="pdf-wrapper">
-                            <div id="pdf-section">
-                                <img class=" logo h-5 w-auto" src="../../assets/img/ceoRound.png" alt="CEO Works Logo" />
-                                <h4 class="pdf-header text-center w-full mb-4">Fair Chance Employment Assessment Report</h4>
-                                <div v-html="reportContentPDF.content_one"></div>
-                                <div class="pdf-score" v-if="total <= 6">Poor, with a
-                                    score of {{ percentage }}</div>
-                                <div class="pdf-score" v-else-if="total > 6 && total <= 12"><span>Fair, with a score of
-                                        {{
-                                            percentage }}%</span></div>
-                                <div class="pdf-score" v-else-if="total > 12 && total <= 18"><span>Good, with a score
-                                        of {{
-                                            percentage }}%</span></div>
-                                <div class="pdf-score" v-else="total > 18 && total <= 24">
-                                    <span>Excellent, with a score of {{ percentage }}%</span>
-                                </div>
-                                <div v-html="reportContentPDF.content_two"></div>
+                            <div id="pdf-section" style="width:446px;height:auto" >
+                              <img src="../../assets/img/pdf/ceo-pdf-p-1-s-1.png" alt="pdf" />
+                              <div style="margin-left:28px;font-size:9px;font-weight:700;height:30px;"> {{ pdfSection }}</div>
+                              <img src="../../assets/img/pdf/ceo-pdf-p-1-s-2.png" alt="pdf" />
+                              <div style="margin-top:1px;margin-left:30px;">
+                                <span style="font-size:5px;margin-right:7px;">Center for Employment Opportunities</span>
+                                <span style="font-size:5px;margin-right:7px;">50 Broadway, Suite 1604</span>
+                                <span style="font-size:5px;margin-right:7px;">New York, NY</span>
+                                <span style="font-size:5px;margin-right:7px;">10004</span>
+                                <span style="font-size:5px;margin-right:7px;">P: 212.422.4430</span>
+                                <span style="font-size:5px;margin-right:7px;">E. info@ceoworks.org</span>
+                              </div>
+                              <img style="margin-top:20px;" src="../../assets/img/pdf/ceo-pdf-p-2.png" alt="pdf" />
+                              <div style="margin-top:17px;margin-left:30px;">
+                                <span style="font-size:5px;margin-right:7px;">Center for Employment Opportunities</span>
+                                <span style="font-size:5px;margin-right:7px;">50 Broadway, Suite 1604</span>
+                                <span style="font-size:5px;margin-right:7px;">New York, NY</span>
+                                <span style="font-size:5px;margin-right:7px;">10004</span>
+                                <span style="font-size:5px;margin-right:7px;">P: 212.422.4430</span>
+                                <span style="font-size:5px;margin-right:7px;">E. info@ceoworks.org</span>
+                              </div>
+                              <img style="margin-top:20px;" src="../../assets/img/pdf/ceo-pdf-p-3.png" alt="pdf" />
+                              <img style="margin-top:-10px;" src="../../assets/img/pdf/ceo-pdf-q.png" alt="pdf" />
+                              <div style="margin-top:-15px;margin-left:30px;">
+                                <span style="font-size:5px;margin-right:7px;">Center for Employment Opportunities</span>
+                                <span style="font-size:5px;margin-right:7px;">50 Broadway, Suite 1604</span>
+                                <span style="font-size:5px;margin-right:7px;">New York, NY</span>
+                                <span style="font-size:5px;margin-right:7px;">10004</span>
+                                <span style="font-size:5px;margin-right:7px;">P: 212.422.4430</span>
+                                <span style="font-size:5px;margin-right:7px;">E. info@ceoworks.org</span>
+                              </div>
                             </div>
                         </div>
                     </div>
