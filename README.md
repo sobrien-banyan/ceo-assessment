@@ -142,7 +142,7 @@ Using
 25. Press `y` and then enter.
 26. Restart NGINX by running the following command `sudo systemctl reload nginx`
 27. Navigate to the repo by entering `cd ~` then `ls` then cd into the repo.
-28. Enter the ATLAS_URI in the config.env by enter the following command `nano config.env` grab the atlas uri from atlas mongodb and press `control x` and enter `y` then enter. Please see the .env.example file for content of .env.
+28. Enter the ATLAS_URI in the config.env by enter the following command `nano .env` grab the atlas uri from atlas mongodb and press `control x` and enter `y` then enter. Please see the .env.example file for content of .env.
 29. Commands to start the app:
     - `npm run build`
     - `pm2 start ecosystem.config.js`
