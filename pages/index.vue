@@ -29,7 +29,6 @@ const submitForm = async () => {
         }),
     });
     if (data.data.value.id) {
-        console.log(data.data.value)
         navigateTo(`/assessment/${data.data.value.id}?UserName=${data.data.value.name}&Email=${data.data.value.email}`);
     }
 };
