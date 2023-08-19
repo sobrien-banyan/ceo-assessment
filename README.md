@@ -119,7 +119,7 @@ Using
 14. Run the command `ssh -i "<name-of-key>.pem" ubuntu@ec2-3-83-25-6.compute-1.amazonaws.com` enter `yes` and press return. You should see something like this in the terminal `ubuntu@ip-172-31-92-8:~/`
 15. Next clone the repo
 16. Cd into the repo
-17. Run the following command to install node `curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -`. In this repo version 16.x is used.
+17. Run the following command to install node `curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -`. In this repo version 16.x is used.
 18. Run the following command to finish intalling node.js and npm`sudo apt-get install -y nodejs`.
 19. you might need to update npm by running this `sudo npm install -g npm@9.5.0`
 20. Install the packages by running `npm install`
