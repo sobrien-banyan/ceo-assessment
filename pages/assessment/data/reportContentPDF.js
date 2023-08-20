@@ -34,21 +34,21 @@ export const reportContentPDF = {
         CEO:</p>
     <p><i>“Talented and eager to work, this untapped pool of workers can bring great value to employers and communities when
             given the opportunity to thrive and succeed in the workplace.” </i></p>
-    <a style="text-underline-offset:8px" class="underline decoration-solid text-blue-800" href="https://prisonerswithchildren.org/ban-the-box/"
+    <a style="text-underline-offset:8px" class="underline decoration-solid text-blue-800" href="https://www.gettingtalentbacktowork.org/?_ga=2.261649677.1853605884.1689269596-1339526832.1686610153"
         target="_blank"><i>GTBTW Video</i></a>
     <p style="margin-top:5px;text-underline-offset:8px;" class="underline decoration-solid font-semibold">JP Morgan Chase believes that:</p>
     <p><i>“Second Chance hiring helps people with former offenses build stable lives, improve their financial health, and
             participate in the workforce. Providing these individuals access to sustainable economic opportunities enables
             them to be a productive member of their communities, which reduces recidivism and helps develop a stronger, more
             resilient economy.”</i></p>
-    <a style="text-underline-offset:8px" class="underline decoration-solid text-blue-800" href="https://prisonerswithchildren.org/ban-the-box/"
+    <a style="text-underline-offset:8px" class="underline decoration-solid text-blue-800" href="https://www.jpmorganchase.com/impact/our-approach/policy-center/second-chance-agenda"
         target="_blank"><i>JPMC Second Chance Agenda</i></a><br>
     <p style="margin-top: 5px;text-underline-offset:8px;" s class="underline decoration-solid font-semibold">Target’s Chairman and CEO, Brian Cornell states:</p>
     <p><i>“With inclusion as a core value, we welcome all job candidates who are qualified and committed to our purpose. At
             Target, we’re devoted to advancing racial equity and dismantling systemic barriers…” </i></p><br>
     <p>To learn more about how Executives and business are coming together to expand fair chance hiring across the nation,
         visit the</p><span><a style="text-underline-offset:8px" class="underline decoration-solid text-blue-800"
-            href="https://prisonerswithchildren.org/ban-the-box/" target="_blank"> Second Chance Business
+            href="https://secondchancebusinesscoalition.org/" target="_blank"> Second Chance Business
             Coalition.</a><br></span><br>
     <p class="font-semibold">The Truth about Fair Chance Hiring </p>
     <ul class="list-disc ml-6">
