@@ -17,7 +17,6 @@ const getUsers = async () => {
     method: 'GET',
   }).then((data) => {
     users.value = data.data.value;
-    console.log(JSON.parse(data.data.value[0].results));
   });
 };
 const getEmails = async () => {
