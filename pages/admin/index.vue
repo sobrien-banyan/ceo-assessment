@@ -6,8 +6,6 @@ definePageMeta({
 import { ref, watchEffect } from 'vue';
 import { responses } from '../assessment/data/responses';
 
-const route = useRoute();
-
 const users = ref([]);
 const emails = ref([]);
 const isList = ref(true);
@@ -282,7 +280,7 @@ const logoutHandler = () => {
                         <div class="pdf-wrapper">
                             <div id="pdf-section" style="width:446px;height:auto" >
                               <img src="../../assets/img/pdf/ceo-pdf-p-1-s-1.png" alt="pdf" />
-                              <div style="margin-left:28px;font-size:9px;font-weight:700;height:30px;"> {{ pdfSection }}</div>
+                              <div style="margin-left:28px;font-size:9px;font-weight:700;height:30px;"> {{ user.score  <= 6 ? `Poor, with a score of ${(user.score  / 24 * 100).toFixed(0)}%` : user.score  > 6 && user.score  <= 12 ? `Fair, with a score of ${(user.score  / 24 * 100).toFixed(0)}%` : user.score  > 12 && user.score  <= 18 ? `Good, with a score of ${(user.score  / 24 * 100).toFixed(0)}%` : `Excellent , with a score of ${(user.score  / 24 * 100).toFixed(0)}%`}}</div>
                               <img src="../../assets/img/pdf/ceo-pdf-p-1-s-2.png" alt="pdf" />
                               <div style="margin-top:1px;margin-left:30px;">
                                 <span style="font-size:5px;margin-right:7px;">Center for Employment Opportunities</span>
