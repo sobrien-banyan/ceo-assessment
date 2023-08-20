@@ -17,6 +17,7 @@ const getUsers = async () => {
     method: 'GET',
   }).then((data) => {
     users.value = data.data.value;
+    console.log(JSON.parse(data.data.value[0].results));
   });
 };
 const getEmails = async () => {
@@ -128,6 +129,7 @@ const logoutHandler = () => {
                 <Transition>
                   <div v-if="isOpen[key] == true" class="items-center w-full p-3 ">
                     <ul class="mt-5" v-for="_, key in JSON.parse(user.results)">
+                      {{ key }}
                       <li v-if="key == 2">
                         <h3 class="text-lg lg:text-3xl text-center w-full mb-4">{{
                           JSON.parse(user.results)[key]['section'] }}</h3>
@@ -164,7 +166,7 @@ const logoutHandler = () => {
                           </div>
                         </Transition>
                       </li>
-                      <li v-else-if="key == 3">
+                      <li v-else-if="key == 4">
                         <h3 class="text-lg lg:text-3xl text-center w-full mb-4">{{
                           JSON.parse(user.results)[key]['section'] }}</h3>
                         <div
@@ -180,14 +182,6 @@ const logoutHandler = () => {
                         <Transition>
                           <div v-if="isOpen[key] == true" class="items-center w-full p-3 ">
                             <div class="w-full py-3 ml-2 text-gray-900">
-                              <span class="mr-4 text-neutral-400">Question:</span> {{
-                                JSON.parse(user.results)[key]['question'] }}
-                            </div>
-                            <div class="w-full py-3 ml-2 text-gray-900">
-                              <span class="ml-6 mr-4 text-neutral-400">Answer:</span>{{
-                                JSON.parse(user.results)[key]['answer'] }}
-                            </div>
-                            <div class="w-full py-3 ml-2 text-gray-900">
                               <span class="mr-4 text-neutral-400">Question:</span> {{ JSON.parse(user.results)[key -
                                 1]['question']
                               }}
@@ -197,10 +191,18 @@ const logoutHandler = () => {
                                 1]['answer']
                               }}
                             </div>
+                            <div class="w-full py-3 ml-2 text-gray-900">
+                              <span class="mr-4 text-neutral-400">Question:</span> {{
+                                JSON.parse(user.results)[key]['question'] }}
+                            </div>
+                            <div class="w-full py-3 ml-2 text-gray-900">
+                              <span class="ml-6 mr-4 text-neutral-400">Answer:</span>{{
+                                JSON.parse(user.results)[key]['answer'] }}
+                            </div>
                           </div>
                         </Transition>
                       </li>
-                      <li v-else-if="key == 5">
+                      <li v-else-if="key == 6">
                         <h3 class="text-lg lg:text-3xl text-center w-full mb-4">{{
                           JSON.parse(user.results)[key]['section'] }}</h3>
                         <div
@@ -216,14 +218,6 @@ const logoutHandler = () => {
                         <Transition>
                           <div v-if="isOpen[key] == true" class="items-center w-full p-3 ">
                             <div class="w-full py-3 ml-2 text-gray-900">
-                              <span class="mr-4 text-neutral-400">Question:</span> {{
-                                JSON.parse(user.results)[key]['question'] }}
-                            </div>
-                            <div class="w-full py-3 ml-2 text-gray-900">
-                              <span class="ml-6 mr-4 text-neutral-400">Answer:</span>{{
-                                JSON.parse(user.results)[key]['answer'] }}
-                            </div>
-                            <div class="w-full py-3 ml-2 text-gray-900">
                               <span class="mr-4 text-neutral-400">Question:</span> {{ JSON.parse(user.results)[key -
                                 1]['question']
                               }}
@@ -233,10 +227,18 @@ const logoutHandler = () => {
                                 1]['answer']
                               }}
                             </div>
+                            <div class="w-full py-3 ml-2 text-gray-900">
+                              <span class="mr-4 text-neutral-400">Question:</span> {{
+                                JSON.parse(user.results)[key]['question'] }}
+                            </div>
+                            <div class="w-full py-3 ml-2 text-gray-900">
+                              <span class="ml-6 mr-4 text-neutral-400">Answer:</span>{{
+                                JSON.parse(user.results)[key]['answer'] }}
+                            </div>
                           </div>
                         </Transition>
                       </li>
-                      <li v-else-if="key == 7">
+                      <li v-else-if="key == 8">
                         <h3 class="text-lg lg:text-3xl text-center w-full mb-4">{{
                           JSON.parse(user.results)[key]['section'] }}</h3>
                         <div
@@ -252,14 +254,6 @@ const logoutHandler = () => {
                         <Transition>
                           <div v-if="isOpen[key] == true" class="items-center w-full p-3 ">
                             <div class="w-full py-3 ml-2 text-gray-900">
-                              <span class="mr-4 text-neutral-400">Question:</span> {{
-                                JSON.parse(user.results)[key]['question'] }}
-                            </div>
-                            <div class="w-full py-3 ml-2 text-gray-900">
-                              <span class="ml-6 mr-4 text-neutral-400">Answer:</span>{{
-                                JSON.parse(user.results)[key]['answer'] }}
-                            </div>
-                            <div class="w-full py-3 ml-2 text-gray-900">
                               <span class="mr-4 text-neutral-400">Question:</span> {{ JSON.parse(user.results)[key -
                                 1]['question']
                               }}
@@ -268,6 +262,14 @@ const logoutHandler = () => {
                               <span class="ml-6 mr-4 text-neutral-400">Answer:</span>{{ JSON.parse(user.results)[key -
                                 1]['answer']
                               }}
+                            </div>
+                            <div class="w-full py-3 ml-2 text-gray-900">
+                              <span class="mr-4 text-neutral-400">Question:</span> {{
+                                JSON.parse(user.results)[key]['question'] }}
+                            </div>
+                            <div class="w-full py-3 ml-2 text-gray-900">
+                              <span class="ml-6 mr-4 text-neutral-400">Answer:</span>{{
+                                JSON.parse(user.results)[key]['answer'] }}
                             </div>
                           </div>
                         </Transition>

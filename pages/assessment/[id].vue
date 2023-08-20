@@ -226,7 +226,7 @@ const clickHandler = (event) => {
                                 </div>
                             </Transition>
                         </li>
-                        <li v-else-if="key == 3">
+                        <li v-else-if="key == 4">
                             <h3 class="text-lg lg:text-3xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
                             <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
                                 <div v-html="responses.for_3_4.less_than_4">
@@ -240,13 +240,6 @@ const clickHandler = (event) => {
                             <Transition>
                                 <div v-if="isOpen[key] == true" class="items-center w-full p-3 ">
                                     <div class="w-full py-3 ml-2 text-gray-900">
-                                        <span class="mr-4 text-neutral-400">Question:</span> {{ results[key]['question'] }}
-                                    </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
-                                        <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{
-                                            results[key]['answer'] }}
-                                    </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
                                         <span class="mr-4 text-neutral-400">Question:</span> {{ results[key - 1]['question']
                                         }}
                                     </div>
@@ -255,10 +248,17 @@ const clickHandler = (event) => {
                                             1]['answer']
                                         }}
                                     </div>
+                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                        <span class="mr-4 text-neutral-400">Question:</span> {{ results[key]['question'] }}
+                                    </div>
+                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                        <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{
+                                            results[key]['answer'] }}
+                                    </div>
                                 </div>
                             </Transition>
                         </li>
-                        <li v-else-if="key == 5">
+                        <li v-else-if="key == 6">
                             <h3 class="text-lg lg:text-3xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
                             <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
                                 <div v-html="responses.for_5_6.less_than_4">
@@ -272,13 +272,6 @@ const clickHandler = (event) => {
                             <Transition>
                                 <div v-if="isOpen[key] == true" class="items-center w-full p-3 ">
                                     <div class="w-full py-3 ml-2 text-gray-900">
-                                        <span class="mr-4 text-neutral-400">Question:</span> {{ results[key]['question'] }}
-                                    </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
-                                        <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{
-                                            results[key]['answer'] }}
-                                    </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
                                         <span class="mr-4 text-neutral-400">Question:</span> {{ results[key - 1]['question']
                                         }}
                                     </div>
@@ -287,10 +280,17 @@ const clickHandler = (event) => {
                                             1]['answer']
                                         }}
                                     </div>
+                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                        <span class="mr-4 text-neutral-400">Question:</span> {{ results[key]['question'] }}
+                                    </div>
+                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                        <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{
+                                            results[key]['answer'] }}
+                                    </div>
                                 </div>
                             </Transition>
                         </li>
-                        <li v-else-if="key == 7">
+                        <li v-else-if="key == 8">
                             <h3 class="text-lg lg:text-3xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
                             <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
                                 <div v-html="responses.for_7_8.less_than_4">
@@ -304,13 +304,6 @@ const clickHandler = (event) => {
                             <Transition>
                                 <div v-if="isOpen[key] == true" class="items-center w-full p-3 ">
                                     <div class="w-full py-3 ml-2 text-gray-900">
-                                        <span class="mr-4 text-neutral-400">Question:</span> {{ results[key]['question'] }}
-                                    </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
-                                        <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{
-                                            results[key]['answer'] }}
-                                    </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
                                         <span class="mr-4 text-neutral-400">Question:</span> {{ results[key - 1]['question']
                                         }}
                                     </div>
@@ -318,6 +311,13 @@ const clickHandler = (event) => {
                                         <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{ results[key -
                                             1]['answer']
                                         }}
+                                    </div>
+                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                        <span class="mr-4 text-neutral-400">Question:</span> {{ results[key]['question'] }}
+                                    </div>
+                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                        <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{
+                                            results[key]['answer'] }}
                                     </div>
                                 </div>
                             </Transition>
