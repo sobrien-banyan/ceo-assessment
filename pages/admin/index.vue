@@ -128,7 +128,6 @@ const logoutHandler = () => {
                 <Transition>
                   <div v-if="isOpen[key] == true" class="items-center w-full p-3 ">
                     <ul class="mt-5" v-for="_, key in JSON.parse(user.results)">
-                      {{ key }}
                       <li v-if="key == 2">
                         <h3 class="text-lg lg:text-3xl text-center w-full mb-4">{{
                           JSON.parse(user.results)[key]['section'] }}</h3>
