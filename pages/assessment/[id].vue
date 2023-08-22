@@ -20,31 +20,55 @@ const shuffledQuestions = ref(questions.map((obj) => {
 }).sort(() => Math.random() - 0.5));
 
 const showListItem = ref(0);
+const showResults = ref(false);
+const showSubmitButton = ref(false);
 const total = ref(0);
 const percentage = ref(0);
 const results = ref({});
 const isOpen = ref({});
+const isPulseNext = ref(false);
+const isPulsePrevious = ref(false);
 const pdfSection = ref('');
 
 const runningScore = ref({});
 const runningAnswers = ref({});
 const length = questions.length;
-const runningScoreLength = ref(Object.keys(runningScore.value).length);
 
 const toggle = (index) => {
     isOpen.value[index] = !isOpen.value[index];
 };
 
+const pluseDirection = () => {
+    const runningLength = Object.keys(runningAnswers.value).length;
+    if (runningLength < 8 && runningLength >= showListItem.value + 1) {
+        isPulseNext.value = true;
+    } else if (runningLength < 8) {
+        isPulsePrevious.value = true;
+    };
+      if (isPulsePrevious.value) {
+       setTimeout(() => {
+        isPulsePrevious.value = false;
+    }, 4000);
+    };  
+      if (isPulseNext.value) {
+       setTimeout(() => {
+        isPulseNext.value = false;
+    }, 4000);
+    };  
+};
+
 const next = () => {
+    isPulseNext.value = false;
     if (showListItem.value < length - 1) {
         showListItem.value++;
     }
 };
 
 const prev = () => {
+    isPulsePrevious.value = false;
     if (showListItem.value > 0) {
         showListItem.value--;
-    }
+    };
 };
 
 const scrollHandler = () => {
@@ -88,19 +112,19 @@ const saveScore = () => {
                 toAddress: Email,
         },
     });
-        
+    showResults.value = true;
+    percentage.value = (total.value / 24 * 100).toFixed(0);
+    pdfSection.value = total.value  <= 6 ? `Poor, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : total.value  > 6 && total.value  <= 12 ? `Fair, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : total.value  > 12 && total.value  <= 18 ? `Good, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : `Excellent , with a score of ${(total.value  / 24 * 100).toFixed(0)}%`; 
     });
-
-    setTimeout(() => {
-        pdfHandler();
-    }, 1000);
 };
 const clickHandler = (event) => {
     runningScore.value[event.target.dataset.questionId] = event.target.value;
     
     const questionObject = questions.filter((obj) => obj.id == event.target.dataset.questionId)[0];
     const answerObject = questionObject.answers.filter((obj) => obj.id == event.target.id)[0];
-    runningAnswers.value[event.target.dataset.questionId] = answerObject.id;
+    if (runningAnswers.value[event.target.dataset.questionId] != answerObject.id) {
+        runningAnswers.value[event.target.dataset.questionId] = answerObject.id;
+    };
 
     results.value[event.target.dataset.questionId] = {
         section: questionObject.section,
@@ -108,18 +132,8 @@ const clickHandler = (event) => {
         answer: answerObject.answer,
         value: event.target.value,
     };
-
-    setTimeout(() => {
-        next();
-        runningScoreLength.value = Object.keys(runningScore.value).length;
-    }, 300);
-
-    if (runningScoreLength.value + 1 === length) {
-        saveScore();
-        percentage.value = (total.value / 24 * 100).toFixed(0);
-        pdfSection.value = total.value  <= 6 ? `Poor, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : total.value  > 6 && total.value  <= 12 ? `Fair, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : total.value  > 12 && total.value  <= 18 ? `Good, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : `Excellent , with a score of ${(total.value  / 24 * 100).toFixed(0)}%`; 
-    };
-
+    showSubmitButton.value = Object.keys(runningAnswers.value).length == 8;
+    pluseDirection();
 };
 
 
@@ -127,7 +141,7 @@ const clickHandler = (event) => {
 
 <template>
     <section class="flex mx-auto lg:items-center lg:justify-between flex-col py-4 bg-tan h-full"
-        v-if="runningScoreLength != length">
+        v-if="!showResults">
         <div class="space-y-12 m-5 wrapper h-full">
             <h1 class="question mb-2 h-20 text-3xl font-semibold text-gray-900 ">{{ shuffledQuestions[showListItem].question }}</h1>
             <div class="h-full">
@@ -137,21 +151,26 @@ const clickHandler = (event) => {
                             <input v-if="runningAnswers[shuffledQuestions[showListItem].id] == answer.id" @click="clickHandler" type="radio" :name="answer.id"
                                 :data-question-id="shuffledQuestions[showListItem].id" :id="answer.id" :value="answer.value"
                                 v-model=runningScore[shuffledQuestions[showListItem].id]
-                                class="w-6 h-6 radioInputSelected cursor focus:ring-0 focus:ring-offset-0 focus:ring-offset-white focus:ring-opacity-100" />
-                            <input v-else @click="clickHandler" type="radio" :name="answer.id"
+                                class="w-6 h-6 cursor focus:ring-0 focus:ring-offset-0 focus:ring-offset-white focus:ring-opacity-100 radioInputSelected" />
+                             <input v-else @click="clickHandler" type="radio" :name="answer.id"
                                 :data-question-id="shuffledQuestions[showListItem].id" :id="answer.id" :value="answer.value"
                                 v-model=runningScore[shuffledQuestions[showListItem].id]
-                                class="w-6 h-6 radioInput cursor focus:ring-0 focus:ring-offset-0 focus:ring-offset-white focus:ring-opacity-100" />
-                            <label :for="answer.id" class=" answer noselect w-full py-3 ml-2 pr-2 text-lg font-medium text-gray-900 cursor">
+                                class="w-6 h-6 cursor focus:ring-0 focus:ring-offset-0 focus:ring-offset-white focus:ring-opacity-100 radioInput" />
+                            <label :for="answer.id" class="answer noselect w-full py-3 ml-2 pr-2 text-lg font-medium text-gray-900 cursor">
                                 {{ answer.answer }}</label>
                         </div>
                     </li>
                 </ul>
                 <div class="flex justify-between">
-                    <button @click="prev"
+                    <button v-if="showListItem > 0" @click="prev"
+                    :class="isPulsePrevious && 'animate-pulse'"
                         class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">Previous</button>
+                        <div v-else></div>
                     <div>{{ showListItem + 1 }} / {{ length }}</div>
-                    <button @click="next"
+                    <button v-if="showSubmitButton && showListItem == 7" @click="saveScore"
+                        class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">Submit</button>
+                    <button v-else @click="next"
+                        :class="isPulseNext && 'animate-pulse'"
                         class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">Next</button>
                 </div>
             </div>
@@ -441,17 +460,20 @@ const clickHandler = (event) => {
 }
 
 .radioInput {
+    background-color: #ffffff;
     border: 1px solid #2da301 !important;
 }
 .radioInput:checked {
-    background: none !important;
+    background-color: #ffffff !important;
+    color: #ffffFF;
 }
 .radioInputSelected {
     background-color: #2da301;
     border: 1px solid #2da301 !important;
 }
-.radioInputSelected:hover {
-    background-color: #2da301;
+.radioInputSelected:checked {
+    background-color: #2da301 !important;
+    color: #2da301;
 }
 
 @media (max-width: 868px) {
