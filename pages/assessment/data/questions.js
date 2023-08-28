@@ -58,7 +58,7 @@ export const questions = [
             },
             {
                 id: 5,
-                answer: "On our job postings we include a statement encouraging fair chance applicants to apply.",
+                answer: "In our job postings, we include a statement encouraging fair chance applicants to apply.",
                 value: 3
             },
         ],
@@ -70,12 +70,12 @@ export const questions = [
         answers: [
             {
                 id: 1,
-                answer: "We let go of any employee unable to handle the onboarding tasks.",
+                answer: "Any employee unable to handle the onboarding tasks is let go.",
                 value: 0
             },
             {
                 id: 2,
-                answer: "We give new employees three opportunities to accomplish onboarding tasks; if they are unable to get through onboarding without much support we terminate them.",
+                answer: "We give new employees three opportunities to accomplish onboarding tasks; if they cannot get through onboarding without much support, we terminate them.",
                 value: 1
             },
             {
@@ -112,7 +112,7 @@ export const questions = [
             },
             {
                 id: 4,
-                answer: "Our company mandates that employees use person-centered language.  Employees receive annual training on inclusive, person-centered language as well as the company’s DEI( diversity, equity and inclusion) practices.",
+                answer: "Our company mandates that employees use person-centered language. Employees receive annual training on inclusive, person-centered language as well as the company’s DEI( diversity, equity and inclusion) practices.",
                 value: 3
             },
         ],

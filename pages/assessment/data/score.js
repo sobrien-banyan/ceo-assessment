@@ -1,9 +1,9 @@
 const score = {
-    header: "Congratulations on finishing the report. You received a rating of:",
+    header: "Thanks for taking the time to fill out the assessment. After reviewing your responses, your company’s current fair chance hiring practices are:",
     excellent: {
         highLimit: 40,
         lowLimit: 30,
-        text: "Congratulations on being an exemplary fair chance employer. You are making a difference."
+        text: "Congratulations on being an exemplary fair chance employer. You are making a difference in the lives of many justice-involved individuals."
     },
     good: {
         highLimit: 29,

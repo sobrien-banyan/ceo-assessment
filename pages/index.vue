@@ -79,7 +79,7 @@ const states =
                     <h1 class="header-text text-center text-5xl text-white">Self-Assessment</h1>
                 </div>
                 <div class="text-wrapper">
-                    <div class="text text-center">A fair chance employer is one that is willing to consider an applicant’s skills before considering a past criminal conviction. Please utilize this assessment to explore your company’s current hiring practices, and to learn more about how your fair chance hiring practices can grow!</div>
+                    <div class="text text-center">A fair chance employer prioritizes evaluating an applicant's skills before considering prior criminal convictions. Please utilize this assessment to evaluate your company's existing hiring procedures to gain deeper insights into expanding your fair chance hiring initiatives!</div>
                     <div class="text text-center mt-8">To start the assessment, please fill out the form below.</div>
                 </div>
             </div>
@@ -90,7 +90,7 @@ const states =
     <section class="flex mx-auto lg:items-center lg:justify-between flex-col py-4 bg-tan">
         <form @submit.prevent="submitForm">
             <div class="space-y-12 m-5 wrapper">
-                <div class="pb-12">
+                <div>
                     <h2 class="text-2xl font-semibold leading-7 text-gray-900">Your information</h2>
                     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div class="sm:col-span-3 input-container">
@@ -98,7 +98,7 @@ const states =
                             <div class="mt-2">
                                 <input v-model="firstName" required type="text" name="firstName" id="firstName"
                                     placeholder="First name" autocomplete="given-name"
-                                    class="block w-full h-14  border-0 p-2 text-gray-900 shadow-sm placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:leading-6">
+                                    class="block w-full h-14  border-0 p-2 text-gray-900 shadow-sm placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-emerald-500 sm:leading-6">
                             </div>
                         </div>
                         <div class="sm:col-span-3 input-container">
@@ -106,7 +106,7 @@ const states =
                             <div class="mt-2">
                                 <input v-model="lastName" required type="text" name="last-name" id="last-name"
                                     placeholder="Last name" autocomplete="family-name"
-                                    class="block w-full h-14 border-0 p-2 text-gray-900 shadow-sm placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:leading-6">
+                                    class="block w-full h-14 border-0 p-2 text-gray-900 shadow-sm placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-emerald-500 sm:leading-6">
                             </div>
                         </div>
                         <div class="sm:col-span-3 input-container">
@@ -114,25 +114,24 @@ const states =
                             <div class="mt-2">
                                 <input v-model="email" required type="email" name="email" id="email"
                                     placeholder="Email" autocomplete="email"
-                                    class="block w-full h-14  border-0 p-2 text-gray-900 shadow-sm placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:leading-6">
+                                    class="block w-full h-14  border-0 p-2 text-gray-900 shadow-sm placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-emerald-500 sm:leading-6">
                             </div>
                         </div>
                         <div class="sm:col-span-3 input-container">
                             <label for="title" class="block  font-bold leading-6 text-gray-900">What is your title?</label>
                             <div class="mt-2">
                                 <select v-model="title" required id="title" name="title" autocomplete="title"
-                                    class="block w-full h-14 border-0 px-4 p-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:leading-6">
+                                    class="block w-full h-14 border-0 px-4 p-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-inset focus:ring-emerald-500  sm:leading-6">
                                     <option value="" disabled>Select a title</option>
                                     <option v-for="title in titles" :value="title">{{ title }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="sm:col-span-3 input-container">
-                            <label for="role" class="block  font-bold leading-6 text-gray-900">What is your role in your
-                                organization/ company?</label>
+                            <label for="role" class="block  font-bold leading-6 text-gray-900">What department do you work in your company?</label>
                             <div class="mt-2">
                                 <select v-model="role" required id="role" name="role" autocomplete="role"
-                                    class="block w-full h-14 border-0 px-4 p-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:leading-6">
+                                    class="block w-full h-14 border-0 px-4 p-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-inset focus:ring-emerald-500  sm:leading-6">
                                     <option value="" disabled>Select a role</option>
                                     <option v-for="role in roles" :value="role">{{ role }}</option>
                                 </select>
@@ -144,7 +143,7 @@ const states =
                             <div class="mt-2">
                                 <input required v-model="specifiedRole" type="text" name="specifiedRole"
                                     id="specifiedRole" placeholder="Specify Role" autocomplete="given-name"
-                                    class="block w-full h-14  border-0 p-2 text-gray-900 shadow-sm placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:leading-6">
+                                    class="block w-full h-14  border-0 p-2 text-gray-900 shadow-sm placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-emerald-500 sm:leading-6">
                             </div>
                         </div>
                     </Transition>
@@ -156,59 +155,57 @@ const states =
                                 <input v-model="organizationName" required type="text" name="organizationName"
                                     id="organizationName" placeholder="Business/Organization name"
                                     autocomplete="organizationName"
-                                    class="block w-full h-14 border-0 p-2 text-gray-900 shadow-sm placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:leading-6">
+                                    class="block w-full h-14 border-0 p-2 text-gray-900 shadow-sm placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-emerald-500 sm:leading-6">
                             </div>
                         </div>
                         <div class="sm:col-span-3 input-container">
-                            <label for="workLocation" class="block  font-bold leading-6 text-gray-900">Most of my company’s
-                                employees work in:</label>
-                            <div class="mt-2">
-                                <select v-model="workLocation" required id="workLocation" name="workLocation"
-                                    autocomplete="workLocation"
-                                    class="block w-full h-14 border-0 px-4 p-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:leading-6">
-                                    <option value="" disabled selected>Select location</option>
-                                    <option v-for="state in states" :value="state">{{ state }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="sm:col-span-3 input-container">
-                            <label for="employeeCount" class="block  font-bold leading-6 text-gray-900">Approximately how
-                                many people are in your organization?</label>
+                            <label for="employeeCount" class="block  font-bold leading-6 text-gray-900">Approximately how many people does your organization/ company employ?</label>
                             <div class="mt-2">
                                 <select v-model="employeeCount" required id="employeeCount" name="employeeCount"
-                                    autocomplete="employeeCount"
-                                    class="block w-full h-14 border-0 px-4 p-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:leading-6">
-                                    <option value="" disabled selected>Select a range</option>
-                                    <option v-for="range in employeeCounts" :value="range">{{ range }}</option>
-                                </select>
-                            </div>
+                                autocomplete="employeeCount"
+                                class="block w-full h-14 border-0 px-4 p-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-inset focus:ring-emerald-500  sm:leading-6">
+                                <option value="" disabled selected>Select a range</option>
+                                <option v-for="range in employeeCounts" :value="range">{{ range }}</option>
+                            </select>
                         </div>
-                        <div class="sm:col-span-3 input-container">
-                            <label for="primaryReason" class="block  font-bold leading-6 text-gray-900">What is your primary
-                                reason for exploring fair chance hiring?</label>
+                    </div>
+                    <div class="sm:col-span-3 input-container">
+                        <label for="primaryReason" class="block  font-bold leading-6 text-gray-900">What is your primary
+                            reason for exploring fair chance hiring?</label>
                             <div class="mt-2">
                                 <select v-model="primaryReason" required id="primaryReason" name="primaryReason"
-                                    autocomplete="primaryReason"
-                                    class="block w-full h-14 border-0 px-4 p-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:leading-6">
-                                    <option value="" disabled selected>Reason</option>
-                                    <option v-for="reason in reasons" :value="reason">{{ reason }}</option>
-                                </select>
-                            </div>
+                                autocomplete="primaryReason"
+                                class="block w-full h-14 border-0 px-4 p-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-inset focus:ring-emerald-500  sm:leading-6">
+                                <option value="" disabled selected>Reason</option>
+                                <option v-for="reason in reasons" :value="reason">{{ reason }}</option>
+                            </select>
                         </div>
+                    </div>
+                    <div class="sm:col-span-3 input-container">
+                        <label for="workLocation" class="block  font-bold leading-6 text-gray-900">Most of my company’s
+                            employees work in:</label>
+                        <div class="mt-2">
+                            <select v-model="workLocation" required id="workLocation" name="workLocation"
+                                autocomplete="workLocation"
+                                class="block w-full h-14 border-0 px-4 p-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-inset focus:ring-emerald-500  sm:leading-6">
+                                <option value="" disabled selected>Select location</option>
+                                <option v-for="state in states" :value="state">{{ state }}</option>
+                            </select>
+                        </div>
+                    </div>
                         <div class="col-span-full input-container">
                             <label for="howDidYouHearAboutUs" class="block  font-bold leading-6 text-gray-900">How did you
                                 hear about us?</label>
                             <div class="mt-2">
-                                <input v-model="howDidYouHearAboutUs" required type="text"
+                                <textarea v-model="howDidYouHearAboutUs" required type="textarea" rows="4"
                                     name="howDidYouHearAboutUs" id="howDidYouHearAboutUs" placeholder="Please share with us"
-                                    autocomplete="howDidYouHearAboutUs"
-                                    class="block w-full h-14 border-0 p-2 text-gray-900 shadow-sm placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:leading-6">
+                                    class="block w-full border-0 p-2 text-gray-900 shadow-sm placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-emerald-500 sm:leading-6"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <button
-                    class="h-10 input-container rounded-md w-full button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300"
+                    class="h-10 mt-0 rounded-md w-full button-bg-ceogreen font-extrabold text-white hover:shadow-md transition duration-300"
                     type="submit">
                     Submit
                 </button>

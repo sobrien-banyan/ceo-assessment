@@ -143,7 +143,7 @@ const clickHandler = (event) => {
     <section class="flex mx-auto lg:items-center lg:justify-between flex-col py-4 bg-tan h-full"
         v-if="!showResults">
         <div class="space-y-12 m-5 wrapper h-full">
-            <h1 class="question mb-2 h-20 text-3xl font-semibold text-gray-900 ">{{ shuffledQuestions[showListItem].question }}</h1>
+            <h1 class="question text-2xl font-semibold text-gray-900 ">{{ shuffledQuestions[showListItem].question }}</h1>
             <div class="h-full">
                 <ul v-for="answer in shuffledQuestions[showListItem].answers" class="w-full">
                     <li class="mb-2 font-medium bg-white border border-gray-200 rounded-lg cursor">
@@ -156,7 +156,7 @@ const clickHandler = (event) => {
                                 :data-question-id="shuffledQuestions[showListItem].id" :id="answer.id" :value="answer.value"
                                 v-model=runningScore[shuffledQuestions[showListItem].id]
                                 class="w-6 h-6 cursor focus:ring-0 focus:ring-offset-0 focus:ring-offset-white focus:ring-opacity-100 radioInput" />
-                            <label :for="answer.id" class="answer noselect w-full py-3 ml-2 pr-2 text-lg font-medium text-gray-900 cursor">
+                            <label :for="answer.id" class="answer noselect w-full py-3 ml-2 pr-2 font-medium text-gray-900 cursor">
                                 {{ answer.answer }}</label>
                         </div>
                     </li>
@@ -169,9 +169,10 @@ const clickHandler = (event) => {
                     <div>{{ showListItem + 1 }} / {{ length }}</div>
                     <button v-if="showSubmitButton && showListItem == 7" @click="saveScore"
                         class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">Submit</button>
-                    <button v-else @click="next"
+                    <button v-else-if="showListItem < 7" @click="next"
                         :class="isPulseNext && 'animate-pulse'"
                         class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">Next</button>
+                    <div v-else></div>
                 </div>
             </div>
         </div>
@@ -189,21 +190,21 @@ const clickHandler = (event) => {
                         View Report
                     </button>
                 </div>
-                <div class="text-center lg:text-4xl text-2x mb-6">
-                    <div v-html="responses.header"></div>
-                    <div class="flex flex-wrap mt-4 w-full justify-center">
-                        <div v-html="responses.subheader"></div>
-                        <div class="underline decoration-solid ml-4" v-if="total <= 6">Poor, with a score of {{ percentage
+                <div class=" mb-6">
+                    <div class="text-center text-3xl" v-html="responses.header"></div>
+                    <div class="flex flex-wrap mt-4 w-full">
+                        <div class="lg:text-xl" v-html="responses.subheader"></div>
+                        <div class="underline decoration-solid lg:text-xl" v-if="total <= 6">Poor, with a score of {{ percentage
                         }}</div>
-                        <div class="underline decoration-solid ml-4" v-else-if="total > 6 && total <= 12"><span>Fair, with a
+                        <div class="underline decoration-solid lg:text-xl" v-else-if="total > 6 && total <= 12"><span>Fair, with a
                                 score of {{ percentage }}%</span></div>
-                        <div class="underline decoration-solid ml-4" v-else-if="total > 12 && total <= 18"><span>Good, with
+                        <div class="underline decoration-solid lg:text-xl" v-else-if="total > 12 && total <= 18"><span>Good, with
                                 a score of {{ percentage }}%</span></div>
-                        <div class="underline decoration-solid ml-4" v-else="total > 18 && total <= 24"><span>Excellent,
+                        <div class="underline decoration-solid lg:text-xl" v-else="total > 18 && total <= 24"><span>Excellent,
                                 with a score of {{ percentage }}%</span></div>
                     </div>
                 </div>
-                <div class="mb-10 lg:text-2xl">
+                <div class="mb-10 lg:text-xl">
                     <div v-if="total <= 6" v-html="responses.for_1_2.lessthan_equal_6"></div>
                     <div v-else-if="total > 6 && total <= 12" v-html="responses.greaterthan_6_and_lessthan_equal_12"></div>
                     <div v-else-if="total > 12 && total <= 18" v-html="responses.greaterthan_12_and_lessthan_equal_18">
@@ -214,7 +215,8 @@ const clickHandler = (event) => {
                 <div class="w-full bg-white border-gray-200 rounded-lg  px-6 py-3">
                     <ul class="mt-5" v-for="_, key in results">
                         <li v-if="key == 2">
-                            <h3 class="text-lg lg:text-3xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
+                            <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
+                            <div class="mb-2">For this section your score is: {{(parseInt(results[key]['value']) + parseInt(results[key - 1]['value']/16).toFixed(0))}}%</div>
                             <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
                                 <div v-html="responses.for_1_2.less_than_4">
                                 </div>
@@ -225,19 +227,19 @@ const clickHandler = (event) => {
                             </div>
                             <button @click="toggle(key)" class="textgreen">{{isOpen[key] == true ? 'Hide your answers' :'See your answers'}}</button>
                             <Transition>
-                                <div v-if="isOpen[key] == true" class="items-center w-full p-3 ">
-                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                <div v-if="isOpen[key] == true" class="items-center w-full ">
+                                    <div class="w-full py-3 text-gray-900">
                                         <span class="mr-4 text-neutral-400">Question:</span> {{ results[key]['question'] }}
                                     </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                    <div class="w-full py-3 text-gray-900">
                                         <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{
                                             results[key]['answer'] }}
                                     </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                    <div class="w-full py-3 text-gray-900">
                                         <span class="mr-4 text-neutral-400">Question:</span> {{ results[key - 1]['question']
                                         }}
                                     </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                    <div class="w-full py-3 text-gray-900">
                                         <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{ results[key -
                                             1]['answer']
                                         }}
@@ -246,7 +248,8 @@ const clickHandler = (event) => {
                             </Transition>
                         </li>
                         <li v-else-if="key == 4">
-                            <h3 class="text-lg lg:text-3xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
+                            <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
+                            <div class="mb-2">For this section your score is: {{(parseInt(results[key]['value']) + parseInt(results[key - 1]['value']/12).toFixed(0))}}%</div>
                             <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
                                 <div v-html="responses.for_3_4.less_than_4">
                                 </div>
@@ -257,20 +260,20 @@ const clickHandler = (event) => {
                             </div>
                             <button @click="toggle(key)" class="textgreen">{{isOpen[key] == true ? 'Hide your answers' :'See your answers'}}</button>
                             <Transition>
-                                <div v-if="isOpen[key] == true" class="items-center w-full p-3 ">
-                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                <div v-if="isOpen[key] == true" class="items-center w-full ">
+                                    <div class="w-full py-3 text-gray-900">
                                         <span class="mr-4 text-neutral-400">Question:</span> {{ results[key - 1]['question']
                                         }}
                                     </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                    <div class="w-full py-3 text-gray-900">
                                         <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{ results[key -
                                             1]['answer']
                                         }}
                                     </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                    <div class="w-full py-3 text-gray-900">
                                         <span class="mr-4 text-neutral-400">Question:</span> {{ results[key]['question'] }}
                                     </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                    <div class="w-full py-3 text-gray-900">
                                         <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{
                                             results[key]['answer'] }}
                                     </div>
@@ -278,7 +281,8 @@ const clickHandler = (event) => {
                             </Transition>
                         </li>
                         <li v-else-if="key == 6">
-                            <h3 class="text-lg lg:text-3xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
+                            <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
+                            <div class="mb-2">For this section your score is: {{(parseInt(results[key]['value']) + parseInt(results[key - 1]['value']/12).toFixed(0))}}%</div>
                             <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
                                 <div v-html="responses.for_5_6.less_than_4">
                                 </div>
@@ -289,20 +293,20 @@ const clickHandler = (event) => {
                             </div>
                             <button @click="toggle(key)" class="textgreen">{{isOpen[key] == true ? 'Hide your answers' :'See your answers'}}</button>
                             <Transition>
-                                <div v-if="isOpen[key] == true" class="items-center w-full p-3 ">
-                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                <div v-if="isOpen[key] == true" class="items-center w-full ">
+                                    <div class="w-full py-3 text-gray-900">
                                         <span class="mr-4 text-neutral-400">Question:</span> {{ results[key - 1]['question']
                                         }}
                                     </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                    <div class="w-full py-3 text-gray-900">
                                         <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{ results[key -
                                             1]['answer']
                                         }}
                                     </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                    <div class="w-full py-3 text-gray-900">
                                         <span class="mr-4 text-neutral-400">Question:</span> {{ results[key]['question'] }}
                                     </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                    <div class="w-full py-3 text-gray-900">
                                         <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{
                                             results[key]['answer'] }}
                                     </div>
@@ -310,7 +314,8 @@ const clickHandler = (event) => {
                             </Transition>
                         </li>
                         <li v-else-if="key == 8">
-                            <h3 class="text-lg lg:text-3xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
+                            <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
+                            <div class="mb-2">For this section your score is: {{(parseInt(results[key]['value']) + parseInt(results[key - 1]['value']/12).toFixed(0))}}%</div>
                             <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
                                 <div v-html="responses.for_7_8.less_than_4">
                                 </div>
@@ -321,20 +326,20 @@ const clickHandler = (event) => {
                             </div>
                             <button @click="toggle(key)" class="textgreen">{{isOpen[key] == true ? 'Hide your answers' :'See your answers'}}</button>
                             <Transition>
-                                <div v-if="isOpen[key] == true" class="items-center w-full p-3 ">
-                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                <div v-if="isOpen[key] == true" class="items-center w-full ">
+                                    <div class="w-full py-3 text-gray-900">
                                         <span class="mr-4 text-neutral-400">Question:</span> {{ results[key - 1]['question']
                                         }}
                                     </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                    <div class="w-full py-3 text-gray-900">
                                         <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{ results[key -
                                             1]['answer']
                                         }}
                                     </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                    <div class="w-full py-3 text-gray-900">
                                         <span class="mr-4 text-neutral-400">Question:</span> {{ results[key]['question'] }}
                                     </div>
-                                    <div class="w-full py-3 ml-2 text-gray-900">
+                                    <div class="w-full py-3 text-gray-900">
                                         <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{
                                             results[key]['answer'] }}
                                     </div>
@@ -349,7 +354,7 @@ const clickHandler = (event) => {
                         Download Report
                     </button>
                     <div>
-                        <h3 class="text-lg lg:text-3xl text-center w-full mb-4">Assessment Report</h3>
+                        <h3 class="text-lg lg:text-2xl text-center w-full mb-4">Assessment Report</h3>
                         <div v-html="reportContent.content_one"></div>
                         <div class="underline decoration-solid ml-7 text-lg lg:text-2xl" v-if="total <= 6">Poor, with a
                             score of {{ percentage }}</div>
@@ -406,7 +411,7 @@ const clickHandler = (event) => {
 
 <style scoped>
 .card {
-    min-height: 7rem;
+    min-height: 4rem;
 }
 .pdf-container {
   position: relative;
