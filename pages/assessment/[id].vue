@@ -216,7 +216,7 @@ const clickHandler = (event) => {
                     <ul class="mt-5" v-for="_, key in results">
                         <li v-if="key == 2">
                             <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
-                            <div class="mb-2">For this section your score is: {{(parseInt(results[key]['value']) + parseInt(results[key - 1]['value']/16).toFixed(0))}}%</div>
+                            <div class="mb-2">For this section your score is: {{((parseInt(results[key]['value']) + parseInt(results[key - 1]['value'])/16*100).toFixed(0))}}%</div>
                             <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
                                 <div v-html="responses.for_1_2.less_than_4">
                                 </div>
@@ -249,7 +249,7 @@ const clickHandler = (event) => {
                         </li>
                         <li v-else-if="key == 4">
                             <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
-                            <div class="mb-2">For this section your score is: {{(parseInt(results[key]['value']) + parseInt(results[key - 1]['value']/12).toFixed(0))}}%</div>
+                            <div class="mb-2">For this section your score is: {{((parseInt(results[key]['value']) + parseInt(results[key - 1]['value'])/12*100).toFixed(0))}}%</div>
                             <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
                                 <div v-html="responses.for_3_4.less_than_4">
                                 </div>
@@ -282,7 +282,7 @@ const clickHandler = (event) => {
                         </li>
                         <li v-else-if="key == 6">
                             <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
-                            <div class="mb-2">For this section your score is: {{(parseInt(results[key]['value']) + parseInt(results[key - 1]['value']/12).toFixed(0))}}%</div>
+                            <div class="mb-2">For this section your score is: {{((parseInt(results[key]['value']) + parseInt(results[key - 1]['value'])/12*100).toFixed(0))}}%</div>
                             <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
                                 <div v-html="responses.for_5_6.less_than_4">
                                 </div>
@@ -315,7 +315,7 @@ const clickHandler = (event) => {
                         </li>
                         <li v-else-if="key == 8">
                             <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
-                            <div class="mb-2">For this section your score is: {{(parseInt(results[key]['value']) + parseInt(results[key - 1]['value']/12).toFixed(0))}}%</div>
+                            <div class="mb-2">For this section your score is: {{((parseInt(results[key]['value']) + parseInt(results[key - 1]['value'])/12*100).toFixed(0))}}%</div>
                             <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
                                 <div v-html="responses.for_7_8.less_than_4">
                                 </div>

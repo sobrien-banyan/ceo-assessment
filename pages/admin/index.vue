@@ -132,7 +132,7 @@ const logoutHandler = () => {
                       <li v-if="key == 2">
                         <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{
                           JSON.parse(user.results)[key]['section'] }}</h3>
-                          <div class="mb-2">For this section the score is: {{(parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value']/16).toFixed(0))}}%</div>
+                          <div class="mb-2">For this section the score is: {{((parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value'])/16*100).toFixed(0))}}%</div>
                         <div
                           v-if="parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value']) < 4">
                           <div v-html="responses.for_1_2.less_than_4">
@@ -169,7 +169,7 @@ const logoutHandler = () => {
                       <li v-else-if="key == 4">
                         <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{
                           JSON.parse(user.results)[key]['section'] }}</h3>
-                          <div class="mb-2">For this section the score is: {{(parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value']/12).toFixed(0))}}%</div>
+                          <div class="mb-2">For this section the score is: {{((parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value'])/12*100).toFixed(0))}}%</div>
                         <div
                           v-if="parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value']) < 4">
                           <div v-html="responses.for_3_4.less_than_4">
@@ -206,7 +206,7 @@ const logoutHandler = () => {
                       <li v-else-if="key == 6">
                         <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{
                           JSON.parse(user.results)[key]['section'] }}</h3>
-                          <div class="mb-2">For this section the score is: {{(parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value']/12).toFixed(0))}}%</div>
+                          <div class="mb-2">For this section the score is: {{((parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value'])/12*100).toFixed(0))}}%</div>
                         <div
                           v-if="parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value']) < 4">
                           <div v-html="responses.for_5_6.less_than_4">
@@ -243,7 +243,7 @@ const logoutHandler = () => {
                       <li v-else-if="key == 8">
                         <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{
                           JSON.parse(user.results)[key]['section'] }}</h3>
-                          <div class="mb-2">For this section the score is: {{(parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value']/12).toFixed(0))}}%</div>
+                          <div class="mb-2">For this section the score is: {{((parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value'])/12*100).toFixed(0))}}%</div>
                         <div
                           v-if="parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value']) < 4">
                           <div v-html="responses.for_7_8.less_than_4">
