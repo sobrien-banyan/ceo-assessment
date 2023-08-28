@@ -304,7 +304,7 @@ const logoutHandler = () => {
                                 <span style="font-size:5px;margin-right:7px;">P: 212.422.4430</span>
                                 <span style="font-size:5px;margin-right:7px;">E. info@ceoworks.org</span>
                               </div>
-                              <img style="margin-top:20px;" src="../../assets/img/pdf/ceo-pdf-3.png" alt="pdf" />
+                              <img style="margin-top:20px;" src="../../assets/img/pdf/ceo-pdf-p-3.png" alt="pdf" />
                               <img style="margin-top:-10px;" src="../../assets/img/pdf/ceo-pdf-q.png" alt="pdf" />
                               <div style="margin-top:-15px;margin-left:30px;">
                                 <span style="font-size:5px;margin-right:7px;">Center for Employment Opportunities</span>
