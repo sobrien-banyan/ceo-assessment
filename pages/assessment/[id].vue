@@ -99,7 +99,7 @@ const saveScore = () => {
             results: JSON.stringify(results.value),
         },
     });
-    const Rating = score <= 6 ? 'Poor' : score > 6 && score <= 12 ? 'Fair' : score > 12 && score <= 18 ? 'Good' : 'Excellent';
+    const Rating = score <= 6 ? 'Have many opportunities to improve' : score > 6 && score <= 12 ? 'Fair' : score > 12 && score <= 18 ? 'Good' : 'Excellent';
 
     const html = async () => await useRender(template, { UserName, AssessmentScore: score, Rating: Rating }, {
         pretty: true,
@@ -114,7 +114,7 @@ const saveScore = () => {
     });
     showResults.value = true;
     percentage.value = (total.value / 24 * 100).toFixed(0);
-    pdfSection.value = total.value  <= 6 ? `Poor, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : total.value  > 6 && total.value  <= 12 ? `Fair, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : total.value  > 12 && total.value  <= 18 ? `Good, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : `Excellent , with a score of ${(total.value  / 24 * 100).toFixed(0)}%`; 
+    pdfSection.value = total.value  <= 6 ? `Have many opportunities to improve, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : total.value  > 6 && total.value  <= 12 ? `Fair, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : total.value  > 12 && total.value  <= 18 ? `Good, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : `Excellent , with a score of ${(total.value  / 24 * 100).toFixed(0)}%`; 
     });
 };
 const clickHandler = (event) => {
@@ -194,7 +194,7 @@ const clickHandler = (event) => {
                     <div class="text-center text-3xl" v-html="responses.header"></div>
                     <div class="flex flex-wrap mt-4 w-full">
                         <div class="lg:text-xl" v-html="responses.subheader"></div>
-                        <div class="underline decoration-solid lg:text-xl" v-if="total <= 6">Poor, with a score of {{ percentage
+                        <div class="underline decoration-solid lg:text-xl" v-if="total <= 6">Have many opportunities to improve, with a score of {{ percentage
                         }}</div>
                         <div class="underline decoration-solid lg:text-xl" v-else-if="total > 6 && total <= 12"><span>Fair, with a
                                 score of {{ percentage }}%</span></div>
@@ -356,7 +356,7 @@ const clickHandler = (event) => {
                     <div>
                         <h3 class="text-lg lg:text-2xl text-center w-full mb-4">Assessment Report</h3>
                         <div v-html="reportContent.content_one"></div>
-                        <div class="underline decoration-solid ml-7 text-lg lg:text-2xl" v-if="total <= 6">Poor, with a
+                        <div class="underline decoration-solid ml-7 text-lg lg:text-2xl" v-if="total <= 6">Have many opportunities to improve, with a
                             score of {{ percentage }}</div>
                         <div class="underline decoration-solid ml-7 text-lg lg:text-2xl"
                             v-else-if="total > 6 && total <= 12"><span>Fair, with a score of {{ percentage }}%</span></div>
