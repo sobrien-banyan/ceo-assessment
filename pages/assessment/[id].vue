@@ -165,14 +165,14 @@ const clickHandler = (event) => {
                     <button v-if="showListItem > 0" @click="prev"
                     :class="isPulsePrevious && 'animate-pulse'"
                         class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">Previous</button>
-                        <div v-else></div>
+                        <div class="w-28" v-else></div>
                     <div>{{ showListItem + 1 }} / {{ length }}</div>
                     <button v-if="showSubmitButton && showListItem == 7" @click="saveScore"
                         class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">Submit</button>
                     <button v-else-if="showListItem < 7" @click="next"
                         :class="isPulseNext && 'animate-pulse'"
                         class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">Next</button>
-                    <div v-else></div>
+                    <div class="w-28" v-else></div>
                 </div>
             </div>
         </div>
@@ -356,13 +356,13 @@ const clickHandler = (event) => {
                     <div>
                         <h3 class="text-lg lg:text-2xl text-center w-full mb-4">Assessment Report</h3>
                         <div v-html="reportContent.content_one"></div>
-                        <div class="underline decoration-solid ml-7 text-lg lg:text-2xl" v-if="total <= 6">Have many opportunities to improve, with a
+                        <div class="underline decoration-solid text-lg lg:text-2xl" v-if="total <= 6">Have many opportunities to improve, with a
                             score of {{ percentage }}</div>
-                        <div class="underline decoration-solid ml-7 text-lg lg:text-2xl"
+                        <div class="underline decoration-solid text-lg lg:text-2xl"
                             v-else-if="total > 6 && total <= 12"><span>Fair, with a score of {{ percentage }}%</span></div>
-                        <div class="underline decoration-solid ml-7 text-lg lg:text-2xl"
+                        <div class="underline decoration-solid text-lg lg:text-2xl"
                             v-else-if="total > 12 && total <= 18"><span>Good, with a score of {{ percentage }}%</span></div>
-                        <div class="underline decoration-solid ml-7 text-lg lg:text-2xl" v-else="total > 18 && total <= 24">
+                        <div class="underline decoration-solid text-lg lg:text-2xl" v-else="total > 18 && total <= 24">
                             <span>Excellent, with a score of {{ percentage }}%</span>
                         </div>
                         <div v-html="reportContent.content_two"></div>
