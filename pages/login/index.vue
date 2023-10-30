@@ -39,7 +39,7 @@ const TempSignInHandler = async () => {
 </script>
 <template>
     <section>
-        <div class="login-container flex flex-col items-center mt-36 px-6 py-8 mx-auto lg:py-0">
+        <div class="login-container flex flex-col items-center px-6 py-8 mx-auto lg:py-0">
             <div class="flex items-center mb-6 text-2xl font-semibold text-gray-900">
                 Log in
             </div>
@@ -81,9 +81,12 @@ const TempSignInHandler = async () => {
   left: 0px;
   cursor: pointer;
 }
+.login-container {
+        margin-top: 25px;
+    }
   @media (max-width: 868px) {
     .login-container {
-        margin-top: 0px;
+        margin-top: 5px;
     }
 }
 </style>

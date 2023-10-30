@@ -369,38 +369,9 @@ const clickHandler = (event) => {
                     </div>
                     <div class="pdf-container">
                         <div class="pdf-wrapper">
-                            <div id="pdf-section" style="width:446px;height:auto" >
-                              <img src="../../assets/img/pdf/ceo-pdf-p-1-s-1.png" alt="pdf" />
-                              <div style="margin-left:28px;font-size:9px;font-weight:700;height:30px;"> {{ pdfSection }}</div>
-                              <img src="../../assets/img/pdf/ceo-pdf-p-1-s-2.png" alt="pdf" />
-                              <div style="margin-top:1px;margin-left:30px;">
-                                <span style="font-size:5px;margin-right:7px;">Center for Employment Opportunities</span>
-                                <span style="font-size:5px;margin-right:7px;">50 Broadway, Suite 1604</span>
-                                <span style="font-size:5px;margin-right:7px;">New York, NY</span>
-                                <span style="font-size:5px;margin-right:7px;">10004</span>
-                                <span style="font-size:5px;margin-right:7px;">P: 212.422.4430</span>
-                                <span style="font-size:5px;margin-right:7px;">E. info@ceoworks.org</span>
-                              </div>
-                              <img style="margin-top:20px;" src="../../assets/img/pdf/ceo-pdf-p-2.png" alt="pdf" />
-                              <div style="margin-top:17px;margin-left:30px;">
-                                <span style="font-size:5px;margin-right:7px;">Center for Employment Opportunities</span>
-                                <span style="font-size:5px;margin-right:7px;">50 Broadway, Suite 1604</span>
-                                <span style="font-size:5px;margin-right:7px;">New York, NY</span>
-                                <span style="font-size:5px;margin-right:7px;">10004</span>
-                                <span style="font-size:5px;margin-right:7px;">P: 212.422.4430</span>
-                                <span style="font-size:5px;margin-right:7px;">E. info@ceoworks.org</span>
-                              </div>
-                              <img style="margin-top:20px;" src="../../assets/img/pdf/ceo-pdf-p-3.png" alt="pdf" />
-                              <img style="margin-top:-10px;" src="../../assets/img/pdf/ceo-pdf-q.png" alt="pdf" />
-                              <div style="margin-top:-15px;margin-left:30px;">
-                                <span style="font-size:5px;margin-right:7px;">Center for Employment Opportunities</span>
-                                <span style="font-size:5px;margin-right:7px;">50 Broadway, Suite 1604</span>
-                                <span style="font-size:5px;margin-right:7px;">New York, NY</span>
-                                <span style="font-size:5px;margin-right:7px;">10004</span>
-                                <span style="font-size:5px;margin-right:7px;">P: 212.422.4430</span>
-                                <span style="font-size:5px;margin-right:7px;">E. info@ceoworks.org</span>
-                              </div>
-                            </div>
+                            <div id="pdf-section">
+                        <Pdf :total="total" :percentage="percentage" :results="results" />
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -417,19 +388,13 @@ const clickHandler = (event) => {
   position: relative;
   overflow: hidden;
 }
+
+
 .pdf-wrapper {
   position: absolute;
   left: 1000%;
-} 
-.pdf-header {
-    font-size: .75rem;
-    font-weight: 700;
 }
 
-.pdf-score {
-    font-size: .65rem;
-    font-weight: 600;
-}
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -452,18 +417,6 @@ const clickHandler = (event) => {
 .v-leave-to {
     opacity: 0;
 }
-
-.text-wrapper {
-    margin-top: 20%;
-}
-
-.text {
-    font-family: proxima-nova, sans-serif;
-    font-size: 1.4rem;
-    line-height: 2.5rem;
-    color: #555555;
-}
-
 .radioInput {
     background-color: #ffffff;
     border: 1px solid #2da301 !important;

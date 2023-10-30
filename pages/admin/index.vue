@@ -283,37 +283,8 @@ const logoutHandler = () => {
               </div>
               <div class="pdf-container">
                         <div class="pdf-wrapper">
-                            <div id="pdf-section" style="width:446px;height:auto" >
-                              <img src="../../assets/img/pdf/ceo-pdf-p-1-s-1.png" alt="pdf" />
-                              <div style="margin-left:28px;font-size:9px;font-weight:700;height:30px;"> {{ user.score  <= 6 ? `Have many opportunities to improve, with a score of ${(user.score  / 24 * 100).toFixed(0)}%` : user.score  > 6 && user.score  <= 12 ? `Fair, with a score of ${(user.score  / 24 * 100).toFixed(0)}%` : user.score  > 12 && user.score  <= 18 ? `Good, with a score of ${(user.score  / 24 * 100).toFixed(0)}%` : `Excellent , with a score of ${(user.score  / 24 * 100).toFixed(0)}%`}}</div>
-                              <img src="../../assets/img/pdf/ceo-pdf-p-1-s-2.png" alt="pdf" />
-                              <div style="margin-top:1px;margin-left:30px;">
-                                <span style="font-size:5px;margin-right:7px;">Center for Employment Opportunities</span>
-                                <span style="font-size:5px;margin-right:7px;">50 Broadway, Suite 1604</span>
-                                <span style="font-size:5px;margin-right:7px;">New York, NY</span>
-                                <span style="font-size:5px;margin-right:7px;">10004</span>
-                                <span style="font-size:5px;margin-right:7px;">P: 212.422.4430</span>
-                                <span style="font-size:5px;margin-right:7px;">E. info@ceoworks.org</span>
-                              </div>
-                              <img style="margin-top:20px;" src="../../assets/img/pdf/ceo-pdf-p-2.png" alt="pdf" />
-                              <div style="margin-top:17px;margin-left:30px;">
-                                <span style="font-size:5px;margin-right:7px;">Center for Employment Opportunities</span>
-                                <span style="font-size:5px;margin-right:7px;">50 Broadway, Suite 1604</span>
-                                <span style="font-size:5px;margin-right:7px;">New York, NY</span>
-                                <span style="font-size:5px;margin-right:7px;">10004</span>
-                                <span style="font-size:5px;margin-right:7px;">P: 212.422.4430</span>
-                                <span style="font-size:5px;margin-right:7px;">E. info@ceoworks.org</span>
-                              </div>
-                              <img style="margin-top:20px;" src="../../assets/img/pdf/ceo-pdf-p-3.png" alt="pdf" />
-                              <img style="margin-top:-10px;" src="../../assets/img/pdf/ceo-pdf-q.png" alt="pdf" />
-                              <div style="margin-top:-15px;margin-left:30px;">
-                                <span style="font-size:5px;margin-right:7px;">Center for Employment Opportunities</span>
-                                <span style="font-size:5px;margin-right:7px;">50 Broadway, Suite 1604</span>
-                                <span style="font-size:5px;margin-right:7px;">New York, NY</span>
-                                <span style="font-size:5px;margin-right:7px;">10004</span>
-                                <span style="font-size:5px;margin-right:7px;">P: 212.422.4430</span>
-                                <span style="font-size:5px;margin-right:7px;">E. info@ceoworks.org</span>
-                              </div>
+                          <div v-if="user.results" id="pdf-section" >
+                          <Pdf :total="user.score" :percentage="(user.score / 24 * 100).toFixed(0)" :results="JSON.parse(user.results)" />
                             </div>
                         </div>
                     </div>
