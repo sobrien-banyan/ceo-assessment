@@ -14,8 +14,7 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
-})
-console.log('resyke', props.results);
+});
 </script>
 
 <template>
@@ -65,9 +64,10 @@ console.log('resyke', props.results);
             <img src="~/assets/pdfs/CEO_PDF_6.png" alt="pdf6" class="pdf-img" />
         </div>
     </div>
-        <div class="w-full bg-white border-gray-200 rounded-lg  px-4 py-1 results-text">
-                    <ul class="mt-5" v-for="_, key in results">
-                        <li v-if="key == 2">
+        <div class="w-full bg-white border-gray-200 rounded-lg  px-4 results-text">
+                    <ul v-for="_, key in results">
+                        <li v-if="key == 2" class="box">
+                            <h3 class="text-lg lg:text-2xl w-full mb-6">Here are your results:</h3>
                             <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
                             <div class="mb-2">For this section your score is: {{((parseInt(results[key]['value']) + parseInt(results[key - 1]['value'])/16*100).toFixed(0))}}%</div>
                             <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
@@ -98,7 +98,7 @@ console.log('resyke', props.results);
                                     </div>
                                 </div>
                         </li>
-                        <li v-else-if="key == 4">
+                        <li v-else-if="key == 4" class="box">
                             <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
                             <div class="mb-2">For this section your score is: {{((parseInt(results[key]['value']) + parseInt(results[key - 1]['value'])/12*100).toFixed(0))}}%</div>
                             <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
@@ -129,7 +129,7 @@ console.log('resyke', props.results);
                                     </div>
                                 </div>
                         </li>
-                        <li v-else-if="key == 6">
+                        <li v-else-if="key == 6" class="box">
                             <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
                             <div class="mb-2">For this section your score is: {{((parseInt(results[key]['value']) + parseInt(results[key - 1]['value'])/12*100).toFixed(0))}}%</div>
                             <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
@@ -160,7 +160,7 @@ console.log('resyke', props.results);
                                     </div>
                                 </div>
                         </li>
-                        <li v-else-if="key == 8">
+                        <li v-else-if="key == 8" class="box">
                             <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
                             <div class="mb-2">For this section your score is: {{((parseInt(results[key]['value']) + parseInt(results[key - 1]['value'])/12*100).toFixed(0))}}%</div>
                             <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
@@ -197,6 +197,10 @@ console.log('resyke', props.results);
 </template>
 
 <style scoped>
+.box {
+    width: auto;
+    height: 631.25px;
+}
 .pdf-box {
     width: 446px;
     height: 631.25px;
@@ -245,5 +249,7 @@ console.log('resyke', props.results);
 }
 .results-text {
     font-size: .5rem;
+    font-family: proxima-nova, sans-serif;
+    line-height: normal;
 }
 </style>

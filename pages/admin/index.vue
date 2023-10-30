@@ -17,7 +17,6 @@ const getUsers = async () => {
     method: 'GET',
   }).then((data) => {
     users.value = data.data.value;
-    console.log(JSON.parse(users.value[0].results))
   });
 };
 const getEmails = async () => {
@@ -64,7 +63,9 @@ const pdfHandler = () => {
     if (pdfSection.style.display === "none") {
         pdfSection.style.display = "block";
     };
-    exportToPDF('CeoWorksAssessment.pdf', pdfSection);
+    exportToPDF('CeoWorksAssessment.pdf', pdfSection,{
+ floatPrecision: 16 // or "smart", default is 16
+});
     setTimeout(() => {
         pdfSection.style.display = "none";
     }, 500);
@@ -284,11 +285,10 @@ const logoutHandler = () => {
               <div class="pdf-container">
                         <div class="pdf-wrapper">
                           <div v-if="user.results" id="pdf-section" >
-                          <Pdf :total="user.score" :percentage="(user.score / 24 * 100).toFixed(0)" :results="JSON.parse(user.results)" />
+                          <Pdf :total="user.score" :percentage="parseInt((user.score / 24 * 100).toFixed(0))" :results="JSON.parse(user.results)" />
                             </div>
                         </div>
-                    </div>
-
+                      </div>
             </li>
           </ul>
         </div>

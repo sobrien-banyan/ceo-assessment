@@ -370,7 +370,7 @@ const clickHandler = (event) => {
                     <div class="pdf-container">
                         <div class="pdf-wrapper">
                             <div id="pdf-section">
-                        <Pdf :total="total" :percentage="percentage" :results="results" />
+                        <Pdf :total="total" :percentage="parseInt(percentage)" :results="results" />
                     </div>
                         </div>
                     </div>
