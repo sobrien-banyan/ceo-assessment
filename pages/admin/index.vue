@@ -5,6 +5,7 @@ definePageMeta({
 });
 import { ref, watchEffect } from 'vue';
 import { responses } from '../assessment/data/responses';
+import { pdfHelper } from '~/composables/pdfHelper';
 
 const users = ref([]);
 const emails = ref([]);
@@ -58,19 +59,26 @@ const deleteEmailHandler = (id) => {
     getEmails();
   });
 };
-const pdfHandler = () => {
-    const pdfSection = document.querySelector('#pdf-section');
-    if (pdfSection.style.display === "none") {
-        pdfSection.style.display = "block";
-    };
-    exportToPDF('CeoWorksAssessment.pdf', pdfSection,{
- floatPrecision: 16 // or "smart", default is 16
-});
-    setTimeout(() => {
-        pdfSection.style.display = "none";
-    }, 500);
-
+const pdfHandler = (id) => {
+  const userObject = users.value.find((user) => user.id === id);
+  const score = userObject?.score;
+  const Rating = score <= 6 ? 'Have many opportunities to improve' : score > 6 && score <= 12 ? 'Fair' : score > 12 && score <= 18 ? 'Good' : 'Excellent'
+   const pdfJson = pdfHelper((score / 24 * 100).toFixed(0), Rating, JSON.parse(userObject?.results));
+useFetch(`http://localhost:3000/pdf`, {
+            method: 'POST',
+            body: pdfJson,
+    }).then((result) => {
+        const blob = new Blob([result.data], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'Assessment Report.pdf';
+        link.click();
+      }).catch((err) => {
+        console.log(err.message);
+      })
 };
+
+
 const logoutHandler = () => {
   navigateTo(`/`);
 };  
@@ -125,7 +133,7 @@ const logoutHandler = () => {
               </div>
 
               <div>
-                <button @click="pdfHandler" class="textgreen mt-3">Download Report</button><br>
+                <button @click="pdfHandler(user.id)" class="textgreen mt-3">Download Report</button><br>
                 <button @click="toggle(key)" class="textgreen mt-3">{{isOpen[key] == true ? 'Hide Assessment' :'View Assessment'}}</button>
                 <Transition>
                   <div v-if="isOpen[key] == true" class="items-center w-full  ">
@@ -280,15 +288,11 @@ const logoutHandler = () => {
                       </li>
                     </ul>
                   </div>
-                </Transition>
-              </div>
-              <div class="pdf-container">
-                        <div class="pdf-wrapper">
-                          <div v-if="user.results" id="pdf-section" >
-                          <Pdf :total="user.score" :percentage="parseInt((user.score / 24 * 100).toFixed(0))" :results="JSON.parse(user.results)" />
-                            </div>
-                        </div>
+                </Transition>  
+                <div class="pdf-container">
+                      
                       </div>
+              </div>
             </li>
           </ul>
         </div>
@@ -345,21 +349,7 @@ const logoutHandler = () => {
 .pdf-container {
   position: relative;
   overflow: hidden;
-}
-.pdf-wrapper {
-  position: absolute;
-  left: 1000%;
-} 
-.pdf-header {
-  font-size: .75rem;
-  font-weight: 700;
-}
-
-.pdf-score {
-  font-size: .65rem;
-  font-weight: 600;
-}
-@media screen and (max-width: 640px) {
+}@media screen and (max-width: 640px) {
  .info-wrapper {
   flex-direction: column;
  }

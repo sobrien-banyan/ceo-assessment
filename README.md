@@ -11,7 +11,7 @@ Learn why Nuxt? by checking out [Nuxt 3 documentation](https://nuxt.com/docs/get
 Make sure to install the dependencies:
 
 ```bash
-yarn install
+npm install
 ```
 
 ## Development Server
@@ -19,7 +19,7 @@ yarn install
 Start the development server on `http://localhost:3000`:
 
 ```bash
-yarn dev
+npm run dev
 ```
 
 ## Production preview
@@ -27,7 +27,7 @@ yarn dev
 Locally preview production build:
 
 ```bash
-yarn preview
+npm preview
 ```
 ### Standards and colors
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

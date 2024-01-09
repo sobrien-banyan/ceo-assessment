@@ -10,6 +10,7 @@ import { responses } from './data/responses';
 import { reportContent } from '~/pages/assessment/data/reportContent';
 import { useRender } from 'vue-email';
 import template from '~/components/Email.vue';
+import { pdfHelper } from '~/composables/pdfHelper';
 
 const { UserName, Email } = route.query;
 
@@ -28,7 +29,6 @@ const results = ref({});
 const isOpen = ref({});
 const isPulseNext = ref(false);
 const isPulsePrevious = ref(false);
-const pdfSection = ref('');
 
 const runningScore = ref({});
 const runningAnswers = ref({});
@@ -77,15 +77,21 @@ const scrollHandler = () => {
 };
 
 const pdfHandler = () => {
-    const pdfSection = document.querySelector('#pdf-section');
-    if (pdfSection.style.display === "none") {
-        pdfSection.style.display = "block";
-    };
-    exportToPDF('CeoWorksAssessment.pdf', pdfSection);
-    setTimeout(() => {
-        pdfSection.style.display = "none";
-    }, 500);
-
+  const score = total.value;
+  const Rating = score <= 6 ? 'Have many opportunities to improve' : score > 6 && score <= 12 ? 'Fair' : score > 12 && score <= 18 ? 'Good' : 'Excellent'
+const pdfJson = pdfHelper((total.value / 24 * 100).toFixed(0), Rating, results.value);
+useFetch(`http://localhost:3000/pdf`, {
+            method: 'POST',
+            body: pdfJson,
+    }).then((result) => {
+        const blob = new Blob([result.data], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'Assessment Report.pdf';
+        link.click();
+    }).catch((error) => {
+        console.log(error.message);
+    })
 };
 
 
@@ -114,8 +120,7 @@ const saveScore = () => {
     });
     showResults.value = true;
     percentage.value = (total.value / 24 * 100).toFixed(0);
-    pdfSection.value = total.value  <= 6 ? `Have many opportunities to improve, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : total.value  > 6 && total.value  <= 12 ? `Fair, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : total.value  > 12 && total.value  <= 18 ? `Good, with a score of ${(total.value  / 24 * 100).toFixed(0)}%` : `Excellent , with a score of ${(total.value  / 24 * 100).toFixed(0)}%`; 
-    });
+});
 };
 const clickHandler = (event) => {
     runningScore.value[event.target.dataset.questionId] = event.target.value;
@@ -367,13 +372,6 @@ const clickHandler = (event) => {
                         </div>
                         <div v-html="reportContent.content_two"></div>
                     </div>
-                    <div class="pdf-container">
-                        <div class="pdf-wrapper">
-                            <div id="pdf-section">
-                        <Pdf :total="total" :percentage="parseInt(percentage)" :results="results" />
-                    </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -384,17 +382,6 @@ const clickHandler = (event) => {
 .card {
     min-height: 4rem;
 }
-.pdf-container {
-  position: relative;
-  overflow: hidden;
-}
-
-
-.pdf-wrapper {
-  position: absolute;
-  left: 1000%;
-}
-
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
