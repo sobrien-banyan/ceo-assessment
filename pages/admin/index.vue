@@ -63,7 +63,7 @@ const pdfHandler = (id) => {
   const userObject = users.value.find((user) => user.id === id);
   const score = userObject?.score;
   const Rating = score <= 6 ? 'Have many opportunities to improve' : score > 6 && score <= 12 ? 'Fair' : score > 12 && score <= 18 ? 'Good' : 'Excellent'
-   const pdfJson = pdfHelper((score / 24 * 100).toFixed(0), Rating, JSON.parse(userObject?.results));
+   const pdfJson = pdfHelper(Rating, JSON.parse(userObject?.results));
 useFetch(`http://localhost:3000/pdf`, {
             method: 'POST',
             body: pdfJson,

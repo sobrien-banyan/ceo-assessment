@@ -79,7 +79,7 @@ const scrollHandler = () => {
 const pdfHandler = () => {
     const score = total.value;
     const Rating = score <= 6 ? 'Have many opportunities to improve' : score > 6 && score <= 12 ? 'Fair' : score > 12 && score <= 18 ? 'Good' : 'Excellent';
-    const pdfJson = pdfHelper((total.value / 24 * 100).toFixed(0), Rating, results.value);
+    const pdfJson = pdfHelper(Rating, results.value);
     
     $fetch('http://localhost:3001/pdf', {
         method: 'POST',
