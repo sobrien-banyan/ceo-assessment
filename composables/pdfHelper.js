@@ -140,9 +140,12 @@ export const pdfHelper = (grade, results) => {
                 }
             ]
         };
+        let sectionScore = parseInt(results[key]['value']) + parseInt(results[parseInt(key) - 1]['value']);
+        // ** Shaun please review following line **
+        resultObject.grade = sectionScore <= 2 ? 'Opportunities to improve' : sectionScore <= 3 ? 'Fair' : sectionScore <= 4 ? 'Good' : 'Excellent';
 
         if (key === "2") {
-            if (parseInt(results[key]['value']) + parseInt(results[parseInt(key) - 1]['value']) < 4) {
+            if (sectionScore < 4) {
                 resultObject.feedback = responses.for_1_2.less_than_4;
             } else {
                 resultObject.feedback = responses.for_1_2.equal_to_or_greater_than_4;
@@ -152,7 +155,7 @@ export const pdfHelper = (grade, results) => {
         }
 
         if (key === "4") {
-            if (parseInt(results[key]['value']) + parseInt(results[parseInt(key) - 1]['value']) < 4) {
+            if (sectionScore < 4) {
                 resultObject.feedback = responses.for_3_4.less_than_4;
             } else {
                 resultObject.feedback = responses.for_3_4.equal_to_or_greater_than_4;
@@ -162,7 +165,7 @@ export const pdfHelper = (grade, results) => {
         }
 
         if (key === "6") {
-            if (parseInt(results[key]['value']) + parseInt(results[parseInt(key) - 1]['value']) < 4) {
+            if (sectionScore < 4) {
                 resultObject.feedback = responses.for_5_6.less_than_4;
             } else {
                 resultObject.feedback = responses.for_5_6.equal_to_or_greater_than_4;
@@ -172,7 +175,7 @@ export const pdfHelper = (grade, results) => {
         }
 
         if (key === "8") {
-            if (parseInt(results[key]['value']) + parseInt(results[parseInt(key) - 1]['value']) < 4) {
+            if (sectionScore < 4) {
                 resultObject.feedback = responses.for_7_8.less_than_4;
             } else {
                 resultObject.feedback = responses.for_7_8.equal_to_or_greater_than_4;
