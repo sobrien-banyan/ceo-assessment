@@ -65,7 +65,7 @@ const pdfHandler = (id) => {
   const Rating = score <= 6 ? 'Opportunities to improve' : sectionScore <= 12 ? 'Fair' : sectionScore <= 18 ? 'Good' : 'Excellent';
   const pdfJson = pdfHelper(Rating, JSON.parse(userObject?.results));
 
-  $fetch('http://localhost:3001/pdf', {
+  $fetch('http://172.31.41.41:3001/pdf', {
     method: 'POST',
     body: pdfJson,
   }).then((response) => {
