@@ -224,40 +224,7 @@ input {
     color: #999
 }
 
-.welcome-container {
-    width: 100%;
-    height: 80vh;
-    position: relative;
-    overflow: hidden;
-}
 
-.green-circle {
-    position: absolute;
-    top: -163%;
-    left: -19%;
-    background-color: #2da301;
-    border-radius: 50%;
-    width: 137vw;
-    height: 200%;
-}
-
-.header-text-container {
-    position: relative;
-    top: 9%;
-    font-weight: 600;
-}
-
-.text-wrapper {
-    position: relative;
-    bottom: 12%;
-}
-
-.text {
-    font-family: proxima-nova, sans-serif;
-    font-size: 1.4rem;
-    line-height: 2.5rem;
-    color: #555555;
-}
 
 .v-enter-active,
 .v-leave-active {
@@ -269,43 +236,5 @@ input {
     opacity: 0;
 }
 
-@media (max-width: 868px) {
 
-    .header-text-container {
-        top: 1%;
-        font-size: 2rem;
-    }
-    .header-text {
-        font-size: 2.5rem;
-    }
-
-    .text-wrapper {
-        bottom: 4%;
-    }
-
-    .text {
-        font-size: 1rem;
-        line-height: 1.75rem;
-    }
-
-}
-@media screen and (max-width: 640px) {
-    .welcome-container {
-    height: 60vh;
-}
-
-   .top-container {
-       padding: 0;
-       margin: 0;
-   }
-
-    .header-text {
-        font-size: 1.5rem;
-    }
-    .green-circle {
-    left: -39%;
-    width: 179vw;
-    height: 183%;
-}
-}
 </style>

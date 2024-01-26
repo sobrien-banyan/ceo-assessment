@@ -62,17 +62,23 @@ const deleteEmailHandler = (id) => {
 const pdfHandler = (id) => {
   const userObject = users.value.find((user) => user.id === id);
   const score = userObject?.score;
-  const Rating = score <= 6 ? 'Have many opportunities to improve' : score > 6 && score <= 12 ? 'Fair' : score > 12 && score <= 18 ? 'Good' : 'Excellent'
+  const Rating = score <= 6 ? 'Have many opportunities to improve' : score > 6 && score <= 6 ? 'Fair' : score > 6 && score <= 18 ? 'Good' : 'Excellent'
    const pdfJson = pdfHelper((score / 24 * 100).toFixed(0), Rating, JSON.parse(userObject?.results));
 useFetch(`http://localhost:3000/pdf`, {
             method: 'POST',
             body: pdfJson,
-    }).then((result) => {
-        const blob = new Blob([result.data], { type: 'application/pdf' });
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = 'Assessment Report.pdf';
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response], { type: 'application/pdf' }));
+       const link = document.createElement('a');
+
+       let fileName = 'CEOWorksAssessment.pdf';
+       link.href = url;
+       link.setAttribute('download', fileName);
+       document.body.appendChild(link);
         link.click();
+        link.remove();
+        window.URL.revokeObjectURL(url);
+
       }).catch((err) => {
         console.log(err.message);
       })
@@ -86,7 +92,7 @@ const logoutHandler = () => {
 
 <template>
   <section class="flex  mx-auto lg:items-center lg:justify-between flex-col py-4 bg-tan h-full">
-    <div class="space-y-12 m-5 wrapper h-full">
+    <div class="space-y-6 m-5 wrapper h-full">
       <div class="flex justify-between">
       <button @click="viewHandler"
         class="h-10 w-200 rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">
@@ -141,7 +147,7 @@ const logoutHandler = () => {
                       <li v-if="key == 2">
                         <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{
                           JSON.parse(user.results)[key]['section'] }}</h3>
-                          <div class="mb-2">For this section the score is: {{((parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value'])/16*100).toFixed(0))}}%</div>
+                          <div class="mb-2">For this section the score is: {{((parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value'])/6*100).toFixed(0))}}%</div>
                         <div
                           v-if="parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value']) < 4">
                           <div v-html="responses.for_1_2.less_than_4">
@@ -178,7 +184,7 @@ const logoutHandler = () => {
                       <li v-else-if="key == 4">
                         <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{
                           JSON.parse(user.results)[key]['section'] }}</h3>
-                          <div class="mb-2">For this section the score is: {{((parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value'])/12*100).toFixed(0))}}%</div>
+                          <div class="mb-2">For this section the score is: {{((parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value'])/6*100).toFixed(0))}}%</div>
                         <div
                           v-if="parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value']) < 4">
                           <div v-html="responses.for_3_4.less_than_4">
@@ -215,7 +221,7 @@ const logoutHandler = () => {
                       <li v-else-if="key == 6">
                         <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{
                           JSON.parse(user.results)[key]['section'] }}</h3>
-                          <div class="mb-2">For this section the score is: {{((parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value'])/12*100).toFixed(0))}}%</div>
+                          <div class="mb-2">For this section the score is: {{((parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value'])/6*100).toFixed(0))}}%</div>
                         <div
                           v-if="parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value']) < 4">
                           <div v-html="responses.for_5_6.less_than_4">
@@ -252,7 +258,7 @@ const logoutHandler = () => {
                       <li v-else-if="key == 8">
                         <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{
                           JSON.parse(user.results)[key]['section'] }}</h3>
-                          <div class="mb-2">For this section the score is: {{((parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value'])/12*100).toFixed(0))}}%</div>
+                          <div class="mb-2">For this section the score is: {{((parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value'])/6*100).toFixed(0))}}%</div>
                         <div
                           v-if="parseInt(JSON.parse(user.results)[key]['value']) + parseInt(JSON.parse(user.results)[key - 1]['value']) < 4">
                           <div v-html="responses.for_7_8.less_than_4">
@@ -289,9 +295,6 @@ const logoutHandler = () => {
                     </ul>
                   </div>
                 </Transition>  
-                <div class="pdf-container">
-                      
-                      </div>
               </div>
             </li>
           </ul>
@@ -346,10 +349,7 @@ const logoutHandler = () => {
   white-space: break-spaces;
   word-break: break-all;
 }
-.pdf-container {
-  position: relative;
-  overflow: hidden;
-}@media screen and (max-width: 640px) {
+@media screen and (max-width: 640px) {
  .info-wrapper {
   flex-direction: column;
  }
