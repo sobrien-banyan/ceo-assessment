@@ -7,7 +7,6 @@ const route = useRoute();
 
 import { questions } from './data/questions';
 import { responses } from './data/responses';
-import { reportContent } from '~/pages/assessment/data/reportContent';
 import { useRender } from 'vue-email';
 import template from '~/components/Email.vue';
 import { pdfHelper } from '~/composables/pdfHelper';
@@ -15,28 +14,20 @@ import { pdfHelper } from '~/composables/pdfHelper';
 const { UserName, Email } = route.query;
 
 
-const shuffledQuestions = ref(questions.map((obj) => {
-    obj.answers.sort(() => Math.random() - 0.5);
-    return obj;
-}).sort(() => Math.random() - 0.5));
+const Questions = ref(questions);
 
 const showListItem = ref(0);
 const showResults = ref(false);
 const showSubmitButton = ref(false);
 const total = ref(0);
-const percentage = ref(0);
 const results = ref({});
-const isOpen = ref({});
+const preamble = ref(true);
 const isPulseNext = ref(false);
 const isPulsePrevious = ref(false);
 
 const runningScore = ref({});
 const runningAnswers = ref({});
 const length = questions.length;
-
-const toggle = (index) => {
-    isOpen.value[index] = !isOpen.value[index];
-};
 
 const pluseDirection = () => {
     const runningLength = Object.keys(runningAnswers.value).length;
@@ -57,6 +48,14 @@ const pluseDirection = () => {
     };  
 };
 
+const start = () => {
+    if (preamble) {
+        preamble.value = false;
+    } else {
+        preamble.value = true;
+    }
+};
+
 const next = () => {
     isPulseNext.value = false;
     if (showListItem.value < length - 1) {
@@ -69,11 +68,6 @@ const prev = () => {
     if (showListItem.value > 0) {
         showListItem.value--;
     };
-};
-
-const scrollHandler = () => {
-    const pdfSection = document.querySelector('#pdf-report-section');
-    pdfSection.scrollIntoView({ behavior: 'smooth' });
 };
 
 const pdfHandler = () => {
@@ -152,21 +146,31 @@ const clickHandler = (event) => {
 </script>
 
 <template>
-    <section class="flex mx-auto lg:items-center lg:justify-between flex-col py-4 bg-tan h-full"
-        v-if="!showResults">
-        <div class="space-y-12 m-5 wrapper h-full">
-            <h1 class="question text-2xl font-semibold text-gray-900 ">{{ shuffledQuestions[showListItem].question }}</h1>
+    <section v-if="!showResults" class="flex mx-auto lg:items-center lg:justify-between flex-col py-4 bg-tan h-full">
+     <div v-if="preamble"  class="wrapper">
+        <div class="space-y-12 mt-5 h-full  bg-white border border-gray-200 rounded-lg p-4">
+            <h1 class="answer font-semibold text-gray-900 ">Please answer the questions to the best of your ability; at the end of the assessment you will be provided a set of recommendations based upon the following four categories: Excellent, Good, Fair, Opportunities to improve.</h1>
+                <div class="flex justify-between">
+                        <div class="w-28"></div>
+                        <div class="w-28"></div>
+                         <button @click="start"
+                        class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">Continue</button>
+                </div>
+        </div>
+    </div>
+        <div v-else class="space-y-12 m-5 wrapper h-full">
+            <h1 class="question font-semibold text-gray-900 ">{{ Questions[showListItem].question }}</h1>
             <div class="h-full">
-                <ul v-for="answer in shuffledQuestions[showListItem].answers" class="w-full">
+                <ul v-for="answer in Questions[showListItem].answers" class="w-full">
                     <li class="mb-2 font-medium bg-white border border-gray-200 rounded-lg cursor">
                         <div class="flex items-center pl-3 card cursor">
-                            <input v-if="runningAnswers[shuffledQuestions[showListItem].id] == answer.id" @click="clickHandler" type="radio" :name="answer.id"
-                                :data-question-id="shuffledQuestions[showListItem].id" :id="answer.id" :value="answer.value"
-                                v-model=runningScore[shuffledQuestions[showListItem].id]
+                            <input v-if="runningAnswers[Questions[showListItem].id] == answer.id" @click="clickHandler" type="radio" :name="answer.id"
+                                :data-question-id="Questions[showListItem].id" :id="answer.id" :value="answer.value"
+                                v-model=runningScore[Questions[showListItem].id]
                                 class="w-6 h-6 cursor focus:ring-0 focus:ring-offset-0 focus:ring-offset-white focus:ring-opacity-100 radioInputSelected" />
                              <input v-else @click="clickHandler" type="radio" :name="answer.id"
-                                :data-question-id="shuffledQuestions[showListItem].id" :id="answer.id" :value="answer.value"
-                                v-model=runningScore[shuffledQuestions[showListItem].id]
+                                :data-question-id="Questions[showListItem].id" :id="answer.id" :value="answer.value"
+                                v-model=runningScore[Questions[showListItem].id]
                                 class="w-6 h-6 cursor focus:ring-0 focus:ring-offset-0 focus:ring-offset-white focus:ring-opacity-100 radioInput" />
                             <label :for="answer.id" class="answer noselect w-full py-3 ml-2 pr-2 font-medium text-gray-900 cursor">
                                 {{ answer.answer }}</label>
@@ -189,197 +193,24 @@ const clickHandler = (event) => {
             </div>
         </div>
     </section>
-    <section v-else>
-        <div class="flex mx-auto lg:items-center lg:justify-between flex-col py-4 h-full bg-tan">
-            <div class="m-5 wrapper h-full">
-                <div class="flex mb-6">
-                    <button @click="pdfHandler"
-                        class="h-10 w-200 mr-6 rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">
-                        Download Report
-                    </button>
-                    <button @click="scrollHandler"
-                        class="h-10 w-200 rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">
-                        View Report
-                    </button>
+    <section v-else class="results-container bg-white">
+        <div class="green-circle hide-green"></div>
+        <div class="flex px-8 mx-auto items-center justify-between flex-col py-4 relative z-10 h-full">
+            <div class="wrapper px-8 flex mx-auto items-center justify-between flex-col h-full">
+                <div class="header-text-container">
+                    <h1 class=" text-center text-4xl text-white black-text" v-html="responses.header"></h1>
                 </div>
-                <div class=" mb-6">
-                    <div class="text-center text-3xl" v-html="responses.header"></div>
-                    <div class="flex flex-wrap mt-4 w-full">
-                        <div class="lg:text-xl" v-html="responses.subheader"></div>
-                        <div class="underline decoration-solid lg:text-xl" v-if="total <= 6">Have many opportunities to improve, with a score of {{ percentage
-                        }}</div>
-                        <div class="underline decoration-solid lg:text-xl" v-else-if="total > 6 && total <= 12"><span>Fair, with a
-                                score of {{ percentage }}%</span></div>
-                        <div class="underline decoration-solid lg:text-xl" v-else-if="total > 12 && total <= 18"><span>Good, with
-                                a score of {{ percentage }}%</span></div>
-                        <div class="underline decoration-solid lg:text-xl" v-else="total > 18 && total <= 24"><span>Excellent,
-                                with a score of {{ percentage }}%</span></div>
+                <div class="results-wrapper">
+                    <div v-html="responses.subheader"></div><br>
+                        <div v-html="responses.subheader1"></div><br>
+                        <div class="text-center text-3xl" v-if="total <= 6">Have many opportunities to improve</div>
+                        <div class="text-center text-3xl" v-else-if="total > 6 && total <= 12">Fair</div>
+                        <div class="text-center text-3xl" v-else-if="total > 12 && total <= 18">Good</div>
+                        <div class="text-center text-3xl" v-else="total > 18 && total <= 24">Excellent</div>
+                        <br>
+                        <div class=""><span class="cursor-pointer rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300" @click="pdfHandler">Click here</span> to access and download your personalized assessment report. </div><br>
+                        <div class="">The Inclusive Hiring team at the Center for Employment Opportunities helps employers catalyze shifts in employment practices by partnering with employers and community stakeholders to unlock career pathways that promote racial equity and provide economic mobility for people with convictions. Please reach out to <span class="underline decoration-solid text-blue-800">inclusivehiring@ceoworks.org</span> to discuss your recommendations and to learn more about fair chance hiring. </div><br>
                     </div>
-                </div>
-                <div class="mb-10 lg:text-xl">
-                    <div v-if="total <= 6" v-html="responses.for_1_2.lessthan_equal_6"></div>
-                    <div v-else-if="total > 6 && total <= 12" v-html="responses.greaterthan_6_and_lessthan_equal_12"></div>
-                    <div v-else-if="total > 12 && total <= 18" v-html="responses.greaterthan_12_and_lessthan_equal_18">
-                    </div>
-                    <div v-else="total > 18 && total <= 24" v-html="responses.greaterthan_18"></div>
-                </div>
-                
-                <div class="w-full bg-white border-gray-200 rounded-lg  px-6 py-3">
-                    <ul class="mt-5" v-for="_, key in results">
-                        <li v-if="key == 2">
-                            <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
-                            <div class="mb-2">For this section your score is: {{((parseInt(results[key]['value']) + parseInt(results[key - 1]['value'])/16*100).toFixed(0))}}%</div>
-                            <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
-                                <div v-html="responses.for_1_2.less_than_4">
-                                </div>
-                            </div>
-                            <div v-else>
-                                <div v-html="responses.for_1_2.equal_to_or_greater_than_4">
-                                </div>
-                            </div>
-                            <button @click="toggle(key)" class="textgreen">{{isOpen[key] == true ? 'Hide your answers' :'See your answers'}}</button>
-                            <Transition>
-                                <div v-if="isOpen[key] == true" class="items-center w-full ">
-                                    <div class="w-full py-3 text-gray-900">
-                                        <span class="mr-4 text-neutral-400">Question:</span> {{ results[key]['question'] }}
-                                    </div>
-                                    <div class="w-full py-3 text-gray-900">
-                                        <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{
-                                            results[key]['answer'] }}
-                                    </div>
-                                    <div class="w-full py-3 text-gray-900">
-                                        <span class="mr-4 text-neutral-400">Question:</span> {{ results[key - 1]['question']
-                                        }}
-                                    </div>
-                                    <div class="w-full py-3 text-gray-900">
-                                        <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{ results[key -
-                                            1]['answer']
-                                        }}
-                                    </div>
-                                </div>
-                            </Transition>
-                        </li>
-                        <li v-else-if="key == 4">
-                            <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
-                            <div class="mb-2">For this section your score is: {{((parseInt(results[key]['value']) + parseInt(results[key - 1]['value'])/12*100).toFixed(0))}}%</div>
-                            <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
-                                <div v-html="responses.for_3_4.less_than_4">
-                                </div>
-                            </div>
-                            <div v-else>
-                                <div v-html="responses.for_3_4.equal_to_or_greater_than_4">
-                                </div>
-                            </div>
-                            <button @click="toggle(key)" class="textgreen">{{isOpen[key] == true ? 'Hide your answers' :'See your answers'}}</button>
-                            <Transition>
-                                <div v-if="isOpen[key] == true" class="items-center w-full ">
-                                    <div class="w-full py-3 text-gray-900">
-                                        <span class="mr-4 text-neutral-400">Question:</span> {{ results[key - 1]['question']
-                                        }}
-                                    </div>
-                                    <div class="w-full py-3 text-gray-900">
-                                        <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{ results[key -
-                                            1]['answer']
-                                        }}
-                                    </div>
-                                    <div class="w-full py-3 text-gray-900">
-                                        <span class="mr-4 text-neutral-400">Question:</span> {{ results[key]['question'] }}
-                                    </div>
-                                    <div class="w-full py-3 text-gray-900">
-                                        <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{
-                                            results[key]['answer'] }}
-                                    </div>
-                                </div>
-                            </Transition>
-                        </li>
-                        <li v-else-if="key == 6">
-                            <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
-                            <div class="mb-2">For this section your score is: {{((parseInt(results[key]['value']) + parseInt(results[key - 1]['value'])/12*100).toFixed(0))}}%</div>
-                            <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
-                                <div v-html="responses.for_5_6.less_than_4">
-                                </div>
-                            </div>
-                            <div v-else>
-                                <div v-html="responses.for_5_6.equal_to_or_greater_than_4">
-                                </div>
-                            </div>
-                            <button @click="toggle(key)" class="textgreen">{{isOpen[key] == true ? 'Hide your answers' :'See your answers'}}</button>
-                            <Transition>
-                                <div v-if="isOpen[key] == true" class="items-center w-full ">
-                                    <div class="w-full py-3 text-gray-900">
-                                        <span class="mr-4 text-neutral-400">Question:</span> {{ results[key - 1]['question']
-                                        }}
-                                    </div>
-                                    <div class="w-full py-3 text-gray-900">
-                                        <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{ results[key -
-                                            1]['answer']
-                                        }}
-                                    </div>
-                                    <div class="w-full py-3 text-gray-900">
-                                        <span class="mr-4 text-neutral-400">Question:</span> {{ results[key]['question'] }}
-                                    </div>
-                                    <div class="w-full py-3 text-gray-900">
-                                        <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{
-                                            results[key]['answer'] }}
-                                    </div>
-                                </div>
-                            </Transition>
-                        </li>
-                        <li v-else-if="key == 8">
-                            <h3 class="text-lg lg:text-2xl text-center w-full mb-4">{{ results[key]['section'] }}</h3>
-                            <div class="mb-2">For this section your score is: {{((parseInt(results[key]['value']) + parseInt(results[key - 1]['value'])/12*100).toFixed(0))}}%</div>
-                            <div v-if="parseInt(results[key]['value']) + parseInt(results[key - 1]['value']) < 4">
-                                <div v-html="responses.for_7_8.less_than_4">
-                                </div>
-                            </div>
-                            <div v-else>
-                                <div v-html="responses.for_7_8.equal_to_or_greater_than_4">
-                                </div>
-                            </div>
-                            <button @click="toggle(key)" class="textgreen">{{isOpen[key] == true ? 'Hide your answers' :'See your answers'}}</button>
-                            <Transition>
-                                <div v-if="isOpen[key] == true" class="items-center w-full ">
-                                    <div class="w-full py-3 text-gray-900">
-                                        <span class="mr-4 text-neutral-400">Question:</span> {{ results[key - 1]['question']
-                                        }}
-                                    </div>
-                                    <div class="w-full py-3 text-gray-900">
-                                        <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{ results[key -
-                                            1]['answer']
-                                        }}
-                                    </div>
-                                    <div class="w-full py-3 text-gray-900">
-                                        <span class="mr-4 text-neutral-400">Question:</span> {{ results[key]['question'] }}
-                                    </div>
-                                    <div class="w-full py-3 text-gray-900">
-                                        <span class="ml-6 mr-4 text-neutral-400">Your answer:</span>{{
-                                            results[key]['answer'] }}
-                                    </div>
-                                </div>
-                            </Transition>
-                        </li>
-                    </ul>
-                </div>
-                <div id="pdf-report-section" class="w-full mt-20 bg-white border-gray-200 rounded-lg  px-6 py-3">
-                    <button @click="pdfHandler"
-                        class="h-10 w-200 mb-6 rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">
-                        Download Report
-                    </button>
-                    <div>
-                        <h3 class="text-lg lg:text-2xl text-center w-full mb-4">Assessment Report</h3>
-                        <div v-html="reportContent.content_one"></div>
-                        <div class="underline decoration-solid text-lg lg:text-2xl" v-if="total <= 6">Have many opportunities to improve, with a
-                            score of {{ percentage }}</div>
-                        <div class="underline decoration-solid text-lg lg:text-2xl"
-                            v-else-if="total > 6 && total <= 12"><span>Fair, with a score of {{ percentage }}%</span></div>
-                        <div class="underline decoration-solid text-lg lg:text-2xl"
-                            v-else-if="total > 12 && total <= 18"><span>Good, with a score of {{ percentage }}%</span></div>
-                        <div class="underline decoration-solid text-lg lg:text-2xl" v-else="total > 18 && total <= 24">
-                            <span>Excellent, with a score of {{ percentage }}%</span>
-                        </div>
-                        <div v-html="reportContent.content_two"></div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -428,6 +259,29 @@ const clickHandler = (event) => {
     color: #2da301;
 }
 
+.results-container {
+    width: 100%;
+    height: 88vh;
+    position: relative;
+    overflow-x: hidden;
+    -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+.results-container::-webkit-scrollbar {
+  display: none;
+}
+
+.results-wrapper {
+    position: relative;
+    bottom: 10%;
+}
+.question {
+    font-size: 1.5rem;
+}
+.answer {
+    font-size: 1rem;
+}
+
 @media (max-width: 868px) {
 
 .question {
@@ -436,14 +290,32 @@ const clickHandler = (event) => {
 p {
     word-break: break-all;
 }
+.results-container {
+    height: 100vh;
+
+}
 }
 @media screen and (max-width: 640px) {
     .question {
-    font-size: 1.5rem;
+    font-size: 1rem;
     margin-top: 2rem;
 }
 .answer {
-    font-size: 1rem;
+    font-size: .90rem;
 }  
+.hide-green {
+    display: none;
 }
+.black-text {
+    color: #000000;
+}
+}
+
+@media (max-height: 800px) {
+    .results-wrapper {
+    top: 30%;
+}
+
+}
+
 </style>

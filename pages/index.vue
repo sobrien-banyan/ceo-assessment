@@ -231,26 +231,6 @@ input {
     overflow: hidden;
 }
 
-.green-circle {
-    position: absolute;
-    top: -163%;
-    left: -19%;
-    background-color: #2da301;
-    border-radius: 50%;
-    width: 137vw;
-    height: 200%;
-}
-
-.header-text-container {
-    position: relative;
-    top: 9%;
-    font-weight: 600;
-}
-
-.text-wrapper {
-    position: relative;
-    bottom: 12%;
-}
 
 .text {
     font-family: proxima-nova, sans-serif;
