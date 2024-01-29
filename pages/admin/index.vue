@@ -6,6 +6,7 @@ definePageMeta({
 import { ref, watchEffect } from 'vue';
 import { responses } from '../assessment/data/responses';
 import { pdfHelper } from '~/composables/pdfHelper';
+const config = useRuntimeConfig();
 
 const users = ref([]);
 const emails = ref([]);
@@ -65,7 +66,7 @@ const pdfHandler = (id) => {
   const Rating = score <= 6 ? 'Opportunities to improve' : sectionScore <= 12 ? 'Fair' : sectionScore <= 18 ? 'Good' : 'Excellent';
   const pdfJson = pdfHelper(Rating, JSON.parse(userObject?.results));
 
-  $fetch('http://3.18.225.118:3001/pdf', {
+  $fetch(config.public.vueEmailOptions.pdfGeneratorUrl, {
     method: 'POST',
     body: pdfJson,
   }).then((response) => {

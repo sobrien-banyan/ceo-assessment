@@ -110,16 +110,14 @@
     overflow: hidden;
     max-height: 0;
   }
-
-
-  .green-circle {
+  .green-circle-img {
     position: absolute;
-    top: -163%;
-    left: -19%;
-    background-color: #2da301;
-    border-radius: 50%;
-    width: 137vw;
-    height: 200%;
+    top: 0;
+    right: 0;
+    z-index: 0;
+    width: 100%;
+    height: auto;
+    max-height: 230px;
 }
 
 .header-text-container {
@@ -132,6 +130,12 @@
     position: relative;
     bottom: 12%;
 }
+.text {
+  font-family: proxima-nova, sans-serif;
+  font-size: 1.4rem;
+  line-height: 2.5rem;
+  color: #555555;
+}
 
   
   @media (max-width: 868px) {
@@ -143,6 +147,27 @@
         margin: 0;
         margin-bottom: 4rem;
         }
+        .header-text-container {
+          top: 1%;
+          font-size: 2rem;
+      }
+      .header-text {
+          font-size: 2.5rem;
+      }
   
+      .text-wrapper {
+          bottom: 4%;
+      }
+      .text {
+        font-size: 1rem;
+        line-height: 1.75rem;
+    }
 
+}
+
+@media screen and (max-width: 640px) {
+
+  .header-text {
+      font-size: 1.5rem;
+  }
 }

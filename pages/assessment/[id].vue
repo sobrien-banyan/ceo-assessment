@@ -4,6 +4,7 @@ definePageMeta({
 });
 import { ref } from 'vue';
 const route = useRoute();
+const config = useRuntimeConfig();
 
 import { questions } from './data/questions';
 import { responses } from './data/responses';
@@ -75,7 +76,7 @@ const pdfHandler = () => {
     const Rating = score <= 6 ? 'Have many opportunities to improve' : score > 6 && score <= 12 ? 'Fair' : score > 12 && score <= 18 ? 'Good' : 'Excellent';
     const pdfJson = pdfHelper(Rating, results.value);
     
-    $fetch('http://3.18.225.118:3001/pdf', {
+    $fetch(config.public.vueEmailOptions.pdfGeneratorUrl, {
         method: 'POST',
         body: pdfJson,
     }).then((response) => {
@@ -194,22 +195,22 @@ const clickHandler = (event) => {
         </div>
     </section>
     <section v-else class="results-container bg-white">
-        <div class="green-circle hide-green"></div>
-        <div class="flex px-8 mx-auto items-center justify-between flex-col py-4 relative z-10 h-full">
-            <div class="wrapper px-8 flex mx-auto items-center justify-between flex-col h-full">
+       <img class="green-circle-img" src="/assets/img/greenCircle.png" alt="green circle">
+        <div class="flex px-8 mx-auto items-center flex-col py-4 relative z-10 h-full">
+            <div class="wrapper px-8 flex mx-auto items-center flex-col h-full">
                 <div class="header-text-container">
-                    <h1 class=" text-center text-4xl text-white black-text" v-html="responses.header"></h1>
+                    <h1 class=" text-center thank-you-text text-white" v-html="responses.header"></h1>
                 </div>
                 <div class="results-wrapper">
-                    <div v-html="responses.subheader"></div><br>
-                        <div v-html="responses.subheader1"></div><br>
-                        <div class="text-center text-3xl" v-if="total <= 6">Have many opportunities to improve</div>
-                        <div class="text-center text-3xl" v-else-if="total > 6 && total <= 12">Fair</div>
-                        <div class="text-center text-3xl" v-else-if="total > 12 && total <= 18">Good</div>
-                        <div class="text-center text-3xl" v-else="total > 18 && total <= 24">Excellent</div>
+                    <div class="small-text" v-html="responses.subheader"></div><br>
+                        <div class="small-text" v-html="responses.subheader1"></div><br>
+                        <div class="text-center text-3xl small-text1" v-if="total <= 6">Have many opportunities to improve</div>
+                        <div class="text-center text-3xl small-text1" v-else-if="total > 6 && total <= 12">Fair</div>
+                        <div class="text-center text-3xl small-text1" v-else-if="total > 12 && total <= 18">Good</div>
+                        <div class="text-center text-3xl small-text1" v-else="total > 18 && total <= 24">Excellent</div>
                         <br>
-                        <div class=""><span class="cursor-pointer rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300" @click="pdfHandler">Click here</span> to access and download your personalized assessment report. </div><br>
-                        <div class="">The Inclusive Hiring team at the Center for Employment Opportunities helps employers catalyze shifts in employment practices by partnering with employers and community stakeholders to unlock career pathways that promote racial equity and provide economic mobility for people with convictions. Please reach out to <span class="underline decoration-solid text-blue-800">inclusivehiring@ceoworks.org</span> to discuss your recommendations and to learn more about fair chance hiring. </div><br>
+                        <div class="small-text"><span class="cursor-pointer rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300" @click="pdfHandler">Click here</span> to access and download your personalized assessment report. </div><br>
+                        <div class="small-text">The Inclusive Hiring team at the Center for Employment Opportunities helps employers catalyze shifts in employment practices by partnering with employers and community stakeholders to unlock career pathways that promote racial equity and provide economic mobility for people with convictions. Please reach out to <span class="underline decoration-solid text-blue-800">inclusivehiring@ceoworks.org</span> to discuss your recommendations and to learn more about fair chance hiring. </div><br>
                     </div>
             </div>
         </div>
@@ -217,6 +218,8 @@ const clickHandler = (event) => {
 </template>
 
 <style scoped>
+
+
 .card {
     min-height: 4rem;
 }
@@ -273,7 +276,7 @@ const clickHandler = (event) => {
 
 .results-wrapper {
     position: relative;
-    bottom: 10%;
+    top: 30%;
 }
 .question {
     font-size: 1.5rem;
@@ -281,7 +284,9 @@ const clickHandler = (event) => {
 .answer {
     font-size: 1rem;
 }
-
+.thank-you-text {
+    font-size: 2rem;
+}
 @media (max-width: 868px) {
 
 .question {
@@ -294,6 +299,9 @@ p {
     height: 100vh;
 
 }
+.thank-you-text {
+    font-size: 1.5rem;
+}
 }
 @media screen and (max-width: 640px) {
     .question {
@@ -303,19 +311,19 @@ p {
 .answer {
     font-size: .90rem;
 }  
-.hide-green {
-    display: none;
+.thank-you-text {
+    font-size: 1rem;
+    margin-top: -10px;
 }
-.black-text {
-    color: #000000;
+.results-wrapper {
+    top: 20%;
 }
+.small-text {
+    font-size: .75rem;
 }
-
-@media (max-height: 800px) {
-    .results-wrapper {
-    top: 30%;
+.small-text1 {
+    font-size: 1.5rem;
 }
-
 }
 
 </style>

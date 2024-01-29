@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
       },
       Subject: {
         Charset: 'UTF-8',
-        Data: 'hello world',
+        Data: 'CEO Works Assessment',
       },
     },
   };

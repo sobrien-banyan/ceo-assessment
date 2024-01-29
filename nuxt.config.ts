@@ -22,6 +22,7 @@ export default defineNuxtConfig({
   },
   vueEmail: {
     key: process.env.AUTH_SECRET,
+    pdfGeneratorUrl: process.env.PDF_GENERATOR_URL,
   },
 
 });

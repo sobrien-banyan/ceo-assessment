@@ -70,13 +70,12 @@ const states =
 
 <template>
     <section class="welcome-container">
-        <div class="green-circle"></div>
-
+        <img class="green-circle-img" src="/assets/img/greenCircle.png" alt="green circle">
         <div class="flex top-container px-8 mx-auto items-center justify-between flex-col py-4 relative z-10 h-full">
             <div class="wrapper px-8 flex mx-auto items-center justify-between flex-col h-full">
                 <div class="header-text-container">
                     <h1 class="header-text text-center text-5xl text-white">Fair Chance Employment</h1>
-                    <h1 class="header-text text-center text-5xl text-white">Self-Assessment</h1>
+                    <h1 class="header-text text-center text-5xl text-white mb-6">Self-Assessment</h1>
                 </div>
                 <div class="text-wrapper">
                     <div class="text text-center">A fair chance employer prioritizes evaluating an applicant's skills before considering prior criminal convictions. Please utilize this assessment to evaluate your company's existing hiring procedures to gain deeper insights into expanding your fair chance hiring initiatives!</div>
@@ -232,12 +231,7 @@ input {
 }
 
 
-.text {
-    font-family: proxima-nova, sans-serif;
-    font-size: 1.4rem;
-    line-height: 2.5rem;
-    color: #555555;
-}
+
 
 .v-enter-active,
 .v-leave-active {
@@ -249,26 +243,7 @@ input {
     opacity: 0;
 }
 
-@media (max-width: 868px) {
 
-    .header-text-container {
-        top: 1%;
-        font-size: 2rem;
-    }
-    .header-text {
-        font-size: 2.5rem;
-    }
-
-    .text-wrapper {
-        bottom: 4%;
-    }
-
-    .text {
-        font-size: 1rem;
-        line-height: 1.75rem;
-    }
-
-}
 @media screen and (max-width: 640px) {
     .welcome-container {
     height: 60vh;
@@ -279,13 +254,6 @@ input {
        margin: 0;
    }
 
-    .header-text {
-        font-size: 1.5rem;
-    }
-    .green-circle {
-    left: -39%;
-    width: 179vw;
-    height: 183%;
-}
+
 }
 </style>
