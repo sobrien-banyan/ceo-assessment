@@ -6,10 +6,6 @@ const props = defineProps({
     type: String,
     default: 'Valued Client',
   },
-  AssessmentScore: {
-    type: Number,
-    default: 100,
-  },
   Rating: {
     type: String,
     default: 'Excellent!',
@@ -93,10 +89,6 @@ const boxInfos = {
                 {{ formattedDate }}
               </EText>
               <EText :style="{ ...paragraph, marginTop: '-5px' }">
-                <b>Score: </b>
-                {{ (AssessmentScore / 24 * 100).toFixed(0) }}%
-              </EText>
-              <EText :style="{ ...paragraph, marginTop: '-5px' }">
                 <b>Rating: </b>
                 {{ Rating }}
               </EText>
@@ -106,8 +98,7 @@ const boxInfos = {
                   <EHeading style="font-size: 28; font-weight: bold">Assessment Report</EHeading>
                   <div v-html="reportContent.content_one"></div>
                   <div :style="{ ...paragraph }" class="underline decoration-solid ml-7 text-lg lg:text-2xl">
-                    {{ Rating }}, with a
-                    score of {{ (AssessmentScore / 24 * 100).toFixed(0) }}%</div>
+                    {{ Rating }}</div>
                   <div v-html="reportContent.content_two"></div>
                 </div>
               </EText>

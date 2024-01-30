@@ -63,8 +63,8 @@ const deleteEmailHandler = (id) => {
 const pdfHandler = (id) => {
   const userObject = users.value.find((user) => user.id === id);
   const score = userObject?.score;
-  const Rating = score <= 6 ? 'Opportunities to improve' : sectionScore <= 12 ? 'Fair' : sectionScore <= 18 ? 'Good' : 'Excellent';
-  const pdfJson = pdfHelper(Rating, JSON.parse(userObject?.results));
+  const Rating = score <= 6 ? 'Opportunities to improve' : score <= 12 ? 'Fair' : score <= 18 ? 'Good' : 'Excellent';
+  const pdfJson = Rating && userObject?.results && pdfHelper(Rating, JSON.parse(userObject?.results));
 
   $fetch(config.public.vueEmailOptions.pdfGeneratorUrl, {
     method: 'POST',

@@ -109,7 +109,7 @@ const saveScore = () => {
     });
     const Rating = score <= 6 ? 'Have many opportunities to improve' : score > 6 && score <= 12 ? 'Fair' : score > 12 && score <= 18 ? 'Good' : 'Excellent';
 
-    const html = async () => await useRender(template, { UserName, AssessmentScore: score, Rating: Rating }, {
+    const html = async () => await useRender(template, { UserName, Rating: Rating }, {
         pretty: true,
     });
     html().then((result) => {
@@ -121,7 +121,6 @@ const saveScore = () => {
         },
     });
     showResults.value = true;
-    percentage.value = (total.value / 24 * 100).toFixed(0);
 });
 };
 const clickHandler = (event) => {
