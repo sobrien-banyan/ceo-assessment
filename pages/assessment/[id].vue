@@ -149,7 +149,7 @@ const clickHandler = (event) => {
     <section v-if="!showResults" class="flex mx-auto lg:items-center lg:justify-between flex-col py-4 bg-tan h-full">
      <div v-if="preamble"  class="wrapper">
         <div class="space-y-12 mt-5 h-full  bg-white border border-gray-200 rounded-lg p-4">
-            <h1 class="answer font-semibold text-gray-900 ">Please answer the questions to the best of your ability; at the end of the assessment you will be provided a set of recommendations based upon the following four categories: Excellent, Good, Fair, Opportunities to improve.</h1>
+            <h1 class="answer font-semibold text-gray-900 leading-7">In the next section, please answer the questions to the best of your ability. The questions are focused on fair chance hiring practices and the talent lifecycle. Based upon your responses you will be given a score and will be provided with individualized recommendations on fair chance hiring practices. </h1>
                 <div class="flex justify-between">
                         <div class="w-28"></div>
                         <div class="w-28"></div>
@@ -195,18 +195,18 @@ const clickHandler = (event) => {
     </section>
     <section v-else class="results-container bg-white">
        <img class="green-circle-img" src="/assets/img/greenCircle.png" alt="green circle">
-        <div class="flex px-8 mx-auto items-center flex-col py-4 relative z-10 h-full">
-            <div class="wrapper px-8 flex mx-auto items-center flex-col h-full">
-                <div class="header-text-container">
-                    <h1 class=" text-center thank-you-text text-white" v-html="responses.header"></h1>
-                </div>
+        <div class="flex px-8 mx-auto items-center flex-col relative z-10 h-full">
+            <div class="header-text-container">
+                <h1 class=" text-center thank-you-text text-white" v-html="responses.header"></h1>
+            </div>
+            <div class="wrapper px-8 mx-auto items-center ">
                 <div class="results-wrapper">
                     <div class="small-text" v-html="responses.subheader"></div><br>
                         <div class="small-text" v-html="responses.subheader1"></div><br>
-                        <div class="text-center text-3xl small-text1" v-if="total <= 6">Have many opportunities to improve</div>
-                        <div class="text-center text-3xl small-text1" v-else-if="total > 6 && total <= 12">Fair</div>
-                        <div class="text-center text-3xl small-text1" v-else-if="total > 12 && total <= 18">Good</div>
-                        <div class="text-center text-3xl small-text1" v-else="total > 18 && total <= 24">Excellent</div>
+                        <div class="text-center text-3xl small-text1 font-medium me-2 px-2.5 py-0.5" v-if="total <= 6">Have many opportunities to improve</div>
+                        <div class="text-center text-3xl small-text1 font-medium me-2 px-2.5 py-0.5" v-else-if="total > 6 && total <= 12">Fair</div>
+                        <div class="text-center text-3xl small-text1 font-medium me-2 px-2.5 py-0.5" v-else-if="total > 12 && total <= 18">Good</div>
+                        <div class="text-center text-3xl small-text1 font-medium me-2 px-2.5 py-0.5" v-else="total > 18 && total <= 24">Excellent</div>
                         <br>
                         <div class="small-text"><span class="cursor-pointer rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300" @click="pdfHandler">Click here</span> to access and download your personalized assessment report. </div><br>
                         <div class="small-text">The Inclusive Hiring team at the Center for Employment Opportunities helps employers catalyze shifts in employment practices by partnering with employers and community stakeholders to unlock career pathways that promote racial equity and provide economic mobility for people with convictions. Please reach out to <span class="underline decoration-solid text-blue-800">inclusivehiring@ceoworks.org</span> to discuss your recommendations and to learn more about fair chance hiring. </div><br>
@@ -217,7 +217,6 @@ const clickHandler = (event) => {
 </template>
 
 <style scoped>
-
 
 .card {
     min-height: 4rem;
@@ -260,7 +259,12 @@ const clickHandler = (event) => {
     background-color: #2da301 !important;
     color: #2da301;
 }
-
+.header-text-container {
+    position: relative;
+    font-weight: 600;
+    padding: 8vh 0 17vh;
+    width: 100%;
+}
 .results-container {
     width: 100%;
     height: 88vh;
@@ -273,10 +277,7 @@ const clickHandler = (event) => {
   display: none;
 }
 
-.results-wrapper {
-    position: relative;
-    top: 30%;
-}
+
 .question {
     font-size: 1.5rem;
 }
@@ -286,6 +287,8 @@ const clickHandler = (event) => {
 .thank-you-text {
     font-size: 2rem;
 }
+
+    
 @media (max-width: 868px) {
 
 .question {
@@ -302,7 +305,8 @@ p {
     font-size: 1.5rem;
 }
 }
-@media screen and (max-width: 640px) {
+
+@media screen and (max-width: 680px) {
     .question {
     font-size: 1rem;
     margin-top: 2rem;
@@ -314,9 +318,7 @@ p {
     font-size: 1rem;
     margin-top: -10px;
 }
-.results-wrapper {
-    top: 20%;
-}
+
 .small-text {
     font-size: .75rem;
 }
@@ -324,5 +326,9 @@ p {
     font-size: 1.5rem;
 }
 }
-
+@media screen and (max-width: 400px) {
+    .header-text-container {
+        padding: 1vh 0 4vh;
+}
+}
 </style>

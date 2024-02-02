@@ -40,9 +40,9 @@ const roles = [
     "Owner",
     "Human Resources",
     "Talent Acquisition",
-    "Executive/ Leadership",
-    "Operations/ Management",
-    "Public/ Community Relations",
+    "Executive/Leadership",
+    "Operations",
+    "Public/Community Relations",
     "Other: Specify",
 ];
 const employeeCounts = [
@@ -54,11 +54,10 @@ const employeeCounts = [
 ];
 
 const reasons = [
-    "Talent Pipelines",
-    "Corporate Social Responsibility",
-    "Diversity, Equity, Inclusion",
-    "Compliance with External Policy",
-    "Compliance with Internal Policy",
+    "Recruiting Talent",
+    "Improve Retention",
+    "Corporate Social Responsibility/DEI",
+    "Legal Compliance with Fair Chance Laws",
     "Other",
 ];
 
@@ -71,17 +70,15 @@ const states =
 <template>
     <section class="welcome-container">
         <img class="green-circle-img" src="/assets/img/greenCircle.png" alt="green circle">
-        <div class="flex top-container px-8 mx-auto items-center justify-between flex-col py-4 relative z-10 h-full">
-            <div class="wrapper px-8 flex mx-auto items-center justify-between flex-col h-full">
-                <div class="header-text-container">
-                    <h1 class="header-text text-center text-5xl text-white">Fair Chance Employment</h1>
-                    <h1 class="header-text text-center text-5xl text-white mb-6">Self-Assessment</h1>
-                </div>
+        <div class="header-text-container">
+                <h1 class="header-text text-center  text-white">Fair Chance Employer Assessment</h1>
+                <h1 class="header-text text-center  text-white mb-6">Self-Assessment</h1>
+             </div>
+            <div class="wrapper mx-auto items-center h-full">
                 <div class="text-wrapper">
-                    <div class="text text-center">A fair chance employer prioritizes evaluating an applicant's skills before considering prior criminal convictions. Please utilize this assessment to evaluate your company's existing hiring procedures to gain deeper insights into expanding your fair chance hiring initiatives!</div>
-                    <div class="text text-center mt-8">To start the assessment, please fill out the form below.</div>
+                    <div class="text text-center">A fair chance employer prioritizes evaluating an applicant's skills for a job before considering prior criminal convictions. Please utilize this assessment to evaluate your company's existing hiring procedures. You will gain deeper insights into ways your company can successfully implement or expand fair chance hiring.</div>
+                    <div class="text text-center mt-8">The assessment is free and takes about 10 minutes to complete. To get started fill out the information below.</div>
                 </div>
-            </div>
         </div>
     </section>
 
@@ -93,7 +90,7 @@ const states =
                     <h2 class="text-2xl font-semibold leading-7 text-gray-900">Your information</h2>
                     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div class="sm:col-span-3 input-container">
-                            <label for="firstName" class="block font-bold leading-6 text-gray-900">First name</label>
+                            <label for="firstName" class="block font-bold leading-6 text-gray-900">First Name</label>
                             <div class="mt-2">
                                 <input v-model="firstName" required type="text" name="firstName" id="firstName"
                                     placeholder="First name" autocomplete="given-name"
@@ -101,7 +98,7 @@ const states =
                             </div>
                         </div>
                         <div class="sm:col-span-3 input-container">
-                            <label for="last-name" class="block  font-bold leading-6 text-gray-900">Last name</label>
+                            <label for="last-name" class="block  font-bold leading-6 text-gray-900">Last Name</label>
                             <div class="mt-2">
                                 <input v-model="lastName" required type="text" name="last-name" id="last-name"
                                     placeholder="Last name" autocomplete="family-name"
@@ -148,8 +145,7 @@ const states =
                     </Transition>
                         <div class="col-span-full input-container">
                             <label for="organizationName"
-                                class="block  font-bold leading-6 text-gray-900">Business/Organization
-                                name</label>
+                                class="block  font-bold leading-6 text-gray-900">Business/Organization Name</label>
                             <div class="mt-2">
                                 <input v-model="organizationName" required type="text" name="organizationName"
                                     id="organizationName" placeholder="Business/Organization name"
@@ -169,7 +165,7 @@ const states =
                         </div>
                     </div>
                     <div class="sm:col-span-3 input-container">
-                        <label for="primaryReason" class="block  font-bold leading-6 text-gray-900">What is your primary
+                        <label for="primaryReason" class="block  font-bold leading-6 text-gray-900 primary-reason">What is your primary
                             reason for exploring fair chance hiring?</label>
                             <div class="mt-2">
                                 <select v-model="primaryReason" required id="primaryReason" name="primaryReason"
@@ -196,8 +192,8 @@ const states =
                             <label for="howDidYouHearAboutUs" class="block  font-bold leading-6 text-gray-900">How did you
                                 hear about us?</label>
                             <div class="mt-2">
-                                <textarea v-model="howDidYouHearAboutUs" required type="textarea" rows="4"
-                                    name="howDidYouHearAboutUs" id="howDidYouHearAboutUs" placeholder="Please share with us"
+                                <textarea v-model="howDidYouHearAboutUs" type="textarea" rows="4"
+                                    name="howDidYouHearAboutUs" id="howDidYouHearAboutUs" placeholder="Optional"
                                     class="block w-full border-0 p-2 text-gray-900 shadow-sm placeholder:text-gray-400 placeholder:pl-2 focus:ring-2 focus:ring-inset focus:ring-emerald-500 sm:leading-6"></textarea>
                             </div>
                         </div>
@@ -214,6 +210,10 @@ const states =
 </template>
 
 <style scoped>
+.primary-reason {
+    position: relative;
+    bottom: 3px;
+}
 select {
     width: 100%;
     color: #999;
@@ -225,11 +225,31 @@ input {
 
 .welcome-container {
     width: 100%;
-    height: 80vh;
     position: relative;
-    overflow: hidden;
+}
+.header-text-container {
+    position: relative;
+    font-weight: 600;
+    padding: 5vh 0;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.header-text {
+    font-size: 2.7vw;
+   
 }
 
+.text-wrapper {
+    padding: 7vh 0 18vh;
+    position: relative;
+    z-index: 1;
+}
+.text {
+  font-family: proxima-nova, sans-serif;
+  font-size: 1.2rem;
+  line-height: 2.5rem;
+  color: #555555;
+}
 
 
 
@@ -242,18 +262,42 @@ input {
 .v-leave-to {
     opacity: 0;
 }
-
-
-@media screen and (max-width: 640px) {
-    .welcome-container {
-    height: 60vh;
+@media screen and (min-width: 1400px){
+    .header-text {
+    font-size: 40px;
+}
 }
 
-   .top-container {
-       padding: 0;
-       margin: 0;
-   }
+@media (max-width: 868px) {
+    .header-text-container {
+        padding: 1vh 0;
+}
+      .header-text {
+        font-size: 3.5vw;
+      }
+  
 
+      .text-wrapper {
+    padding: 5vh 0;
+}
+      .text {
+        font-size: 1rem;
+        line-height: 1.75rem;
+    }
 
+}
+
+@media screen and (max-width: 640px) {
+
+.text {
+    font-size: 0.9rem;
+    line-height: 1.5rem;
+}
+}
+@media screen and (max-width: 400px) {
+    .header-text-container {
+        padding: 2px;
+}
+    
 }
 </style>

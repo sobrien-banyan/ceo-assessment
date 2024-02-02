@@ -2,31 +2,31 @@ export const questions = [
     {
         id: 1,
         section: "Hiring",
-        question: "How does your team approach hiring applicants with a criminal record?",
+        question: "How does your team approach hiring applicants with a past criminal record?",
         answers: [
             {
                 id: 1,
-                answer: "We do not offer employment to people with past convictions.",
+                answer: "We conduct background checks on all applicants, and if an applicant has a criminal background, we do not offer them employment.",
                 value: 0
             },
             {
                 id: 2,
-                answer: "We screen out applicants with serious convictions.",
+                answer: "We conduct background checks on all applicants, and if an applicant has a felony conviction, we do not offer them employment.",
                 value: 1
             },
             {
                 id: 3,
-                answer: "During the hiring process, we allow applicants with convictions to provide context on their past convictions before making the final decision.",
+                answer: "We conduct background checks on all applicants, and if an applicant has a conviction, we allow them to explain the circumstance and then make a final decision.",
                 value: 2
             },
             {
                 id: 4,
-                answer: "We only conduct background checks for certain positions.",
+                answer: "We do not conduct background checks.",
                 value: 2
             },
             {
                 id: 5,
-                answer: "We do not conduct a background check for any position.",
+                answer: "We help employees with criminal background access legal services for record expungement.",
                 value: 3
             },
         ],
@@ -34,31 +34,31 @@ export const questions = [
     {
         id: 2,
         section: "Hiring",
-        question: "How does your team approach hiring?",
+        question: "How does your team approach job postings?",
         answers: [
             {
                 id: 1,
-                answer: "We avoid recruiting candidates with conviction records.",
+                answer: "Our job postings include language such as “People with past criminal backgrounds are not welcome to apply.",
                 value: 0
             },
             {
                 id: 2,
-                answer: "Our job postings include a statement informing applicants that a background check will be conducted.",
+                answer: "All of our job postings include a standard statement that informs potential applicants that a background check might be conducted, but no further information is included, like the types of convictions that will disqualify an applicant from employment.",
                 value: 1
             },
             {
                 id: 3,
-                answer: "We typically do not include anything regarding background checks or previous convictions in our job posting.",
+                answer: " We do not conduct background checks and we do not include anything on our job postings about our background check practice.",
                 value: 2
             },
             {
                 id: 4,
-                answer: "We purposefully post job listings on websites geared towards fair chance hiring for individuals with a conviction record.",
+                answer: "We purposefully call ourselves a “fair chance hirer” and intentionally recruit from websites geared towards fair chance hiring.",
                 value: 3
             },
             {
                 id: 5,
-                answer: "In our job postings, we include a statement encouraging fair chance applicants to apply.",
+                answer: "We purposefully call ourselves a “fair chance hirer” and intentionally recruit from websites geared towards fair chance hiring. We also have a statement such as “we encourage people with past convictions to apply.”",
                 value: 3
             },
         ],
@@ -66,7 +66,7 @@ export const questions = [
     {
         id: 3,
         section: "Onboarding",
-        question: "During the onboarding stage, what accommodations are made for employees with past convictions?",
+        question: "During the onboarding stage of the talent lifecycle, do you provide any accommodations to employees experiencing barriers?",
         answers: [
             {
                 id: 1,
@@ -97,22 +97,22 @@ export const questions = [
         answers: [
             {
                 id: 1,
-                answer: `We commonly use terms like “offender” or “felon”`,
+                answer: `We commonly use terms like “offender” or “felon.”`,
                 value: 0
             },
             {
                 id: 2,
-                answer: `We do our best to use language that signals people are no longer part of the criminal legal system such as “ex-felon” or “ex-convict”`,
+                answer: `We do our best to use language that signals people are no longer part of the criminal legal system such as “ex-felon” or “ex-convict.”`,
                 value: 1
             },
             {
                 id: 3,
-                answer: `Our company encourages employees to utilize inclusive and person-centered language.`,
+                answer: `Our company encourages employees to utilize inclusive and person-centered language when necessary and refers to an employee with a past criminal conviction. We suggest using language such as a “justice impacted individual”`,
                 value: 2
             },
             {
                 id: 4,
-                answer: "Our company mandates that employees use person-centered language. Employees receive annual training on inclusive, person-centered language as well as the company’s DEI( diversity, equity and inclusion) practices.",
+                answer: "Our company mandates that employees use person-centered language like ‘job seeker with past conviction’ or ‘justice impacted individual.’ Employees receive annual training on inclusive, person-centered language as well as the company’s DEI (diversity, equity, and inclusion) practices.",
                 value: 3
             },
         ],
@@ -124,17 +124,17 @@ export const questions = [
         answers: [
             {
                 id: 1,
-                answer: "Most people with past convictions stay in entry level positions because we don’t currently have a clear process or system to promote employees.",
+                answer: "Most employees will stay in entry level positions because we don’t currently have a clear process or system to promote employees.",
                 value: 0
             },
             {
                 id: 2,
-                answer: "We rarely seek to promote fair chance talent.",
+                answer: "We do offer talent development opportunities but not for entry level positions.",
                 value: 1
             },
             {
                 id: 3,
-                answer: "We have opportunities for advancement within the company, but we could do a better job at talking about career pathways.",
+                answer: "We have opportunities for advancement for all positions, but we could do a better job talking about talent development and career pathways.",
                 value: 2
             },
             {
@@ -205,22 +205,22 @@ export const questions = [
         answers: [
             {
                 id: 1,
-                answer: "Most of our employees with past convictions are temporary employees, and they are welcomed to stay, but they will not be hired full-time.",
+                answer: "Most of our employees are temporary and are welcomed to stay, but they will not be hired on with the company.",
                 value: 0
             },
             {
                 id: 2,
-                answer: "We value all of our employees by having appreciation events and celebrations. We promote a work-life balance and believe our culture is conducive to it.",
+                answer: "We value all of our employees and have occasional appreciation events. We promote work life balance and believe our culture is conducive to it.",
                 value: 1
             },
             {
                 id: 3,
-                answer: "We allow opportunities for mentorship and small groups for employees with past convictions to address any concerns or worries. We collect information about employees' employment experiences and seek to improve our practices by incorporating their feedback into the workplace.",
+                answer: "We intentionally make efforts to appreciate our employees, promote a healthy work life balance, have mentorship type programs and regularly seek employee feedback to improve culture.",
                 value: 2
             },
             {
                 id: 4,
-                answer: "On top of mentorship, small groups, and our feedback collection processes, we have many incentives and benefits: financial (bonuses), unlimited paid time off, upward mobility, typical benefits such as health care, and non-traditional benefits to help with life-stabilizing measures such as housing and transportation.",
+                answer: "We intentionally make efforts to appreciate our employees, promote a healthy work life balance, have mentorship type programs, seek out employee feedback and have non-traditional benefits such as unlimited paid time off or transportation assistance.",
                 value: 3
             },
         ],

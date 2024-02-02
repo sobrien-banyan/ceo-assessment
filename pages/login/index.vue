@@ -3,8 +3,6 @@ definePageMeta({
   layout: "main",
 });
 import { ref } from 'vue';
-const route = useRouter();
-
 
 const username = ref('');
 const password = ref('');
@@ -15,19 +13,6 @@ const signInHandler = async () => {
     body: {
       username: username.value,
       password: password.value,
-    },
-  }).then((res) => {
-    if (res.data.value.status === 'authenticated') {
-        navigateTo({path: '/admin', query: {token: res.data.value.token}});
-    };
-  });
-};
-const TempSignInHandler = async () => {
-    await useFetch(`/api/auth`, {
-    method: 'POST',
-    body: {
-      username: 'Genevieve',
-      password: '78w3bri&8h2je!',
     },
   }).then((res) => {
     if (res.data.value.status === 'authenticated') {
@@ -69,7 +54,7 @@ const TempSignInHandler = async () => {
                             <img class="w-19 h-8 mr-2" src="~/assets/img/CEO.png" alt="CEO Works Logo" />
                         </p>
                     </form>
-                        <NuxtLink @click.prevent="TempSignInHandler" class="w-20 log-in-button log-in-button2 px-3 py-1 font-extrabold " to="">Skip</NuxtLink>
+
                 </div>
             </div>
         </div>
