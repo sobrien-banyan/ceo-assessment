@@ -8,6 +8,9 @@ const username = ref('');
 const password = ref('');
 
 const signInHandler = async () => {
+    if (username.value === '' || password.value === '') {
+        return;
+    }
   await useFetch(`/api/auth`, {
     method: 'POST',
     body: {

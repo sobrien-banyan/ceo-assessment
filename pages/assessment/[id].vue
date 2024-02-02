@@ -208,7 +208,8 @@ const clickHandler = (event) => {
                         <div class="text-center text-3xl small-text1 font-medium me-2 px-2.5 py-0.5" v-else-if="total > 12 && total <= 18">Good</div>
                         <div class="text-center text-3xl small-text1 font-medium me-2 px-2.5 py-0.5" v-else="total > 18 && total <= 24">Excellent</div>
                         <br>
-                        <div class="small-text"><span class="cursor-pointer rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300" @click="pdfHandler">Click here</span> to access and download your personalized assessment report. </div><br>
+                        
+                        <div class="small-text"><button type="button" class="cursor-pointer rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300 focus:outline-none focus:ring-4 focus:ring-green-300" @click="pdfHandler">Click here</button> to access and download your personalized assessment report. </div><br>
                         <div class="small-text">The Inclusive Hiring team at the Center for Employment Opportunities helps employers catalyze shifts in employment practices by partnering with employers and community stakeholders to unlock career pathways that promote racial equity and provide economic mobility for people with convictions. Please reach out to <span class="underline decoration-solid text-blue-800">inclusivehiring@ceoworks.org</span> to discuss your recommendations and to learn more about fair chance hiring. </div><br>
                     </div>
             </div>
