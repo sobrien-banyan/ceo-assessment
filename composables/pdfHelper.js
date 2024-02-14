@@ -141,7 +141,7 @@ export const pdfHelper = (grade, results) => {
             ]
         };
         let sectionScore = parseInt(results[key]['value']) + parseInt(results[parseInt(key) - 1]['value']);
-        resultObject.grade = sectionScore <= 6 ? 'Opportunities to improve' : sectionScore <= 12 ? 'Fair' : sectionScore <= 18 ? 'Good' : 'Excellent';
+        resultObject.grade = sectionScore <= 1 ? 'Opportunities to improve' : sectionScore <= 3 ? 'Fair' : sectionScore <= 5 ? 'Good' : 'Excellent';
 
         if (key === "2") {
             if (sectionScore < 4) {

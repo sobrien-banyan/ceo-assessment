@@ -38,7 +38,7 @@ export const questions = [
         answers: [
             {
                 id: 1,
-                answer: "Our job postings include language such as “People with past criminal backgrounds are not welcome to apply.",
+                answer: "Our job postings include language such as “People with past criminal backgrounds are not welcome to apply.“",
                 value: 0
             },
             {
@@ -107,7 +107,7 @@ export const questions = [
             },
             {
                 id: 3,
-                answer: `Our company encourages employees to utilize inclusive and person-centered language when necessary and refers to an employee with a past criminal conviction. We suggest using language such as a “justice impacted individual”`,
+                answer: `Our company encourages employees to utilize inclusive and person-centered language when necessary and refers to an employee with a past criminal conviction. We suggest using language such as a “justice impacted individual.”`,
                 value: 2
             },
             {

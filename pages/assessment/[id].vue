@@ -21,10 +21,12 @@ const showListItem = ref(0);
 const showResults = ref(false);
 const showSubmitButton = ref(false);
 const total = ref(0);
-const results = ref({});
+const results = ref({1: {}, 2: {}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {}, 8: {}});
 const preamble = ref(true);
 const isPulseNext = ref(false);
 const isPulsePrevious = ref(false);
+const showPopover = ref(false);
+const listOfUnansweredQuestions = ref([]);
 
 const runningScore = ref({});
 const runningAnswers = ref({});
@@ -49,6 +51,20 @@ const pluseDirection = () => {
     };  
 };
 
+const checkAnswers = () => {
+    listOfUnansweredQuestions.value = [];
+    if (results.value[8].value) {
+        for (let key in results.value) {
+            if (results.value[key].value == undefined && !listOfUnansweredQuestions.value.includes(key)) {
+               listOfUnansweredQuestions.value.push(key);
+            } 
+        };
+        showPopover.value = true;
+    } else {
+        showPopover.value = false;
+    };
+};
+
 const start = () => {
     if (preamble) {
         preamble.value = false;
@@ -62,6 +78,7 @@ const next = () => {
     if (showListItem.value < length - 1) {
         showListItem.value++;
     }
+    checkAnswers();
 };
 
 const prev = () => {
@@ -140,6 +157,7 @@ const clickHandler = (event) => {
     };
     showSubmitButton.value = Object.keys(runningAnswers.value).length == 8;
     pluseDirection();
+    checkAnswers();
 };
 
 
@@ -177,7 +195,7 @@ const clickHandler = (event) => {
                         </div>
                     </li>
                 </ul>
-                <div class="flex justify-between">
+                <div class="flex justify-between h-8">
                     <button v-if="showListItem > 0" @click="prev"
                     :class="isPulsePrevious && 'animate-pulse'"
                         class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">Previous</button>
@@ -188,7 +206,18 @@ const clickHandler = (event) => {
                     <button v-else-if="showListItem < 7" @click="next"
                         :class="isPulseNext && 'animate-pulse'"
                         class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">Next</button>
-                    <div class="w-28" v-else></div>
+                    <div class="w-28 hidden-container" v-else>
+                        
+                         <div v-if="showPopover" class="pop-up z-10 inline-block text-sm text-gray-500 transition duration-300 bg-white border border-gray-200 rounded-lg shadow-sm ">
+                           <div class="px-3 py-2  border-b border-gray-200 rounded-t-lg bg-ceogreen">
+                               <h3 class="font-semibold text-gray-900 dark:text-white">Please respond to the follow question{{ listOfUnansweredQuestions.length > 1 ? "s" : '' }}:</h3>
+                           </div>
+                           <div class="px-3 py-2">
+                               <p>{{ listOfUnansweredQuestions.toString() }}</p>
+                           </div>
+                         </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -288,6 +317,15 @@ const clickHandler = (event) => {
 .thank-you-text {
     font-size: 2rem;
 }
+.hidden-container {
+    position: relative;
+}
+.pop-up {
+    position: relative;
+    width: 291px;
+    bottom: 46px;
+    right: 178px;
+}
 
     
 @media (max-width: 868px) {
@@ -326,10 +364,23 @@ p {
 .small-text1 {
     font-size: 1.5rem;
 }
+.pop-up {
+    width: 160px;
+    right: 49px;
+}
 }
 @media screen and (max-width: 400px) {
     .header-text-container {
         padding: 1vh 0 4vh;
+}
+}
+@media screen and (max-width: 380px) {
+    .pop-up {
+    font-size: .70rem;
+    width: 150px;
+    height: 87px;
+    right: 40px;
+    bottom: 22px;
 }
 }
 </style>
