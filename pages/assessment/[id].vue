@@ -56,7 +56,7 @@ const checkAnswers = () => {
     if (results.value[8].value) {
         for (let key in results.value) {
             if (results.value[key].value == undefined && !listOfUnansweredQuestions.value.includes(key)) {
-               listOfUnansweredQuestions.value.push(key);
+               listOfUnansweredQuestions.value.push(" " + key);
             } 
         };
         showPopover.value = true;

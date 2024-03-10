@@ -165,8 +165,7 @@ const states =
                         </div>
                     </div>
                     <div class="sm:col-span-3 input-container">
-                        <label for="primaryReason" class="block  font-bold leading-6 text-gray-900 primary-reason">What is your primary
-                            reason for exploring fair chance hiring?</label>
+                        <label for="primaryReason" class="block  font-bold leading-6 text-gray-900 primary-reason">What is your primary reason for exploring fair chance hiring?</label>
                             <div class="mt-2">
                                 <select v-model="primaryReason" required id="primaryReason" name="primaryReason"
                                 autocomplete="primaryReason"
@@ -211,8 +210,7 @@ const states =
 
 <style scoped>
 .primary-reason {
-    position: relative;
-    bottom: 3px;
+    min-height: 48px;
 }
 select {
     width: 100%;
@@ -292,6 +290,9 @@ input {
 .text {
     font-size: 0.9rem;
     line-height: 1.5rem;
+}
+.primary-reason {
+    min-height: fit-content;
 }
 }
 @media screen and (max-width: 400px) {
