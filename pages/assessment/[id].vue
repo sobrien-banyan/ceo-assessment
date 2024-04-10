@@ -8,9 +8,11 @@ const config = useRuntimeConfig();
 
 import { questions } from './data/questions';
 import { responses } from './data/responses';
+import { useRender } from 'vue-email';
+import template from '~/components/Email.vue';
 import { pdfHelper } from '~/composables/pdfHelper';
 
-const { Email } = route.query;
+const { UserName, Email } = route.query;
 
 
 const Questions = ref(questions);
@@ -86,10 +88,8 @@ const prev = () => {
     };
 };
 
-let pdf = null;
-
-const fetchPdf = (score) => {
-    pdf = null;
+const pdfHandler = () => {
+    const score = total.value;
     const Rating = score <= 6 ? 'Have many opportunities to improve' : score > 6 && score <= 12 ? 'Fair' : score > 12 && score <= 18 ? 'Good' : 'Excellent';
     const pdfJson = pdfHelper(Rating, results.value);
     
@@ -97,33 +97,26 @@ const fetchPdf = (score) => {
         method: 'POST',
         body: pdfJson,
     }).then((response) => {
-        pdf = response;
+        const url = window.URL.createObjectURL(new Blob([response], { type: 'application/pdf' }));
+        const link = document.createElement('a');
+
+        let fileName = 'CEOWorksAssessment.pdf';
+        link.href = url;
+        link.setAttribute('download', fileName);
+        document.body.appendChild(link);
+
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(url);
     }).catch((error) => {
         console.log(error.message);
     });
-};
-
-const downloadPdf = () => {
-    const url = window.URL.createObjectURL(new Blob([pdf], { type: 'application/pdf' }));
-    const link = document.createElement('a');
-
-    let fileName = 'CEOWorksAssessment.pdf';
-    link.href = url;
-    link.setAttribute('download', fileName);
-    document.body.appendChild(link);
-
-    link.click();
-    link.remove();
-    window.URL.revokeObjectURL(url);
 };
 
 
 const saveScore = () => {
     const score = Object.values(runningScore.value).reduce((a, b) => parseInt(a) + parseInt(b), 0);
     total.value = score;
-
-    fetchPdf(score);
-
     useFetch(`/api/user/${route.params.id}`, {
         method: 'PUT',
         body: {
@@ -131,20 +124,21 @@ const saveScore = () => {
             results: JSON.stringify(results.value),
         },
     });
+    const Rating = score <= 6 ? 'Have many opportunities to improve' : score > 6 && score <= 12 ? 'Fair' : score > 12 && score <= 18 ? 'Good' : 'Excellent';
 
-    useFetch(`/api/sendEmail`, {
-        method: 'POST',
-        body: {
-            template: pdf,
-            toAddress: Email,
-        },
-    }).then((response) => {
-        console.log(response);
-        showResults.value = true;
-    }).catch((error) => {
-        console.log(error);
-        showResults.value = true;
+    const html = async () => await useRender(template, { UserName, Rating: Rating }, {
+        pretty: true,
     });
+    html().then((result) => {
+        useFetch(`/api/sendEmail`, {
+            method: 'POST',
+            body: {
+                template: result,
+                toAddress: Email,
+        },
+    });
+    showResults.value = true;
+});
 };
 const clickHandler = (event) => {
     runningScore.value[event.target.dataset.questionId] = event.target.value;
@@ -244,7 +238,7 @@ const clickHandler = (event) => {
                         <div class="text-center text-3xl small-text1 font-medium me-2 px-2.5 py-0.5" v-else="total > 18 && total <= 24">Excellent</div>
                         <br>
                         
-                        <div class="small-text"><button type="button" class="cursor-pointer rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300 focus:outline-none focus:ring-4 focus:ring-green-300" @click="downloadPdf">Click here</button> to access and download your personalized assessment report. </div><br>
+                        <div class="small-text"><button type="button" class="cursor-pointer rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300 focus:outline-none focus:ring-4 focus:ring-green-300" @click="pdfHandler">Click here</button> to access and download your personalized assessment report. </div><br>
                         <div class="small-text">The Inclusive Hiring team at the Center for Employment Opportunities helps employers catalyze shifts in employment practices by partnering with employers and community stakeholders to unlock career pathways that promote racial equity and provide economic mobility for people with convictions. Please reach out to <span class="underline decoration-solid text-blue-800">inclusivehiring@ceoworks.org</span> to discuss your recommendations and to learn more about fair chance hiring. </div><br>
                     </div>
             </div>
