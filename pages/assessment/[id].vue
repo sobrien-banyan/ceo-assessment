@@ -89,34 +89,63 @@ const prev = () => {
 };
 
 const pdfHandler = () => {
-    const score = total.value;
+    const link = document.createElement('a');
+
+    let fileName = 'CEOWorksAssessment.pdf';
+    link.href = globalPDFUrl;
+    link.setAttribute('download', fileName);
+    document.body.appendChild(link);
+
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+};
+
+function fetchAndStorePDF(score) {
     const Rating = score <= 6 ? 'Have many opportunities to improve' : score > 6 && score <= 12 ? 'Fair' : score > 12 && score <= 18 ? 'Good' : 'Excellent';
     const pdfJson = pdfHelper(Rating, results.value);
-    
+
     $fetch(config.public.vueEmailOptions.pdfGeneratorUrl, {
         method: 'POST',
         body: pdfJson,
-    }).then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response], { type: 'application/pdf' }));
-        const link = document.createElement('a');
+    }).then(response => response.blob())
+        .then(blob => {
+            globalPDFUrl = window.URL.createObjectURL(blob);
 
-        let fileName = 'CEOWorksAssessment.pdf';
-        link.href = url;
-        link.setAttribute('download', fileName);
-        document.body.appendChild(link);
+            sendEmailWithPDFAttachment(blob);
+        }).catch(error => {
+            console.log(error.message);
+        });
+}
 
-        link.click();
-        link.remove();
-        window.URL.revokeObjectURL(url);
-    }).catch((error) => {
-        console.log(error.message);
-    });
-};
+function sendEmailWithPDFAttachment(blob) {
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = () => {
+        const base64data = reader.result;
 
+        const html = async () => await useRender(template, { UserName, Rating: Rating }, {
+            pretty: true,
+        });
+        html().then((result) => {
+            useFetch(`/api/sendEmail`, {
+                method: 'POST',
+                body: {
+                    template: result,
+                    toAddress: Email,
+                    pdfData: base64data,
+                },
+            });
+            showResults.value = true;
+        }).catch((error) => {
+            console.log(error);
+        });
+    };
+}
 
 const saveScore = () => {
     const score = Object.values(runningScore.value).reduce((a, b) => parseInt(a) + parseInt(b), 0);
-    total.value = score;
+
     useFetch(`/api/user/${route.params.id}`, {
         method: 'PUT',
         body: {
@@ -124,22 +153,10 @@ const saveScore = () => {
             results: JSON.stringify(results.value),
         },
     });
-    const Rating = score <= 6 ? 'Have many opportunities to improve' : score > 6 && score <= 12 ? 'Fair' : score > 12 && score <= 18 ? 'Good' : 'Excellent';
 
-    const html = async () => await useRender(template, { UserName, Rating: Rating }, {
-        pretty: true,
-    });
-    html().then((result) => {
-        useFetch(`/api/sendEmail`, {
-            method: 'POST',
-            body: {
-                template: result,
-                toAddress: Email,
-        },
-    });
-    showResults.value = true;
-});
+    fetchAndStorePDF(score);
 };
+
 const clickHandler = (event) => {
     runningScore.value[event.target.dataset.questionId] = event.target.value;
     
