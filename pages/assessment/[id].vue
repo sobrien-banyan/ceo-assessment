@@ -112,7 +112,7 @@ function fetchAndStorePDF(score) {
         .then(blob => {
             window.globalPDFUrl = window.URL.createObjectURL(blob);
 
-            sendEmailWithPDFAttachment(blob);
+            sendEmailWithPDFAttachment(blob, Rating);
         }).catch(error => {
             console.log(error.message);
     }).catch((error) => {
@@ -122,13 +122,13 @@ function fetchAndStorePDF(score) {
     });
 }
 
-function sendEmailWithPDFAttachment(blob) {
+function sendEmailWithPDFAttachment(blob, Rating) {
     const reader = new FileReader();
     reader.readAsDataURL(blob);
     reader.onloadend = () => {
         const base64data = reader.result;
 
-        const html = async () => await useRender(template, { UserName, Rating: Rating }, {
+        const html = async () => await useRender(template, { UserName, Rating }, {
             pretty: true,
         });
         html().then((result) => {
