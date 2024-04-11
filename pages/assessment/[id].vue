@@ -88,7 +88,7 @@ const prev = () => {
     };
 };
 
-const pdfData = null;
+let pdfData = null;
 
 const pdfHandler = () => {
     let globalPDFUrl = new Blob([pdfData], { type: 'application/pdf' });
@@ -106,6 +106,7 @@ const pdfHandler = () => {
 };
 
 function fetchAndStorePDF(score) {
+    pdfData = null;
     const Rating = score <= 6 ? 'Have many opportunities to improve' : score > 6 && score <= 12 ? 'Fair' : score > 12 && score <= 18 ? 'Good' : 'Excellent';
     const pdfJson = pdfHelper(Rating, results.value);
 
