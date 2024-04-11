@@ -115,7 +115,11 @@ function fetchAndStorePDF(score) {
             sendEmailWithPDFAttachment(blob);
         }).catch(error => {
             console.log(error.message);
-        });
+    }).catch((error) => {
+        console.log(error);
+
+        showResults.value = true;
+    });
 }
 
 function sendEmailWithPDFAttachment(blob) {
