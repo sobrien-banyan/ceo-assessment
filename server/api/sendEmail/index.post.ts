@@ -6,7 +6,6 @@ const ses = new SES({ region: config.awsSesRegion })
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const pdfBuffer = Buffer.from(body.pdfData.split("base64,")[1], 'base64');
   const params = {
     Source: config.senderEmail,
     Destination: {
@@ -26,7 +25,7 @@ export default defineEventHandler(async (event) => {
     },
     Attachments: [{
       Filename: 'CEOWorksAssessment.pdf',
-      Data: pdfBuffer,
+      Data: body.pdfData,
     }],
   };
 
