@@ -88,11 +88,15 @@ const prev = () => {
     };
 };
 
+const pdfData = null;
+
 const pdfHandler = () => {
+    let globalPDFUrl = new Blob([pdfData], { type: 'application/pdf' });
+
     const link = document.createElement('a');
 
     let fileName = 'CEOWorksAssessment.pdf';
-    link.href = window.globalPDFUrl;
+    link.href = globalPDFUrl;
     link.setAttribute('download', fileName);
     document.body.appendChild(link);
 
@@ -108,13 +112,11 @@ function fetchAndStorePDF(score) {
     $fetch(config.public.vueEmailOptions.pdfGeneratorUrl, {
         method: 'POST',
         body: pdfJson,
-    }).then(response => new Blob([response], { type: 'application/pdf' }))
-        .then(blob => {
-            window.globalPDFUrl = window.URL.createObjectURL(blob);
+    })
+    .then(response => {
+        pdfData = response;
 
-            sendEmailWithPDFAttachment(blob, Rating);
-        }).catch(error => {
-            console.log(error.message);
+        sendEmailWithPDFAttachment(response, Rating);
     }).catch((error) => {
         console.log(error);
 
@@ -123,11 +125,6 @@ function fetchAndStorePDF(score) {
 }
 
 function sendEmailWithPDFAttachment(blob, Rating) {
-    const reader = new FileReader();
-    reader.readAsDataURL(blob);
-    reader.onloadend = () => {
-        const base64data = reader.result;
-
         const html = async () => await useRender(template, { UserName, Rating }, {
             pretty: true,
         });
@@ -137,14 +134,13 @@ function sendEmailWithPDFAttachment(blob, Rating) {
                 body: {
                     template: result,
                     toAddress: Email,
-                    pdfData: base64data,
+                    pdfData: blob,
                 },
             });
             showResults.value = true;
         }).catch((error) => {
             console.log(error);
         });
-    };
 }
 
 const saveScore = () => {
