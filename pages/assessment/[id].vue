@@ -92,7 +92,7 @@ const pdfHandler = () => {
     const link = document.createElement('a');
 
     let fileName = 'CEOWorksAssessment.pdf';
-    link.href = globalPDFUrl;
+    link.href = window.globalPDFUrl;
     link.setAttribute('download', fileName);
     document.body.appendChild(link);
 
@@ -110,7 +110,7 @@ function fetchAndStorePDF(score) {
         body: pdfJson,
     }).then(response => new Blob([response], { type: 'application/pdf' }))
         .then(blob => {
-            globalPDFUrl = window.URL.createObjectURL(blob);
+            window.globalPDFUrl = window.URL.createObjectURL(blob);
 
             sendEmailWithPDFAttachment(blob);
         }).catch(error => {
