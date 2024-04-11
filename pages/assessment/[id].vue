@@ -108,7 +108,7 @@ function fetchAndStorePDF(score) {
     $fetch(config.public.vueEmailOptions.pdfGeneratorUrl, {
         method: 'POST',
         body: pdfJson,
-    }).then(response => response.blob())
+    }).then(response => new Blob([response], { type: 'application/pdf' }))
         .then(blob => {
             globalPDFUrl = window.URL.createObjectURL(blob);
 
