@@ -91,7 +91,7 @@ const prev = () => {
 let pdfData = null;
 
 const pdfHandler = () => {
-    let globalPDFUrl = new Blob([pdfData], { type: 'application/pdf' });
+    const globalPDFUrl = window.URL.createObjectURL(new Blob([pdfData], { type: 'application/pdf' }));
 
     const link = document.createElement('a');
 
@@ -130,7 +130,7 @@ function sendEmailWithPDFAttachment(blob, Rating) {
             pretty: true,
         });
         html().then((result) => {
-            useFetch(`/api/sendEmail`, {
+            $fetch(`/api/sendEmail`, {
                 method: 'POST',
                 body: {
                     template: result,
