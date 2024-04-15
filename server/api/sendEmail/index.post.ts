@@ -1,60 +1,66 @@
 // server/api/send-email.post.ts
-import { SESClient, SendRawEmailCommand } from '@aws-sdk/client-ses';
+import { SES } from '@aws-sdk/client-ses';
+import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 const config = useRuntimeConfig();
 
-const ses = new SESClient({ region: config.awsSesRegion })
+const ses = new SES({ region: config.awsSesRegion });
+const s3 = new S3Client({ region: config.awsSesRegion });
+
+const uploadFileToS3 = async (pdfData: string, username: string) => {
+  const params = {
+    Bucket: 'ceo-works-pdf',
+    Key: `CEOWorksAssessment${username}.pdf`,
+    Body: Buffer.from(pdfData, 'base64'),
+    ContentType: 'application/pdf'
+  };
+
+  await s3.send(new PutObjectCommand(params));
+
+  return params.Key;
+};
+
+const createPresignedUrl = (key: string) => {
+  const command = new GetObjectCommand({
+    Bucket: config.bucketName,
+    Key: key,
+  });
+
+  return getSignedUrl(s3, command, { expiresIn: 60 * 60 });
+}
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const { toAddress, pdfBuffer, username } = body;
-  const subject = 'Your CEO Works Assessment Results';
-  const filename = 'CEOWorksAssessment.pdf';
-  const date = new Date();
-  const year = date.getFullYear();
-  const htmlBody = `
-      <p>Hi ${username},</p>
-      <p>Please find attached your CEO Works Assessment results.</p>
-      <p>Best regards,</p>
-      <p>The CEO Works Team</p>
-      PRIVACY POLICY | &copy; ${year} Center for Employment Opportunities. All rights reserved.
-  `;
-
-  const boundary = "----=_Part_" + Date.now().toString();
-  const rawMessage = [
-    "From: " + config.senderEmail,
-    "To: " + toAddress,
-    "Subject: " + subject,
-    "MIME-Version: 1.0",
-    "Content-Type: multipart/mixed; boundary=\"" + boundary + "\"",
-    "",
-    "--" + boundary,
-    "Content-Type: text/html; charset=UTF-8",
-    "Content-Transfer-Encoding: 7bit",
-    "",
-    htmlBody,
-    "",
-    "--" + boundary,
-    "Content-Type: application/pdf",
-    "Content-Disposition: attachment; filename=\"" + filename + "\"",
-    "Content-Transfer-Encoding: base64",
-    "",
-    pdfBuffer.toString('base64'),
-    "",
-    "--" + boundary + "--"
-  ].join("\n");
+  const pdfKey = await uploadFileToS3(body.pdfBuffer, body.username);
+  const pdfUrl = createPresignedUrl(pdfKey);
 
   const params = {
-    RawMessage: { Data: new TextEncoder().encode(rawMessage) },
     Source: config.senderEmail,
-    Destinations: [toAddress]
+    Destination: {
+      ToAddresses: [body.toAddress],
+    },
+    Message: {
+      Body: {
+        Html: {
+          Charset: 'UTF-8',
+          Data: `
+            <html>
+              <body>
+                <p>Hi ${body.username},</p>
+                <p>Please find the attached CEO Works Assessment PDF.</p>
+                <p>Download the PDF <a href="${pdfUrl}">here</a>.</p>
+              </body>
+            </html>
+          `,
+        },
+      },
+      Subject: {
+        Charset: 'UTF-8',
+        Data: 'CEO Works Assessment',
+      },
+    }
   };
 
-  const command = new SendRawEmailCommand(params);
-
-  try {
-    await ses.send(command);
-    return { status: 200, body: 'Email sent successfully' };
-  } catch (error) {
-    return { status: 500, body: error };
-  }
+  await ses.sendEmail(params);
+  return { message: 'Email sent' };
 });

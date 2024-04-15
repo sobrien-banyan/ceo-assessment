@@ -8,8 +8,6 @@ const config = useRuntimeConfig();
 
 import { questions } from './data/questions';
 import { responses } from './data/responses';
-import { useRender } from 'vue-email';
-import template from '~/components/Email.vue';
 import { pdfHelper } from '~/composables/pdfHelper';
 
 const { UserName, Email } = route.query;
@@ -118,7 +116,7 @@ function fetchAndStorePDF(score) {
         pdfData = response;
 
         const blob = new Blob([pdfData], { type: 'application/pdf' });
-        sendEmailWithPDFAttachment(blob, Rating);
+        sendEmailWithPDFAttachment(blob);
     }).catch((error) => {
         console.log(error);
 
@@ -126,7 +124,7 @@ function fetchAndStorePDF(score) {
     });
 }
 
-function sendEmailWithPDFAttachment(blob, Rating) {
+function sendEmailWithPDFAttachment(blob) {
         const reader = new FileReader();
         reader.readAsDataURL(blob);
         reader.onloadend = () => {
