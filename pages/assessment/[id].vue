@@ -116,7 +116,7 @@ function fetchAndStorePDF(score) {
         pdfData = response;
 
         const blob = new Blob([pdfData], { type: 'application/pdf' });
-        sendEmailWithPDFAttachment(blob);
+        sendEmailWithPDFAttachment(response);
     }).catch((error) => {
         console.log(error);
 
