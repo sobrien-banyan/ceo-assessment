@@ -125,22 +125,15 @@ function fetchAndStorePDF(score) {
 }
 
 function sendEmailWithPDFAttachment(blob) {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = () => {
-            const base64data = reader.result;
-            console.log('Base64:', base64data);
-
-            useFetch(`/api/sendEmail`, {
-                method: 'POST',
-                body: {
-                    username: UserName,
-                    toAddress: Email,
-                    pdfBuffer: base64data,
-                },
-            });
-            showResults.value = true;
-        };
+    useFetch(`/api/sendEmail`, {
+        method: 'POST',
+        body: {
+            username: UserName,
+            toAddress: Email,
+            pdfBuffer: blob,
+        },
+    });
+    showResults.value = true;
 }
 
 const saveScore = () => {
