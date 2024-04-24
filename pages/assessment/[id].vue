@@ -100,7 +100,7 @@ const pdfHandler = () => {
 
     link.click();
     link.remove();
-    window.URL.revokeObjectURL(url);
+    window.URL.revokeObjectURL(link);
 };
 
 function fetchAndStorePDF(score) {
@@ -129,7 +129,6 @@ function sendEmailWithPDFAttachment(blob) {
         reader.readAsDataURL(blob);
         reader.onloadend = () => {
             const base64data = reader.result;
-            console.log('Base64:', base64data);
 
             useFetch(`/api/sendEmail`, {
                 method: 'POST',
