@@ -26,14 +26,14 @@ const uploadFileToS3 = async (pdfData: string, username: string) => {
   }
 };
 
-const createPresignedUrl = (key: string) => {
+const createPresignedUrl = async (key: string) => {
   const command = new GetObjectCommand({
     Bucket: config.bucketName,
     Key: key,
   });
 
   try {
-    return getSignedUrl(s3, command, { expiresIn: 60 * 60 });
+    return await getSignedUrl(s3, command, { expiresIn: 60 * 60 });
   } catch (error) {
     console.error('Error creating presigned URL:', error);
   }
@@ -42,7 +42,7 @@ const createPresignedUrl = (key: string) => {
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const pdfKey = await uploadFileToS3(body.pdfBuffer, body.username);
-  const pdfUrl = pdfKey ? createPresignedUrl(pdfKey) : null;
+  const pdfUrl = pdfKey ? await createPresignedUrl(pdfKey) : null;
 
   if (!pdfUrl) {
     return { message: 'Error uploading file to S3' };
