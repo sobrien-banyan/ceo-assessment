@@ -12,7 +12,7 @@ const uploadFileToS3 = async (pdfData: string, username: string) => {
   const params = {
     Bucket: config.bucketName,
     Key: `CEOWorksAssessment${username}.pdf`,
-    Body: Buffer.from(pdfData, 'base64'),
+    Body: pdfData,
     ContentType: 'application/pdf'
   };
 
