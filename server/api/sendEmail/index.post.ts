@@ -36,7 +36,7 @@ const createPresignedUrl = async (key: string) => {
   });
 
   try {
-    return await getSignedUrl(s3, command, { expiresIn: 60 * 60 });
+    return await getSignedUrl(s3, command, { expiresIn: 604800 });
   } catch (error) {
     console.error('Error creating presigned URL:', error);
   }
