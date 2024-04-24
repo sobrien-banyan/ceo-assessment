@@ -15,9 +15,13 @@ const uploadFileToS3 = async (pdfData: string, username: string) => {
     ContentType: 'application/pdf'
   };
 
-  await s3.send(new PutObjectCommand(params));
+  try {
+    await s3.send(new PutObjectCommand(params));
 
-  return params.Key;
+    return params.Key;
+  } catch (error) {
+    console.error('Error uploading file to S3:', error);
+  }
 };
 
 const createPresignedUrl = (key: string) => {
@@ -26,14 +30,22 @@ const createPresignedUrl = (key: string) => {
     Key: key,
   });
 
-  return getSignedUrl(s3, command, { expiresIn: 60 * 60 });
+  try {
+    return getSignedUrl(s3, command, { expiresIn: 60 * 60 });
+  } catch (error) {
+    console.error('Error creating presigned URL:', error);
+  }
 }
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const pdfKey = await uploadFileToS3(body.pdfBuffer, body.username);
-  const pdfUrl = createPresignedUrl(pdfKey);
+  const pdfUrl = pdfKey ? createPresignedUrl(pdfKey) : null;
 
+  if (!pdfUrl) {
+    return { message: 'Error uploading file to S3' };
+  }
+  
   const params = {
     Source: config.senderEmail,
     Destination: {
