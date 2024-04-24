@@ -9,12 +9,13 @@ const s3 = new S3Client({ region: config.awsSesRegion });
 
 const uploadFileToS3 = async (pdfData: string, username: string) => {
   console.log('Uploading file to S3:', config.bucketName);
-  let newBuffer = pdfData.replace(/^data:.+;base64,/, "");
+  const base64Data = Buffer.from(pdfData.replace(/^data:application\/\w+;base64,/, ""), "base64");
 
   const params = {
     Bucket: config.bucketName,
     Key: `CEOWorksAssessment${username}.pdf`,
-    Body: newBuffer,
+    Body: base64Data,
+    ContentEncoding: 'base64',
     ContentType: 'application/pdf'
   };
 
