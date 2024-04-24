@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     mongoUrl: process.env.MONGO_URL,
     mongoDBName: process.env.MONGO_DB_NAME,
     awsSesRegion: process.env.AWS_SES_REGION,
+    bucketName: process.env.BUCKET_NAME,
     senderEmail: process.env.SENDER_EMAIL_ADDRESS,
     authSecret: process.env.AUTH_SECRET,
     authPassword: process.env.AUTH_PASSWORD,

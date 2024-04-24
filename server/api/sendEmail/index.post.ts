@@ -8,16 +8,18 @@ const ses = new SES({ region: config.awsSesRegion });
 const s3 = new S3Client({ region: config.awsSesRegion });
 
 const uploadFileToS3 = async (pdfData: string, username: string) => {
+  console.log('Uploading file to S3:', config.bucketName);
   const params = {
-    Bucket: 'ceo-works-pdf',
+    Bucket: config.bucketName,
     Key: `CEOWorksAssessment${username}.pdf`,
     Body: Buffer.from(pdfData, 'base64'),
     ContentType: 'application/pdf'
   };
 
   try {
-    await s3.send(new PutObjectCommand(params));
+    const response = await s3.send(new PutObjectCommand(params));
 
+    console.log('File uploaded to S3:', response);
     return params.Key;
   } catch (error) {
     console.error('Error uploading file to S3:', error);
