@@ -13,7 +13,7 @@ const uploadFileToS3 = async (pdfData: string, username: string) => {
 
   const params = {
     Bucket: config.bucketName,
-    Key: `CEOWorksAssessment${username}.pdf`,
+    Key: `CEOWorksAssessment-${username}.pdf`,
     Body: base64Data,
     ContentEncoding: 'base64',
     ContentType: 'application/pdf'
@@ -64,8 +64,8 @@ export default defineEventHandler(async (event) => {
             <html>
               <body>
                 <p>Hi ${body.username},</p>
-                <p>Please find the attached CEO Works Assessment PDF.</p>
-                <p>Download the PDF <a href="${pdfUrl}">here</a>.</p>
+                <p>Thank you for completing the assessment!</p>
+                <p>View and download your results PDF <a href="${pdfUrl}">here</a>.</p>
               </body>
             </html>
           `,
@@ -73,7 +73,7 @@ export default defineEventHandler(async (event) => {
       },
       Subject: {
         Charset: 'UTF-8',
-        Data: 'CEO Works Assessment',
+        Data: 'CEO Works Assessment Results',
       },
     }
   };
