@@ -90,7 +90,7 @@ const states =
                     <h2 class="text-2xl font-semibold leading-7 text-gray-900">Your information</h2>
                     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div class="sm:col-span-3 input-container">
-                            <label for="firstName" class="block font-bold leading-6 text-gray-900">First Name</label>
+                            <label for="firstName" class="block font-medium leading-6 text-gray-900">First Name</label>
                             <div class="mt-2">
                                 <input v-model="firstName" required type="text" name="firstName" id="firstName"
                                     placeholder="First name" autocomplete="given-name"
@@ -98,7 +98,7 @@ const states =
                             </div>
                         </div>
                         <div class="sm:col-span-3 input-container">
-                            <label for="last-name" class="block  font-bold leading-6 text-gray-900">Last Name</label>
+                            <label for="last-name" class="block font-medium leading-6 text-gray-900">Last Name</label>
                             <div class="mt-2">
                                 <input v-model="lastName" required type="text" name="last-name" id="last-name"
                                     placeholder="Last name" autocomplete="family-name"
@@ -106,7 +106,7 @@ const states =
                             </div>
                         </div>
                         <div class="sm:col-span-3 input-container">
-                            <label for="email" class="block font-bold leading-6 text-gray-900">Email</label>
+                            <label for="email" class="block font-medium leading-6 text-gray-900">Email</label>
                             <div class="mt-2">
                                 <input v-model="email" required type="email" name="email" id="email"
                                     placeholder="Email" autocomplete="email"
@@ -114,7 +114,7 @@ const states =
                             </div>
                         </div>
                         <div class="sm:col-span-3 input-container">
-                            <label for="title" class="block  font-bold leading-6 text-gray-900">What is your title?</label>
+                            <label for="title" class="block font-medium leading-6 text-gray-900">What is your title?</label>
                             <div class="mt-2">
                                 <select v-model="title" required id="title" name="title" autocomplete="title"
                                     class="block w-full h-14 border-0 px-4 p-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-inset focus:ring-emerald-500  sm:leading-6">
@@ -124,7 +124,7 @@ const states =
                             </div>
                         </div>
                         <div class="sm:col-span-3 input-container">
-                            <label for="role" class="block  font-bold leading-6 text-gray-900">What department do you work in your company?</label>
+                            <label for="role" class="block font-medium leading-6 text-gray-900">What department do you work in your company?</label>
                             <div class="mt-2">
                                 <select v-model="role" required id="role" name="role" autocomplete="role"
                                     class="block w-full h-14 border-0 px-4 p-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-inset focus:ring-emerald-500  sm:leading-6">
@@ -135,7 +135,7 @@ const states =
                         </div>
                         <Transition>
                         <div v-if="role === 'Other: Specify'" class="sm:col-span-3 input-container">
-                            <label for="specifiedRole" class="block font-bold leading-6 text-gray-900">Specify Role</label>
+                            <label for="specifiedRole" class="block font-medium leading-6 text-gray-900">Specify Role</label>
                             <div class="mt-2">
                                 <input required v-model="specifiedRole" type="text" name="specifiedRole"
                                     id="specifiedRole" placeholder="Specify Role" autocomplete="given-name"
@@ -145,7 +145,7 @@ const states =
                     </Transition>
                         <div class="col-span-full input-container">
                             <label for="organizationName"
-                                class="block  font-bold leading-6 text-gray-900">Business/Organization Name</label>
+                                class="block font-medium leading-6 text-gray-900">Business/Organization Name</label>
                             <div class="mt-2">
                                 <input v-model="organizationName" required type="text" name="organizationName"
                                     id="organizationName" placeholder="Business/Organization name"
@@ -154,7 +154,7 @@ const states =
                             </div>
                         </div>
                         <div class="sm:col-span-3 input-container">
-                            <label for="employeeCount" class="block  font-bold leading-6 text-gray-900">Approximately how many people does your organization/ company employ?</label>
+                            <label for="employeeCount" class="block font-medium leading-6 text-gray-900">Approximately how many people does your organization/ company employ?</label>
                             <div class="mt-2">
                                 <select v-model="employeeCount" required id="employeeCount" name="employeeCount"
                                 autocomplete="employeeCount"
@@ -165,7 +165,7 @@ const states =
                         </div>
                     </div>
                     <div class="sm:col-span-3 input-container">
-                        <label for="primaryReason" class="block  font-bold leading-6 text-gray-900 primary-reason">What is your primary reason for exploring fair chance hiring?</label>
+                        <label for="primaryReason" class="block font-medium leading-6 text-gray-900 primary-reason">What is your primary reason for exploring fair chance hiring?</label>
                             <div class="mt-2">
                                 <select v-model="primaryReason" required id="primaryReason" name="primaryReason"
                                 autocomplete="primaryReason"
@@ -176,7 +176,7 @@ const states =
                         </div>
                     </div>
                     <div class="sm:col-span-3 input-container">
-                        <label for="workLocation" class="block  font-bold leading-6 text-gray-900">Most of my company’s
+                        <label for="workLocation" class="block font-medium leading-6 text-gray-900">Most of my company’s
                             employees work in:</label>
                         <div class="mt-2">
                             <select v-model="workLocation" required id="workLocation" name="workLocation"
@@ -188,7 +188,7 @@ const states =
                         </div>
                     </div>
                         <div class="col-span-full input-container">
-                            <label for="howDidYouHearAboutUs" class="block  font-bold leading-6 text-gray-900">How did you
+                            <label for="howDidYouHearAboutUs" class="block font-medium leading-6 text-gray-900">How did you
                                 hear about us?</label>
                             <div class="mt-2">
                                 <textarea v-model="howDidYouHearAboutUs" type="textarea" rows="4"
@@ -199,7 +199,7 @@ const states =
                     </div>
                 </div>
                 <button
-                    class="h-10 mt-0 rounded-md w-full button-bg-ceogreen font-extrabold text-white hover:shadow-md transition duration-300"
+                    class="h-10 mt-0 rounded-md w-full button-bg-ceogreen font-bold text-white hover:shadow-md transition duration-300"
                     type="submit">
                     Submit
                 </button>

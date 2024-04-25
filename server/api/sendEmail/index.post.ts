@@ -40,7 +40,7 @@ const createPresignedUrl = async (key: string) => {
   } catch (error) {
     console.error('Error creating presigned URL:', error);
   }
-}
+};
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -65,7 +65,7 @@ export default defineEventHandler(async (event) => {
               <body>
                 <p>Hi ${body.username},</p>
                 <p>Thank you for completing the assessment!</p>
-                <p>View and download your results PDF <a href="${pdfUrl}">here</a>.</p>
+                <p>View and download your personalized assessment report <a href="${pdfUrl}">here</a>.</p>
               </body>
             </html>
           `,

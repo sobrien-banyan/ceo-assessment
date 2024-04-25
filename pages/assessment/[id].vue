@@ -192,7 +192,7 @@ const clickHandler = (event) => {
                         <div class="w-28"></div>
                         <div class="w-28"></div>
                          <button @click="start"
-                        class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">Continue</button>
+                        class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-bold text-white hover:shadow-md transition duration-300">Continue</button>
                 </div>
         </div>
     </div>
@@ -218,14 +218,14 @@ const clickHandler = (event) => {
                 <div class="flex justify-between h-8">
                     <button v-if="showListItem > 0" @click="prev"
                     :class="isPulsePrevious && 'animate-pulse'"
-                        class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">Previous</button>
+                        class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-bold text-white hover:shadow-md transition duration-300">Previous</button>
                         <div class="w-28" v-else></div>
                     <div>{{ showListItem + 1 }} / {{ length }}</div>
                     <button v-if="showSubmitButton && showListItem == 7" @click="saveScore"
-                        class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">Submit</button>
+                        class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-bold text-white hover:shadow-md transition duration-300">Submit</button>
                     <button v-else-if="showListItem < 7" @click="next"
                         :class="isPulseNext && 'animate-pulse'"
-                        class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300">Next</button>
+                        class="w-28 donate-button rounded-md button-bg-ceogreen px-3 py-1 font-bold text-white hover:shadow-md transition duration-300">Next</button>
                     <div class="w-28 hidden-container" v-else>
                         
                          <div v-if="showPopover" class="pop-up z-10 inline-block text-sm text-gray-500 transition duration-300 bg-white border border-gray-200 rounded-lg shadow-sm ">
@@ -258,7 +258,7 @@ const clickHandler = (event) => {
                         <div class="text-center text-3xl small-text1 font-medium me-2 px-2.5 py-0.5" v-else="total > 18 && total <= 24">Excellent</div>
                         <br>
                         
-                        <div class="small-text"><button type="button" class="cursor-pointer rounded-md button-bg-ceogreen px-3 py-1 font-extrabold text-white hover:shadow-md transition duration-300 focus:outline-none focus:ring-4 focus:ring-green-300" @click="pdfHandler">Click here</button> to download your personalized assessment report. </div><br>
+                        <div class="small-text"><button type="button" class="cursor-pointer rounded-md button-bg-ceogreen px-3 py-1 font-bold text-white hover:shadow-md transition duration-300 focus:outline-none focus:ring-4 focus:ring-green-300" @click="pdfHandler">Click here</button> to download your personalized assessment report. </div><br>
                         <div class="small-text">The Inclusive Hiring team at the Center for Employment Opportunities helps employers catalyze shifts in employment practices by partnering with employers and community stakeholders to unlock career pathways that promote racial equity and provide economic mobility for people with convictions. Please reach out to <span class="underline decoration-solid text-blue-800">inclusivehiring@ceoworks.org</span> to discuss your recommendations and to learn more about fair chance hiring. </div><br>
                     </div>
             </div>
