@@ -106,6 +106,7 @@ const pdfHandler = () => {
 
 function fetchAndStorePDF(score) {
     pdfData = null;
+    total.value = score;
     const Rating = score <= 6 ? 'Have many opportunities to improve' : score > 6 && score <= 12 ? 'Fair' : score > 12 && score <= 18 ? 'Good' : 'Excellent';
     const pdfJson = pdfHelper(Rating, results.value);
 
